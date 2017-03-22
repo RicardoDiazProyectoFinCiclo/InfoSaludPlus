@@ -1,0 +1,51 @@
+body{
+    background: rgb(240,240,255);
+}
+
+header, footer, #secciones, nav{
+    margin-top: 10px;
+}
+
+
+h1{
+    text-align: left;
+    margin-top: 50px;
+}
+
+h2, h3{
+    text-align: center;
+}
+
+#secciones{
+    min-height: 400px;
+}
+
+footer{
+    text-align: center;
+    background: rgba(50,50,50,0.8);
+    height: 100px;
+    color: white;
+}
+
+#secciones article{
+    background: rgb(253,253,255);
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 420px;
+}
+
+figcaption{
+    font-size: 0.9em;
+    color: darkgrey;
+}
+
+aside{
+    background: rgb(240,240,240);
+    border: dotted 1px black;
+    padding: 50px;
+    min-height: 420px;
+}
+
+.menuPrincipal{
+    color: white; 
+}
