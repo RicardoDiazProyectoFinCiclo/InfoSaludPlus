@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:view>
+        <h:head>
+            <title>Info Salud Plus</title>
+            <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+            <h:outputStylesheet library="css" name="estilo.css"  />
+            <h:outputScript library="js" name="jquery-3.1.1.min.js"/>
+            <h:outputScript library="js" name="bootstrap.min.js"/>
+        </h:head>
+        <h:body>
+            <header class="row">
+                <div id="logo" class="col-sm-3">
+                    <h:graphicImage library="images" class="img-rounded" name="logoInfoSaludPlus.png"/>
+
+                </div>
+                <div class="col-sm-offset-1 col-sm-8">
+                    <h1>Portal web de Info Salud Plus</h1>
+                </div>
+            </header>
+            <nav>
+                <p:menubar styleClass="menuPrincipal" style="background-color: lightskyblue !important;">
+                    <p:menuitem value="Actualidad" url="#"/>
+                    <p:menuitem value="Cita previa" url="#" />
+                    <p:submenu label="Servicios" >
+                        <p:menuitem value="Cardiología" url="#" />
+                        <p:menuitem value="Hematología" url="#"/>
+                        <p:menuitem value="Neumología" url="#"/>
+                        <p:menuitem value="Otorrinología" url="#"/>
+                        <p:menuitem value="Traumatología" url="#"/>
+                        <p:separator/>
+                        <p:menuitem value="Medicina interna" url="#"/>
+                        <p:separator/>
+                        <p:menuitem value="Medicina General" url="#"/>
+                    </p:submenu>
+                    <f:facet name="options">
+                        <f:facet name="options">
+                            <c:if test="${sessionScope.usuario == null}">
+                                <p:commandButton type="button" value="Login" icon="ui-icon-arrowreturnthick-1-e" action="#{usuario.login}"/>
+                                <p:commandButton type="button" value="Registro" icon="ui-icon-plusthick" action="#{usuario.registro}"/>
+                            </c:if>
+                            <c:if test="${sessionScope.usuario != null}">
+                                <h:form>
+                                    <p:commandButton type="button" value="Panel de Usuario" icon="ui-icon-arrowreturnthick-1-e" action="#{usuario.login}"/>
+                                    <p:commandButton type="button" value="Cerrar sesión" icon="ui-icon-plusthick" action="#{usuario.cerrar}"/>
+                                </h:form>
+                            </c:if>
+                        </f:facet>
+                    </f:facet>
+
+                </p:menubar>
+            </nav>
+            <div id="secciones" class="row">
+                <ui:insert name="secciones">
+
+                </ui:insert>
+            </div>
+
+            <footer>
+                <p>Creado por Ricardo Díaz © 2017</p>
+                <p>Esto es una maqueta, puede tener ligeras variaciones con respecto al resultado final.</p>
+            </footer>
+        </h:body>
+    </f:view>
+</html>
+
