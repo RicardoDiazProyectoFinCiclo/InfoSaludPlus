@@ -4,9 +4,12 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+<<<<<<< HEAD
     <navigation-rule>
         <display-name>inicio</display-name>
         <from-view-id>/index.xhtml</from-view-id>
     </navigation-rule>
     
+=======
+>>>>>>> 63e102bc16daf8b45c0eba0b0851157de346b5d7
 </faces-config>

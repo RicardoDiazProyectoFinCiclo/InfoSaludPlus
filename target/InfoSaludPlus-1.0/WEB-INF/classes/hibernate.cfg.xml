@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+=======
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+>>>>>>> 63e102bc16daf8b45c0eba0b0851157de346b5d7
 <hibernate-configuration>
   <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -7,7 +11,11 @@
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
         <!-- Si ponemos esta propiedad nos crea las tablas de la base de datos -->
+<<<<<<< HEAD
         <property name="hibernate.hbm2ddl.auto">create</property>
+=======
+        <!-- <property name="hibernate.hbm2ddl.auto">create</property> -->
+>>>>>>> 63e102bc16daf8b45c0eba0b0851157de346b5d7
         <!-- Pool de conexiones -->
         <property name="hibernate.connection.pool_size">1</property>
         <property name="hibernate.connection.datasource">java:comp/env/jdbc/ISP</property>
