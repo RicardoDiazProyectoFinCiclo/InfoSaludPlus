@@ -1,4 +1,3 @@
-es\albarregas\beans\Cliente.class
 es\albarregas\beans\Medico.class
 es\albarregas\daofactory\MySQLDAOFactory.class
 es\albarregas\dao\IGenericoDAO.class

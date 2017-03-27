@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
+
 <Context antiJARLocking="true" docBase="infosaludplus" path="/InfoSaludPlus">
   <Resource auth="Container" 
             driverClassName="com.mysql.jdbc.Driver" 
@@ -11,8 +11,5 @@
             type="javax.sql.DataSource" 
             url="jdbc:mysql://localhost:3306/infosaludplus" 
             username="java2017"/>
-=======
-<Context antiJARLocking="true" docBase="InfoSaludPlus" path="/InfoSaludPlus">
-  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="100" maxIdle="30" maxWait="10000" name="jdbc/ISP" password="2017" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/infosaludplus" username="java2017"/>
->>>>>>> 63e102bc16daf8b45c0eba0b0851157de346b5d7
+
 </Context>

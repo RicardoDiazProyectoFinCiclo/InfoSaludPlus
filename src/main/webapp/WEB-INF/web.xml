@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-<<<<<<< HEAD
+
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <display-name>JavaServerFaces</display-name>
-=======
->>>>>>> 63e102bc16daf8b45c0eba0b0851157de346b5d7
+
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
@@ -38,14 +37,7 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-<<<<<<< HEAD
-=======
-    <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
-    </session-config>
->>>>>>> 63e102bc16daf8b45c0eba0b0851157de346b5d7
+
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
