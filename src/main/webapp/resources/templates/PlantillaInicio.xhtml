@@ -1,12 +1,18 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!--<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      >-->
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich">
     <f:view>
         <h:head>
             <title>Info Salud Plus</title>
@@ -26,37 +32,61 @@
                 </div>
             </header>
             <nav>
-                <p:menubar styleClass="menuPrincipal" style="background-color: lightskyblue !important;">
-                    <p:menuitem value="Actualidad" url="#"/>
-                    <p:menuitem value="Cita previa" url="#" />
-                    <p:submenu label="Servicios" >
-                        <p:menuitem value="Cardiología" url="#" />
-                        <p:menuitem value="Hematología" url="#"/>
-                        <p:menuitem value="Neumología" url="#"/>
-                        <p:menuitem value="Otorrinología" url="#"/>
-                        <p:menuitem value="Traumatología" url="#"/>
-                        <p:separator/>
-                        <p:menuitem value="Medicina interna" url="#"/>
-                        <p:separator/>
-                        <p:menuitem value="Medicina General" url="#"/>
-                    </p:submenu>
+                <h:outputStylesheet>
+                    .pic {
+                    margin-bottom: -4px;
+                    margin-right: 2px;
+                    }
 
-                    <f:facet name="options">
-                        <f:facet name="options">
-                            <c:if test="${sessionScope.usuario == null}">
-                                <p:commandButton type="button" value="Login" icon="ui-icon-arrowreturnthick-1-e" action="#{usuario.login}"/>
-                                <p:commandButton type="button" value="Registro" icon="ui-icon-plusthick" action="#{usuario.registro}"/>
-                            </c:if>
-                            <c:if test="${sessionScope.usuario != null}">
-                                <h:form>
-                                    <p:commandButton type="button" value="Panel de Usuario" icon="ui-icon-arrowreturnthick-1-e" action="#{usuario.login}"/>
-                                    <p:commandButton type="button" value="Cerrar sesión" icon="ui-icon-plusthick" action="#{usuario.cerrar}"/>
-                                </h:form>
-                            </c:if>
-                        </f:facet>
-                    </f:facet>
+                    .search .rf-ddm-itm-sel {
+                    background-color: transparent;
+                    background-image:none;
+                    border-color: transparent;
+                    cursor: default;
+                    }
+                </h:outputStylesheet>
 
-                </p:menubar>
+                <h:form id="form">
+                    <rich:toolbar height="26px">
+                        <rich:dropDownMenu mode="ajax">
+                            <f:facet name="label">
+                                <h:panelGrid cellpadding="0" cellspacing="0" columns="2" style="vertical-align:middle">
+                                    <h:outputText value="Servicios" />
+                                </h:panelGrid>
+                            </f:facet>
+                            <rich:menuItem mode="client">
+                                <h:outputText value="Cardiología" />
+                            </rich:menuItem>
+                            <rich:menuItem mode="client">
+                                <h:outputText value="Neumología" />
+                            </rich:menuItem>
+                            <rich:menuItem mode="client">
+                                <h:outputText value="Traumatología" />
+                            </rich:menuItem>
+                            <rich:menuItem mode="client">
+                                <h:outputText value="Medicina General" />
+                            </rich:menuItem>
+                            <rich:menuItem mode="client">
+                                <h:outputText value="Medicina Interna" />
+                            </rich:menuItem>
+                        </rich:dropDownMenu>
+                        <rich:toolbarGroup location="right">
+                            <rich:menuItem>
+                                <h:outputText value="Login"/>
+                            </rich:menuItem>
+                            <rich:menuItem>
+                                <h:outputText value="Registro"/>
+                            </rich:menuItem>
+                        </rich:toolbarGroup>
+                    </rich:toolbar>
+                </h:form>
+
+                <br />
+                <a4j:outputPanel ajaxRendered="true">
+                    <h:outputText value="Current Selection: " />
+                    <h:outputText style="font-weight:bold" value="#{dropDownMenuBean.current}" />
+                </a4j:outputPanel>
+                <br />
             </nav>
             <div id="secciones" class="row">
                 <ui:insert name="secciones">
@@ -65,6 +95,22 @@
             </div>
 
             <footer>
+                <h:commandButton value="Call the popup">
+                    <rich:componentControl target="popup" operation="show" />
+                </h:commandButton>
+                <rich:popupPanel id="popup" modal="true" resizeable="true" onmaskclick="#{rich:component('popup')}.hide()">
+                    <f:facet name="header">
+                        <h:outputText value="Simple popup panel" />
+                    </f:facet>
+                    <f:facet name="controls">
+                        <h:outputLink value="#" onclick="#{rich:component('popup')}.hide(); return false;" style="color: inherit">
+                            X
+                        </h:outputLink>
+                    </f:facet>
+                    <p>You can also check and trigger events if the use clicks outside of the panel.</p>
+
+                    <p>In this example clicking outside closes the panel.</p>
+                </rich:popupPanel>
                 <p>Creado por Ricardo Díaz © 2017</p>
                 <p>Esto es una maqueta, puede tener ligeras variaciones con respecto al resultado final.</p>
             </footer>

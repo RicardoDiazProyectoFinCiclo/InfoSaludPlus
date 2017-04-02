@@ -7,6 +7,18 @@
     <navigation-rule>
         <display-name>inicio</display-name>
         <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/pagina2.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <display-name>pagina2</display-name>
+        <from-view-id>/pagina2.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

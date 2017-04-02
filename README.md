@@ -1,2 +1,2 @@
 # InfoSaludPlus
-Comenzando el login libre de errores de versión, que he tenido unos problemillas con el github que parece que se han subsanado.
+Construyendo los beans y empezando a usar richfaces en lugar de primefaces... 02/04/2017 23:15

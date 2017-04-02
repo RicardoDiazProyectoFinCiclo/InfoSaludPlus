@@ -5,9 +5,14 @@
  */
 package es.albarregas.beans;
 
+import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +31,10 @@ public class Medico extends Usuario {
     private String jefe;
     private String titulos;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinTable(name = "medicoCita")
+    private List<Cita> citas;
+    
     public int getId() {
         return id;
     }
@@ -64,6 +73,14 @@ public class Medico extends Usuario {
 
     public void setTitulos(String titulos) {
         this.titulos = titulos;
+    }
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
     }
     
     

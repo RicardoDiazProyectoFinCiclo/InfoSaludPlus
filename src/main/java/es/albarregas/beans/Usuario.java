@@ -25,13 +25,11 @@ import org.hibernate.annotations.Type;
  *
  * @author Ricardo
  */
-
 @Entity
 @ManagedBean(name = "usuario")
 @Table(name = "Usuarios")
-@Inheritance(strategy=InheritanceType.JOINED)
-@SessionScoped
-public abstract class Usuario implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -46,10 +44,10 @@ public abstract class Usuario implements Serializable {
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
-    @Type (type = "blob")
+    @Type(type = "blob")
     private String clave;
     @Column(nullable = false)
-    @Type (type = "datetime")
+    @Type(type = "datetime")
     private Date fechaAlta;
     @Column(nullable = false)
     private int idDireccion;
@@ -136,14 +134,15 @@ public abstract class Usuario implements Serializable {
     public void setImagen(Blob imagen) {
         this.imagen = imagen;
     }
-    
-    public String login(){
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", Usuario.this);
+
+    public String login() {
         System.out.println("Login");
-        return "inicio";
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", Usuario.this);
+
+        return "login";
     }
-    
-    public String cerrarSesion(){
+
+    public String cerrarSesion() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         Object session = externalContext.getSession(false);
@@ -151,5 +150,5 @@ public abstract class Usuario implements Serializable {
         httpSession.invalidate();
         return "inicio";
     }
-    
+
 }
