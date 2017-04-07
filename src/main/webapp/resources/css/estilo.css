@@ -1,5 +1,6 @@
 body{
     background: rgb(240,240,255);
+    font-size: 11pt;
 }
 
 header, footer, #secciones, nav{

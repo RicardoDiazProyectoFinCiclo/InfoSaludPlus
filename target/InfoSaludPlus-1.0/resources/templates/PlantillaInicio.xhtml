@@ -12,7 +12,8 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:a4j="http://richfaces.org/a4j" 
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <f:view>
         <h:head>
             <title>Info Salud Plus</title>
@@ -74,8 +75,11 @@
                             <rich:menuItem>
                                 <h:outputText value="Login"/>
                             </rich:menuItem>
-                            <rich:menuItem>
-                                <h:outputText value="Registro"/>
+                            <rich:menuItem onclick="return false;">
+
+                                <h:commandLink value="Registro">
+                                    <rich:componentControl target="popup" operation="show" />
+                                </h:commandLink>
                             </rich:menuItem>
                         </rich:toolbarGroup>
                     </rich:toolbar>
@@ -95,22 +99,34 @@
             </div>
 
             <footer>
-                <h:commandButton value="Call the popup">
-                    <rich:componentControl target="popup" operation="show" />
-                </h:commandButton>
+
                 <rich:popupPanel id="popup" modal="true" resizeable="true" onmaskclick="#{rich:component('popup')}.hide()">
                     <f:facet name="header">
-                        <h:outputText value="Simple popup panel" />
+                        <h:outputText value="Panel de registro" />
                     </f:facet>
                     <f:facet name="controls">
                         <h:outputLink value="#" onclick="#{rich:component('popup')}.hide(); return false;" style="color: inherit">
                             X
                         </h:outputLink>
                     </f:facet>
-                    <p>You can also check and trigger events if the use clicks outside of the panel.</p>
+                    <h:form id="registro">
+                        <h:panelGrid columns="2" width="80%">
+                            <h:outputText value="Nombre: " /> <h:inputText value="#{usuario.nombre}" />
+                            <h:outputText value="Apellidos: " /> <h:inputText value="#{usuario.apellidos}" />
+                            <h:outputText value="NIF/DNI: " /> <h:inputText value="#{usuario.nif}"/>
+                            <h:outputText value="Fecha de nacimiento: " /> <rich:calendar value="#{usuario.fechaNacimiento}" />
+                            <h:outputText value="Email: " /> <h:inputText value="#{usuario.email}" />
 
-                    <p>In this example clicking outside closes the panel.</p>
+
+                            <f:facet name="footer">
+                                <h:commandButton value="Registrarse" action="#{usuario.registro()}"/>
+                                <h:commandButton type="reset" value="Limpiar"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </h:form>
+
                 </rich:popupPanel>
+                
                 <p>Creado por Ricardo Díaz © 2017</p>
                 <p>Esto es una maqueta, puede tener ligeras variaciones con respecto al resultado final.</p>
             </footer>

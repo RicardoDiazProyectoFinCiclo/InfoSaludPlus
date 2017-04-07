@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -15,5 +15,12 @@
         <mapping class="es.albarregas.beans.Usuario"/>
         <mapping class="es.albarregas.beans.Medico"/>
         <mapping class="es.albarregas.beans.Paciente"/>
+        <mapping class="es.albarregas.beans.Centro"/>
+        <mapping class="es.albarregas.beans.Cita"/>
+        <mapping class="es.albarregas.beans.Servicio"/>
+        <mapping class="es.albarregas.beans.Informe"/>
+        <mapping class="es.albarregas.beans.Direccion"/>
+        <mapping class="es.albarregas.beans.Pueblo"/>
+        <mapping class="es.albarregas.beans.Provincia"/>
     </session-factory>
 </hibernate-configuration>

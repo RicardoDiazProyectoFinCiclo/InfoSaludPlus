@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       >
-    
+
     <f:view>
         <h:head>
             <title>Facelet Title</title>
@@ -46,18 +46,20 @@
                     <aside class="col-sm-offset-1 col-sm-2">
                         <h3>Cita previa</h3>
                         <p>Cita previa online de forma rápida para acudir a nuestros centros de salud.</p>
-                        <h:panelGrid>
-                            <h:panelGroup>
-                                <h:outputLabel for="dni" value="DNI:"/>
-                                <h:inputText id="dni" />
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <h:outputLabel for="fechaNac" value="Fecha de Nacimiento:"/>
-                                <h:inputText id="fechaNac"/>
-                            </h:panelGroup>
-                            <h:commandButton value="Enviar" class="btn btn-sm btn-primary center-block" style="margin-top: 10px;" />
-                            <h:commandButton value="Enviar" class="btn btn-sm btn-primary center-block" style="margin-top: 10px; "/>
-                        </h:panelGrid>
+                        <h:form>
+                            <h:panelGrid>
+                                <h:panelGroup>
+                                    <h:outputLabel for="dni" value="DNI:"/>
+                                    <h:inputText id="dni" />
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:outputLabel for="fechaNac" value="Fecha de Nacimiento:"/>
+                                    <h:inputText id="fechaNac"/>
+                                </h:panelGroup>
+                                <h:commandButton value="Enviar" class="btn btn-sm btn-primary center-block" style="margin-top: 10px;" />
+                                <h:commandButton value="Enviar" class="btn btn-sm btn-primary center-block" style="margin-top: 10px; "/>
+                            </h:panelGrid>
+                        </h:form>
                     </aside>
 
                 </ui:define>

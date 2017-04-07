@@ -3,13 +3,15 @@
  */
 package es.albarregas.beans;
 
+import es.albarregas.dao.IGenericoDAO;
+import es.albarregas.daofactory.DAOFactory;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,8 +20,11 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.servlet.http.HttpSession;
-import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -32,27 +37,24 @@ import org.hibernate.annotations.Type;
 public class Usuario implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "idUsuario")
+    @GeneratedValue(strategy = IDENTITY)
     private int id;
-    @Column(nullable = false)
     private String nombre;
-    @Column(nullable = false)
     private String apellidos;
-    @Column(nullable = false)
     private String nif;
-    @Column(nullable = false, unique = true)
+//    @Email
     private String email;
-    @Column(nullable = false)
-    @Type(type = "blob")
     private String clave;
-    @Column(nullable = false)
-    @Type(type = "datetime")
+
     private Date fechaAlta;
-    @Column(nullable = false)
-    private int idDireccion;
-    @Column(nullable = false)
-    private int idCentro;
+    private Date fechaNacimiento;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "idDireccion")
+    private Direccion direccion;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "idCentro")
+    private Centro centro;
     private Blob imagen;
 
     public int getId() {
@@ -111,20 +113,20 @@ public class Usuario implements Serializable {
         this.fechaAlta = fechaAlta;
     }
 
-    public int getIdDireccion() {
-        return idDireccion;
+    public Direccion getDireccion() {
+        return direccion;
     }
 
-    public void setIdDireccion(int idDireccion) {
-        this.idDireccion = idDireccion;
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 
-    public int getIdCentro() {
-        return idCentro;
+    public Centro getCentro() {
+        return centro;
     }
 
-    public void setIdCentro(int idCentro) {
-        this.idCentro = idCentro;
+    public void setCentro(Centro centro) {
+        this.centro = centro;
     }
 
     public Blob getImagen() {
@@ -135,13 +137,30 @@ public class Usuario implements Serializable {
         this.imagen = imagen;
     }
 
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    
     public String login() {
         System.out.println("Login");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", Usuario.this);
 
         return "login";
     }
-
+    
+    public String registro(){
+        
+        DAOFactory df = DAOFactory.getDAOFactory();
+        IGenericoDAO igd = df.getGenericoDAO();
+            System.out.println("Registrando usuario ");
+        igd.add(this);
+        return "pagina2";
+    }
+    
     public String cerrarSesion() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();

@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,21 +25,11 @@ import javax.persistence.Table;
 @ManagedBean(name = "paciente")
 public class Paciente extends Usuario {
 
-    @Column(name = "idPaciente")
-    private int id;
     private String numSegSoc;
-
+    
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "pacienteCita")
+    @JoinColumn(name = "idPaciente")
     private List<Cita> citas;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNumSegSoc() {
         return numSegSoc;

@@ -5,14 +5,19 @@
  */
 package es.albarregas.beans;
 
+import es.albarregas.dao.IGenericoDAO;
+import es.albarregas.daofactory.DAOFactory;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,24 +29,17 @@ import javax.persistence.Table;
 @Table(name = "Medicos")
 public class Medico extends Usuario {
 
-    @Column(name = "idMedico")
-    private int id;
     private String numColegiado;
-    private int idServicio;
     private String jefe;
     private String titulos;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(name = "medicoCita")
-    private List<Cita> citas;
-    
-    public int getId() {
-        return id;
-    }
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "idServicio")
+    private Servicio servicio;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "idMedico")
+    private List<Cita> citas;
 
     public String getNumColegiado() {
         return numColegiado;
@@ -49,14 +47,6 @@ public class Medico extends Usuario {
 
     public void setNumColegiado(String numColegiado) {
         this.numColegiado = numColegiado;
-    }
-
-    public int getIdServicio() {
-        return idServicio;
-    }
-
-    public void setIdServicio(int idServicio) {
-        this.idServicio = idServicio;
     }
 
     public String getJefe() {
@@ -75,6 +65,14 @@ public class Medico extends Usuario {
         this.titulos = titulos;
     }
 
+    public Servicio getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
+
     public List<Cita> getCitas() {
         return citas;
     }
@@ -82,6 +80,5 @@ public class Medico extends Usuario {
     public void setCitas(List<Cita> citas) {
         this.citas = citas;
     }
-    
-    
+
 }
