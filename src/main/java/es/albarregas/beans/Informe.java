@@ -37,10 +37,13 @@ public class Informe implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idPaciente")
     private Paciente paciente;
+    @Column(nullable = false)
     private String titulo;
+    @Column(nullable = false)
     private String descripcion;
     private String tratamiento;
     private String observacion;
+    @Column(nullable = false)
     private Date fecha;
 
     public int getId() {
@@ -107,5 +110,4 @@ public class Informe implements Serializable {
         this.fecha = fecha;
     }
 
-    
 }

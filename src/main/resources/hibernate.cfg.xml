@@ -7,7 +7,7 @@
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
         <!-- Si ponemos esta propiedad nos crea las tablas de la base de datos -->
-        <property name="hibernate.hbm2ddl.auto">create</property>
+<!--        <property name="hibernate.hbm2ddl.auto">create</property>-->
         <!-- Pool de conexiones -->
         <property name="hibernate.connection.pool_size">1</property>
         <property name="hibernate.connection.datasource">java:comp/env/jdbc/ISP</property>

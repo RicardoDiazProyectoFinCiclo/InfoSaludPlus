@@ -36,12 +36,13 @@ public class Direccion implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idCentro")
     private Centro centro;
-    private String nombreDireccion;
+    @Column(nullable = false)
     private String direccion;
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idPueblo")
     private Pueblo pueblo;
     private String telefono;
+    private String movil;
 
     public int getId() {
         return id;
@@ -57,14 +58,6 @@ public class Direccion implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public String getNombreDireccion() {
-        return nombreDireccion;
-    }
-
-    public void setNombreDireccion(String nombreDireccion) {
-        this.nombreDireccion = nombreDireccion;
     }
 
     public String getDireccion() {
@@ -89,6 +82,22 @@ public class Direccion implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Centro getCentro() {
+        return centro;
+    }
+
+    public void setCentro(Centro centro) {
+        this.centro = centro;
+    }
+
+    public String getMovil() {
+        return movil;
+    }
+
+    public void setMovil(String movil) {
+        this.movil = movil;
     }
 
 }

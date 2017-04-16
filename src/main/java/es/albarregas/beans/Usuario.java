@@ -5,12 +5,12 @@ package es.albarregas.beans;
 
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
+import es.albarregas.persistencia.FacesUtil;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,9 +22,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.servlet.http.HttpSession;
-import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -39,23 +39,35 @@ public class Usuario implements Serializable {
     @Id
     @Column(name = "idUsuario")
     @GeneratedValue(strategy = IDENTITY)
-    private int id;
-    private String nombre;
-    private String apellidos;
-    private String nif;
-//    @Email
-    private String email;
-    private String clave;
-
-    private Date fechaAlta;
-    private Date fechaNacimiento;
+    protected int id;
+    @Column(nullable = false)
+    protected String nombre;
+    @Column(nullable = false)
+    protected String apellidos;
+    @Column(nullable = false)
+    protected String nif;
+    @Column(nullable = false, unique = true)
+    protected String email;
+    @Column(nullable = false)
+    protected String clave;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    protected Date fechaAlta;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    protected Date fechaNacimiento;
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idDireccion")
-    private Direccion direccion;
+    protected Direccion direccion;
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idCentro")
-    private Centro centro;
-    private Blob imagen;
+    protected Centro centro;
+    protected Blob imagen;
+    protected String tipo = "u";
+    
+    @Transient
+    protected String claveRep;
+
+    @Transient
+    protected String mensaje;
 
     public int getId() {
         return id;
@@ -144,29 +156,55 @@ public class Usuario implements Serializable {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
-    
-    public String login() {
-        System.out.println("Login");
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", Usuario.this);
 
-        return "login";
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
-    public String registro(){
-        
+    public String getClaveRep() {
+        return claveRep;
+    }
+
+    public void setClaveRep(String claveRep) {
+        this.claveRep = claveRep;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+    
+
+    public String login() {
+        String salida = "";
+        String entidad;
+
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
-            System.out.println("Registrando usuario ");
-        igd.add(this);
-        return "pagina2";
+        entidad = "Usuario as u WHERE u.email = '" + getEmail() + "' AND u.clave = '" + getClave() +"'";
+        List<Usuario> listaUsuarios = igd.get(entidad);
+
+        //Si la lista que nos devuelve no está vacía debe contener el usuario en el primer elemento de la lista
+        if (!listaUsuarios.isEmpty()) {         
+            FacesUtil.addSession("usuario",  igd.getOne(listaUsuarios.get(0).id, listaUsuarios.get(0).getClass()));
+            salida = "login";
+        } else {
+            setMensaje("El usuario y/o contraseña no existe");
+        }
+
+        return salida;
     }
-    
+
     public String cerrarSesion() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        Object session = externalContext.getSession(false);
-        HttpSession httpSession = (HttpSession) session;
-        httpSession.invalidate();
+        System.out.println("Cerrando sesión...");
+        FacesUtil.deleteSession();
         return "inicio";
     }
 

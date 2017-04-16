@@ -21,8 +21,6 @@ import javax.persistence.Table;
  *
  * @author Ricardo
  */
-
-
 @Entity
 @ManagedBean(name = "pueblo")
 @Table(name = "Pueblos")
@@ -32,7 +30,9 @@ public class Pueblo implements Serializable {
     @Column(name = "idPueblo")
     @GeneratedValue(strategy = IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String codigoPostal;
+    @Column(nullable = false)
     private String nombre;
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idProvincia")

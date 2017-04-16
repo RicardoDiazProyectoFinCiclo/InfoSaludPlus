@@ -7,7 +7,9 @@ package es.albarregas.beans;
 
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +21,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -29,8 +32,10 @@ import javax.persistence.Table;
 @Table(name = "Medicos")
 public class Medico extends Usuario {
 
+    @Column(nullable = false)
     private String numColegiado;
     private String jefe;
+    @Column(nullable = false)
     private String titulos;
 
     @OneToOne(cascade = {CascadeType.ALL})
@@ -81,4 +86,13 @@ public class Medico extends Usuario {
         this.citas = citas;
     }
 
+    public String registro() {
+
+        DAOFactory df = DAOFactory.getDAOFactory();
+        IGenericoDAO igd = df.getGenericoDAO();
+        System.out.println("Registrando medico ");
+        setFechaAlta(new Date());
+        igd.add(this);
+        return "pagina2";
+    }
 }

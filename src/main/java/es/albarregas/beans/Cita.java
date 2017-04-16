@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -40,7 +41,9 @@ public class Cita implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idCentro")
     private Centro centro;
+    @Column(nullable = false)
     private Date fecha;
+    @Column(nullable = false)
     private String tipo;
 
     public int getId() {

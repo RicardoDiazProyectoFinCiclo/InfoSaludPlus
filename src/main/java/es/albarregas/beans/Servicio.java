@@ -28,7 +28,9 @@ public class Servicio implements Serializable {
     @Column(name = "idServicio")
     @GeneratedValue(strategy = IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private String descripcion;
 //    private Blob imagen;
 
@@ -63,5 +65,4 @@ public class Servicio implements Serializable {
 //    public void setImagen(Blob imagen) {
 //        this.imagen = imagen;
 //    }
-
 }

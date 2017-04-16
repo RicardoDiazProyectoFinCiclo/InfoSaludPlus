@@ -5,6 +5,9 @@
  */
 package es.albarregas.beans;
 
+import es.albarregas.dao.IGenericoDAO;
+import es.albarregas.daofactory.DAOFactory;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
@@ -12,7 +15,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,10 +27,11 @@ import javax.persistence.Table;
 @ManagedBean(name = "paciente")
 public class Paciente extends Usuario {
 
+    @Column(nullable = false)
     private String numSegSoc;
-    
+
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "idPaciente")
+    @JoinColumn(name = "idUsuario")
     private List<Cita> citas;
 
     public String getNumSegSoc() {
@@ -47,5 +50,13 @@ public class Paciente extends Usuario {
         this.citas = citas;
     }
 
-    
+    public String registro() {
+
+        DAOFactory df = DAOFactory.getDAOFactory();
+        IGenericoDAO igd = df.getGenericoDAO();
+        System.out.println("Registrando paciente ");
+        setFechaAlta(new Date());
+        igd.add(this);
+        return "pagina2";
+    }
 }

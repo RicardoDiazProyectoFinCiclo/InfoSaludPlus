@@ -13,7 +13,9 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:a4j="http://richfaces.org/a4j" 
       xmlns:rich="http://richfaces.org/rich"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <f:view>
         <h:head>
             <title>Info Salud Plus</title>
@@ -52,7 +54,7 @@
                         <rich:dropDownMenu mode="ajax">
                             <f:facet name="label">
                                 <h:panelGrid cellpadding="0" cellspacing="0" columns="2" style="vertical-align:middle">
-                                    <h:outputText value="Servicios" />
+                                    <h:outputText value="Servicios" styleClass="menuItemLb"/>
                                 </h:panelGrid>
                             </f:facet>
                             <rich:menuItem mode="client">
@@ -71,16 +73,28 @@
                                 <h:outputText value="Medicina Interna" />
                             </rich:menuItem>
                         </rich:dropDownMenu>
-                        <rich:toolbarGroup location="right">
-                            <rich:menuItem>
-                                <h:outputText value="Login"/>
-                            </rich:menuItem>
-                            <rich:menuItem onclick="return false;">
 
-                                <h:commandLink value="Registro">
-                                    <rich:componentControl target="popup" operation="show" />
-                                </h:commandLink>
-                            </rich:menuItem>
+                        <rich:toolbarGroup location="right">
+                            <c:if test="#{sessionScope.usuario == null}">
+                                <rich:menuItem onclick="return false;">
+                                    <h:commandLink value="Login" styleClass="menuItemLb">
+                                        <rich:componentControl target="login" operation="show" />
+                                    </h:commandLink>
+                                </rich:menuItem>
+                                <rich:menuItem onclick="return false;">
+                                    <h:commandLink value="Registro" styleClass="menuItemLb">
+                                        <rich:componentControl target="registro" operation="show" />
+                                    </h:commandLink>
+                                </rich:menuItem>
+                            </c:if>
+                            <c:if test="#{sessionScope.usuario != null}">
+                                <rich:menuItem mode="client">
+                                    <h:outputText styleClass="menuItemLb" value="Bienvenido, #{sessionScope.usuario.nombre} #{sessionScope.usuario.numSegSoc}"/>
+                                </rich:menuItem>
+
+                                <rich:menuItem label="Panel de control" styleClass="menuItemLb" />
+                                <rich:menuItem label="Cerrar sesión" action="#{usuario.cerrarSesion()}" styleClass="menuItemLb"/>
+                            </c:if>
                         </rich:toolbarGroup>
                     </rich:toolbar>
                 </h:form>
@@ -100,33 +114,72 @@
 
             <footer>
 
-                <rich:popupPanel id="popup" modal="true" resizeable="true" onmaskclick="#{rich:component('popup')}.hide()">
+                <rich:popupPanel id="registro" modal="true" resizeable="false" onmaskclick="#{rich:component('registro')}.hide()" width="350" height="250">
                     <f:facet name="header">
                         <h:outputText value="Panel de registro" />
                     </f:facet>
                     <f:facet name="controls">
-                        <h:outputLink value="#" onclick="#{rich:component('popup')}.hide(); return false;" style="color: inherit">
+                        <h:outputLink value="#" onclick="#{rich:component('registro')}.hide(); return false;" style="color: inherit">
                             X
                         </h:outputLink>
                     </f:facet>
-                    <h:form id="registro">
+                    <h:form id="formularioRegistro">
                         <h:panelGrid columns="2" width="80%">
-                            <h:outputText value="Nombre: " /> <h:inputText value="#{usuario.nombre}" />
-                            <h:outputText value="Apellidos: " /> <h:inputText value="#{usuario.apellidos}" />
-                            <h:outputText value="NIF/DNI: " /> <h:inputText value="#{usuario.nif}"/>
-                            <h:outputText value="Fecha de nacimiento: " /> <rich:calendar value="#{usuario.fechaNacimiento}" />
-                            <h:outputText value="Email: " /> <h:inputText value="#{usuario.email}" />
+                            <h:outputLabel value="Nombre: " for="nombre"/> <h:inputText id="nombre" value="#{paciente.nombre}" >
+                                <f:validateLength maximum="40" minimum="3"/>
+                            </h:inputText>
+                            <h:outputLabel value="Apellidos: " for="apellidos" /> <h:inputText id="apellidos" value="#{paciente.apellidos}" />
+                            <h:outputLabel value="NIF/DNI: " for="dni"/> <h:inputText id="dni" value="#{paciente.nif}"/>
+                            <h:outputLabel value="Fecha de nacimiento: " for="fechaNac" /> <rich:calendar id="fechaNac" value="#{paciente.fechaNacimiento}" />
+                            <h:outputLabel value="Número Seguridad Social " for="numSegSoc"/> <h:inputText id="numSegSoc" value="#{paciente.numSegSoc}" />
+                            <h:outputLabel value="Email: " for="email"/> <h:inputText id="email" value="#{paciente.email}" pt:placeholder="usuario@gmail.com">
+                                <t:validateEmail/>
+                            </h:inputText>
+                            <h:outputLabel value="Contraseña: " for="clave"/> <h:inputSecret id="clave" value="#{paciente.clave}"/>
+                            <h:outputLabel value="Repetir contraseña: " for="claveRep"/> <h:inputSecret id="claveRep" value="#{paciente.claveRep}"/>
+                            <f:facet name="footer" class="center-block text-center" >
+                                <h:commandButton value="Registrarse" action="#{paciente.registro()}"/>
+                                <h:commandButton type="reset" value="Limpiar"/>
+                            </f:facet>
+                        </h:panelGrid>
+                        <h:messages showDetail="false" showSummary="true" styleClass="error"/>
+                    </h:form>
 
+                </rich:popupPanel>
 
-                            <f:facet name="footer">
-                                <h:commandButton value="Registrarse" action="#{usuario.registro()}"/>
+                <rich:popupPanel id="login" modal="true" resizeable="false" onmaskclick="#{rich:component('login')}.hide()" width="350" height="150">
+                    <f:facet name="header">
+                        <h:outputText value="Panel de login" />
+                    </f:facet>
+                    <f:facet name="controls">
+                        <h:outputLink value="#" onclick="#{rich:component('login')}.hide(); return false;" style="color: inherit">
+                            X
+                        </h:outputLink>
+                    </f:facet>
+                    <h:form id="formularioLogin">
+                        <h:panelGrid columns="2">
+                            <f:facet name="header">
+                                <h4 class="text-center bg-danger"><h:outputText value="#{usuario.mensaje}"/></h4>
+                            </f:facet>
+
+                            <h:outputLabel value="Email: " for="email"/> <h:inputText id="email" value="#{usuario.email}" />
+                            <h:outputLabel value="Contraseña: " for="clave"/> <h:inputSecret id="clave" value="#{usuario.clave}"/>
+                            <f:facet name="footer" class="center-block text-center" >
+                                <h:commandButton value="Login" action="#{usuario.login()}"/>
                                 <h:commandButton type="reset" value="Limpiar"/>
                             </f:facet>
                         </h:panelGrid>
                     </h:form>
 
                 </rich:popupPanel>
-                
+
+
+                <c:if test="#{usuario.mensaje != null}">
+
+                    <script>
+                        #{rich:component('login')}.show();
+                    </script>
+                </c:if>
                 <p>Creado por Ricardo Díaz © 2017</p>
                 <p>Esto es una maqueta, puede tener ligeras variaciones con respecto al resultado final.</p>
             </footer>
