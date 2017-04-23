@@ -56,3 +56,24 @@ aside{
     font-family: Arial; 
     font-size: 11pt;
 }
+
+.mensajeError{
+    color: rgb(150,0,0);
+    font-weight: bold;
+    margin: 5px 0px 10px 10px;
+    font: bold 12pt Arial, sans-serif;
+}
+
+.panel{
+    background: none;
+}
+
+input{
+    padding: 2px;
+    margin-bottom: 10px;
+    
+}
+
+label{
+    font-size: 11pt;
+}

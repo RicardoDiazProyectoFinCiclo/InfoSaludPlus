@@ -50,7 +50,7 @@
                 </h:outputStylesheet>
 
                 <h:form id="form">
-                    <rich:toolbar height="26px">
+                    <rich:toolbar height="26px" id="menuPrincipal">
                         <rich:dropDownMenu mode="ajax">
                             <f:facet name="label">
                                 <h:panelGrid cellpadding="0" cellspacing="0" columns="2" style="vertical-align:middle">
@@ -76,14 +76,14 @@
 
                         <rich:toolbarGroup location="right">
                             <c:if test="#{sessionScope.usuario == null}">
-                                <rich:menuItem onclick="return false;">
+                                <rich:menuItem  onclick="return false;">
                                     <h:commandLink value="Login" styleClass="menuItemLb">
-                                        <rich:componentControl target="login" operation="show" />
+                                        <rich:componentControl target="login" event="click" operation="show" />
                                     </h:commandLink>
                                 </rich:menuItem>
                                 <rich:menuItem onclick="return false;">
                                     <h:commandLink value="Registro" styleClass="menuItemLb">
-                                        <rich:componentControl target="registro" operation="show" />
+                                        <rich:componentControl target="registro" event="click" operation="show" />
                                     </h:commandLink>
                                 </rich:menuItem>
                             </c:if>
@@ -101,8 +101,7 @@
 
                 <br />
                 <a4j:outputPanel ajaxRendered="true">
-                    <h:outputText value="Current Selection: " />
-                    <h:outputText style="font-weight:bold" value="#{dropDownMenuBean.current}" />
+                    <h:outputText value="Inicio" style="font-weight:bold" />
                 </a4j:outputPanel>
                 <br />
             </nav>
@@ -114,9 +113,9 @@
 
             <footer>
 
-                <rich:popupPanel id="registro" modal="true" resizeable="false" onmaskclick="#{rich:component('registro')}.hide()" width="350" height="250">
+                <rich:popupPanel id="registro" modal="true" resizeable="false" autosized="true" width="500">
                     <f:facet name="header">
-                        <h:outputText value="Panel de registro" />
+                        <h:outputText value="Regístrate" style="font-size: 14pt; font-weight: bold; text-align: center;" />
                     </f:facet>
                     <f:facet name="controls">
                         <h:outputLink value="#" onclick="#{rich:component('registro')}.hide(); return false;" style="color: inherit">
@@ -124,30 +123,74 @@
                         </h:outputLink>
                     </f:facet>
                     <h:form id="formularioRegistro">
-                        <h:panelGrid columns="2" width="80%">
-                            <h:outputLabel value="Nombre: " for="nombre"/> <h:inputText id="nombre" value="#{paciente.nombre}" >
-                                <f:validateLength maximum="40" minimum="3"/>
-                            </h:inputText>
-                            <h:outputLabel value="Apellidos: " for="apellidos" /> <h:inputText id="apellidos" value="#{paciente.apellidos}" />
-                            <h:outputLabel value="NIF/DNI: " for="dni"/> <h:inputText id="dni" value="#{paciente.nif}"/>
-                            <h:outputLabel value="Fecha de nacimiento: " for="fechaNac" /> <rich:calendar id="fechaNac" value="#{paciente.fechaNacimiento}" />
-                            <h:outputLabel value="Número Seguridad Social " for="numSegSoc"/> <h:inputText id="numSegSoc" value="#{paciente.numSegSoc}" />
-                            <h:outputLabel value="Email: " for="email"/> <h:inputText id="email" value="#{paciente.email}" pt:placeholder="usuario@gmail.com">
-                                <t:validateEmail/>
-                            </h:inputText>
-                            <h:outputLabel value="Contraseña: " for="clave"/> <h:inputSecret id="clave" value="#{paciente.clave}"/>
-                            <h:outputLabel value="Repetir contraseña: " for="claveRep"/> <h:inputSecret id="claveRep" value="#{paciente.claveRep}"/>
-                            <f:facet name="footer" class="center-block text-center" >
-                                <h:commandButton value="Registrarse" action="#{paciente.registro()}"/>
-                                <h:commandButton type="reset" value="Limpiar"/>
-                            </f:facet>
-                        </h:panelGrid>
-                        <h:messages showDetail="false" showSummary="true" styleClass="error"/>
+                        <rich:graphValidator value="#{usuario}" id="gv">
+                            <rich:panel>
+                                <rich:messages for="gv" />
+                                <rich:messages globalOnly="true" />
+
+                                <h:panelGrid columns="1" width="80%" styleClass="panel">
+
+                                    <h:outputLabel value="Nombre " for="nombre"/>
+                                    <h:panelGroup>
+                                        <t:inputText id="nombre" size="50" value="#{paciente.nombre}">
+                                            <f:validateLength maximum="40" minimum="3"/>
+                                        </t:inputText>
+                                        <rich:message for="nombre"/>
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="Apellidos " for="apellidos" /> 
+                                    <h:panelGroup>
+                                        <h:inputText id="apellidos" size="50" value="#{paciente.apellidos}" maxlength="5" />
+                                        <rich:message for="apellidos"/>
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="NIF/DNI " for="dni"/> 
+                                    <h:panelGroup>
+                                        <h:inputText id="dni" size="9" value="#{paciente.nif}" maxlength="9"/>
+                                        <rich:message for="dni"/>
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="Número Seguridad Social " for="numSegSoc"/> 
+                                    <h:panelGroup>
+                                        <h:inputText id="numSegSoc" size="30" value="#{paciente.numSegSoc}" maxlength="20" />
+                                        <rich:message for="numSegSoc"/>
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="Email "  for="email"/> 
+                                    <h:panelGroup>
+                                        <h:inputText id="email" size="50" value="#{paciente.email}" pt:placeholder="usuario@gmail.com"> 
+                                            <t:validateEmail/>
+                                        </h:inputText>
+                                        <h:message for="email"/>
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="Fecha de nacimiento: " for="fechaNac" /> 
+                                    <h:panelGroup>
+                                        <rich:calendar id="fechaNac" value="#{paciente.fechaNacimiento}" />
+                                        <rich:message for="fechaNac"/>
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="Contraseña: "  for="clave"/> 
+                                    <h:panelGroup>
+                                        <h:inputSecret id="clave" size="30" value="#{paciente.clave}"/>
+                                        <rich:message for="clave"/>
+                                    </h:panelGroup>
+
+                                    <h:outputLabel value="Repetir contraseña: " for="claveRep"/>
+                                    <h:panelGroup>
+                                        <h:inputSecret id="claveRep" size="30" value="#{paciente.claveRep}"/>
+                                        <rich:message for="claveRep"/>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                <a4j:commandButton value="Registrarse" render="formularioRegistro menuPrincipal" action="#{paciente.registro()}" />
+                                <a4j:commandButton type="reset" value="Limpiar"/>
+                            </rich:panel>
+                        </rich:graphValidator>
                     </h:form>
 
                 </rich:popupPanel>
 
-                <rich:popupPanel id="login" modal="true" resizeable="false" onmaskclick="#{rich:component('login')}.hide()" width="350" height="150">
+                <rich:popupPanel id="login" modal="true" resizeable="false" autosized="true" onmaskclick="#{rich:component('login')}.hide()" width="350" height="200">
                     <f:facet name="header">
                         <h:outputText value="Panel de login" />
                     </f:facet>
@@ -157,18 +200,31 @@
                         </h:outputLink>
                     </f:facet>
                     <h:form id="formularioLogin">
-                        <h:panelGrid columns="2">
-                            <f:facet name="header">
-                                <h4 class="text-center bg-danger"><h:outputText value="#{usuario.mensaje}"/></h4>
-                            </f:facet>
+                        <rich:validator event="change">
+                            <rich:panel>
+                                <h:panelGrid columns="2">
 
-                            <h:outputLabel value="Email: " for="email"/> <h:inputText id="email" value="#{usuario.email}" />
-                            <h:outputLabel value="Contraseña: " for="clave"/> <h:inputSecret id="clave" value="#{usuario.clave}"/>
-                            <f:facet name="footer" class="center-block text-center" >
-                                <h:commandButton value="Login" action="#{usuario.login()}"/>
-                                <h:commandButton type="reset" value="Limpiar"/>
-                            </f:facet>
-                        </h:panelGrid>
+                                    <f:facet name="header">
+                                        <h4 class="text-center bg-danger"><h:outputText value="#{usuario.mensaje}"/></h4>
+                                    </f:facet>
+
+                                    <h:outputLabel value="Email: " for="email"/>
+                                    <h:inputText id="email" value="#{paciente.email}" pt:placeholder="usuario@gmail.com"> 
+                                        <t:validateEmail/>
+                                    </h:inputText>
+                                    <h:outputLabel value="Contraseña: " for="clave"/> <h:inputSecret id="clave" value="#{usuario.clave}"/>
+
+                                    <rich:notifyMessages stayTime="2000" nonblocking="true" />
+                                    <f:facet name="footer" class="center-block text-center" >
+                                        <a4j:commandButton value="Login" render="login menuPrincipal" action="#{usuario.login()}" execute="@form" >
+                                            <rich:componentControl target="login" event="blur" operation="hide" />
+                                        </a4j:commandButton>
+                                        <a4j:commandButton type="reset" value="Limpiar"/>
+
+                                    </f:facet>
+                                </h:panelGrid>
+                            </rich:panel>
+                        </rich:validator>
                     </h:form>
 
                 </rich:popupPanel>

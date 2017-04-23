@@ -57,6 +57,7 @@ public class Paciente extends Usuario {
         System.out.println("Registrando paciente ");
         setFechaAlta(new Date());
         igd.add(this);
-        return "pagina2";
+        super.login();
+        return "";
     }
 }
