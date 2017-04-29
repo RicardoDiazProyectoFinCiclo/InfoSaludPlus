@@ -5,9 +5,9 @@ es\albarregas\dao\IGenericoDAO.class
 es\albarregas\daofactory\DAOFactory.class
 es\albarregas\beans\Paciente.class
 es\albarregas\beans\Usuario.class
-es\albarregas\persistencia\FacesUtil.class
 es\albarregas\beans\Cita.class
 es\albarregas\persistencia\HibernateUtil.class
+es\albarregas\persistencia\FacesUtils.class
 es\albarregas\beans\Direccion.class
 es\albarregas\beans\Medico.class
 es\albarregas\beans\Informe.class

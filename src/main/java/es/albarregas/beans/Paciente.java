@@ -7,9 +7,12 @@ package es.albarregas.beans;
 
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
+import es.albarregas.persistencia.FacesUtils;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,9 +58,21 @@ public class Paciente extends Usuario {
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         System.out.println("Registrando paciente ");
-        setFechaAlta(new Date());
-        igd.add(this);
-        super.login();
+        if (!igd.get("Usuario as u WHERE u.email = '" + this.getEmail() + "'").isEmpty()) {
+            FacesUtils.addMessage(null, "error", mensaje);
+            //El email ya existe
+        } else {
+            setFechaAlta(new Date());
+            igd.add(this);
+            this.login();
+            System.out.println("Email no encontrado...");
+        }
         return "";
     }
+
+    @Override
+    public boolean isPasswordsEquals() {
+        return super.isPasswordsEquals(); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

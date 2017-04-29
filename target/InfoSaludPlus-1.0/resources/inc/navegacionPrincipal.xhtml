@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<nav xmlns="http://www.w3.org/1999/xhtml" 
+     xmlns:h="http://java.sun.com/jsf/html" 
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets" 
+     xmlns:a4j="http://richfaces.org/a4j" 
+     xmlns:rich="http://richfaces.org/rich"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:t="http://myfaces.apache.org/tomahawk"
+     xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:outputStylesheet>
+        .pic {
+        margin-bottom: -4px;
+        margin-right: 2px;
+        }
+
+        .search .rf-ddm-itm-sel {
+        background-color: transparent;
+        background-image:none;
+        border-color: transparent;
+        cursor: default;
+        }
+    </h:outputStylesheet>
+
+
+    <h:form>
+
+        <rich:toolbar height="26px" id="menuPrincipal">
+            <rich:dropDownMenu mode="ajax">
+                <f:facet name="label">
+                    <h:panelGrid cellpadding="0" cellspacing="0" columns="2" style="vertical-align:middle">
+                        <h:outputText value="Servicios" styleClass="menuItemLb"/>
+                    </h:panelGrid>
+                </f:facet>
+                <rich:menuItem mode="client" onclick="#{rich:component('confirmRegistro')}.show();">
+                    <h:outputText value="Cardiología" />
+                </rich:menuItem>
+                <rich:menuItem mode="client">
+                    <h:outputText value="Neumología" />
+                </rich:menuItem>
+                <rich:menuItem mode="client">
+                    <h:outputText value="Traumatología" />
+                </rich:menuItem>
+                <rich:menuItem mode="client">
+                    <h:outputText value="Medicina General" />
+                </rich:menuItem>
+                <rich:menuItem mode="client">
+                    <h:outputText value="Medicina Interna" />
+                </rich:menuItem>
+            </rich:dropDownMenu>
+
+            <rich:toolbarGroup location="right">
+                <c:if test="#{sessionScope.usuario == null}">
+                    <rich:menuItem label="Login" class="menuItemLb">
+                        <rich:componentControl  event="click" target="login" operation="show"  />
+                    </rich:menuItem>
+                    <rich:menuItem label="Registro" class="menuItemLb">
+                        <h:outputText value="Registro" styleClass="menuItemLb" />
+                        <rich:componentControl target="registro" event="click" operation="show" />
+                    </rich:menuItem>
+                </c:if>
+                <c:if test="#{sessionScope.usuario != null}">
+                    <!-- El mode client de menuItem anula el action y actionListener -->
+                    <rich:menuItem mode="client"  id="msgBienvenida" styleClass="msgBienvenida" label="Bienvenido, #{sessionScope.usuario.nombre} #{sessionScope.usuario.numSegSoc}" />
+                    <rich:menuItem label="Panel de control" styleClass="menuItemLb" />
+                    <rich:menuItem label="Cerrar sesión" action="#{usuario.cerrarSesion()}" styleClass="menuItemLb"/>
+                </c:if>
+            </rich:toolbarGroup>
+        </rich:toolbar>
+
+    </h:form>
+
+    <br />
+    <a4j:outputPanel ajaxRendered="true">
+        <h:outputText value="Inicio" style="font-weight:bold" />
+    </a4j:outputPanel>
+    <br />
+
+    <!-- Modal de registro -->
+    <rich:popupPanel id="registro" modal="true" resizeable="false" autosized="true"  onmaskclick="#{rich:component('registro')}.hide()">
+        <f:facet name="header">
+            <h:outputText value="Regístrate" styleClass="cabeceraModal" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('registro')}.hide(); return false;" style="color: inherit">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form id="formularioRegistro">
+            <rich:focus/>
+            <rich:graphValidator value="#{paciente}" id="gvRegistro">
+                <rich:panel>
+                    <rich:messages styleClass="msgErrorGlobal" for="gvRegistro" />
+                    <rich:messages styleClass="msgErrorGlobal" globalOnly="true" />
+
+                    <h:panelGrid  columns="3" class="panel" id="grid" >
+
+                        <h:outputLabel value="Nombre " for="nombre"/>
+                        <t:inputText id="nombre" size="30" value="#{paciente.nombre}" maxlength="30">
+                            <f:validateLength minimum="3"/>
+                        </t:inputText>
+                        <rich:message for="nombre" ajaxRendered="true" styleClass="msgError" />
+
+                        <h:outputLabel value="Apellidos " for="apellidos" /> 
+                        <h:inputText id="apellidos" size="30" value="#{paciente.apellidos}" maxlength="40" >
+                            <f:validateLength minimum="3"/>
+                        </h:inputText>
+                        <rich:message for="apellidos" ajaxRendered="true"  styleClass="msgError"/>
+
+                        <h:outputLabel value="NIF/DNI " for="dni"/> 
+                        <h:inputText id="dni" size="9" value="#{paciente.nif}" maxlength="9" validatorMessage="Formato DNI incorrecto. Ej: 012345678A">
+                            <f:validateRegex pattern="^[0-9]{8}[a-zA-Z]{1}"/>
+                        </h:inputText>
+                        <rich:message for="dni" ajaxRendered="true" styleClass="msgError" />
+
+                        <h:outputLabel value="Número Seguridad Social " for="numSegSoc"/> 
+                        <h:inputText id="numSegSoc" size="15" value="#{paciente.numSegSoc}" maxlength="15" >
+                            <f:validateLength minimum="2"/>
+                        </h:inputText>
+                        <rich:message for="numSegSoc" ajaxRendered="true" />
+
+                        <h:outputLabel value="Email "  for="email"/> 
+                        <h:inputText id="email" size="30" value="#{paciente.email}" pt:placeholder="paciente@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </h:inputText>
+                        <rich:message for="email" ajaxRendered="true" />
+
+                        <h:outputLabel value="Fecha de nacimiento: " for="fechaNac" /> 
+                        <rich:calendar id="fechaNac" value="#{paciente.fechaNacimiento}" />
+                        <rich:message for="fechaNac" ajaxRendered="true"  />
+
+                        <h:outputLabel value="Contraseña: "  for="clave"/> 
+                        <h:inputSecret id="clave" size="15" value="#{paciente.clave}">
+                            <f:validateLength minimum="4" maximum="20"/>
+                        </h:inputSecret>
+                        <rich:message for="clave" ajaxRendered="true" />
+
+                        <h:outputLabel value="Repetir contraseña: " for="claveRep"/>
+                        <h:inputSecret id="claveRep" size="15" value="#{paciente.claveRep}">
+                            <f:validateLength minimum="4" maximum="20"/>
+                        </h:inputSecret>
+
+                        <rich:message for="claveRep" ajaxRendered="true"/>
+
+                    </h:panelGrid>
+                    <div class="botones">
+                        <a4j:commandButton value="Registrarse" 
+                                           execute="@form"
+                                           action="#{paciente.registro()}" 
+                                           oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('registro')}.hide(); #{rich:component('confirmRegistro')}.show(); } 
+                                           highlightInvalidInputs(); "
+                                           styleClass="boton"
+                                           /> 
+                        <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
+                    </div>
+                </rich:panel>
+            </rich:graphValidator>
+        </h:form>
+
+    </rich:popupPanel>
+    <!-- Modal de confirmación de registro -->
+
+    <rich:popupPanel id="confirmRegistro" modal="true" resizeable="false" autosized="true" domElementAttachment="form">
+        <f:facet name="header">
+            <h:outputText value="Registro correcto" styleClass="cabeceraModal" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('confirmRegistro')}.hide(); return false;" style="color: inherit">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form>
+
+            <rich:panel>
+                <h:outputText styleClass="msgOk" value="Se ha registrado satisfactoriamente. Bienvenido!"/>
+                <div class="botones">
+                    <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true" render="menuPrincipal"  onclick="#{rich:component('confirmRegistro')}.hide();"/>
+                </div>            
+            </rich:panel>
+        </h:form>
+    </rich:popupPanel>
+
+    <!-- Modal de login -->
+    <rich:popupPanel id="login" modal="true" resizeable="false" autosized="true" onmaskclick="#{rich:component('login')}.hide()" >
+        <f:facet name="header">
+            <h:outputText value="Panel de login" styleClass="cabeceraModal" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('login')}.hide(); return false;" style="color: inherit">
+                X
+            </h:outputLink>
+        </f:facet>
+        <h:form id="formularioLogin">
+            <rich:graphValidator id="gvLogin">
+                <rich:panel>
+                    <rich:messages styleClass="msgErrorGlobal" for="gvLogin" />
+                    <rich:messages styleClass="msgErrorGlobal" globalOnly="true" />
+                    <h:panelGrid columns="3">
+                        <h:outputLabel value="Email: " for="email2"/>
+                        <h:inputText id="email2" size="30" value="#{usuario.email}" pt:placeholder="ejemplo@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </h:inputText>
+                        <rich:message for="email2" ajaxRendered="true" />
+
+                        <h:outputLabel value="Contraseña: " for="clave2"/> 
+                        <h:inputSecret id="clave2" value="#{usuario.clave}" required="true" requiredMessage="El campo contraseña no puede estar vacío"/>
+                        <rich:message for="clave2"/>
+                    </h:panelGrid>
+                    <div class="botones">
+                        <a4j:commandButton value="Login" styleClass="boton" render="menuPrincipal" action="#{usuario.login()}" execute="@form" oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('login')}.hide(); } "/>
+                        <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
+                    </div>
+                </rich:panel>
+            </rich:graphValidator>
+        </h:form>
+
+    </rich:popupPanel>
+
+    <h:outputScript>
+        //Script para poner bordes rojos cuando hay error en los formularios
+        highlightInvalidInputs = function () {
+        var rows = $(#{rich:element('grid')}).find('tr');
+        rows.find('input').removeClass('invalid');
+        rows.has('.rf-msg-err').find('input').addClass('invalid')
+        }
+    </h:outputScript>
+    <style>
+        /* Estilo para poner bordes rojos cuando hay error en los formularios */
+        .invalid {
+            border-color: #D91C0D !important;
+        }
+    </style>
+</nav>
+

@@ -4,14 +4,15 @@
       xmlns:h="http://java.sun.com/jsf/html" 
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
-      >
+
+      xmlns:rich="http://richfaces.org/rich">
 
     <f:view>
         <h:head>
             <title>Facelet Title</title>
         </h:head>
         <h:body class="container-fluid">
-            <ui:decorate template="/resources/templates/PlantillaInicio.xhtml">
+            <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
 
                 <ui:define name="accesosMenu">
 
@@ -46,20 +47,22 @@
                     <aside class="col-sm-offset-1 col-sm-2">
                         <h3>Cita previa</h3>
                         <p>Cita previa online de forma rápida para acudir a nuestros centros de salud.</p>
-                        <h:form>
-                            <h:panelGrid>
-                                <h:panelGroup>
+                        <rich:panel>
+                            <h:form>
+                                <h:panelGrid columns="1">
                                     <h:outputLabel for="dni" value="DNI:"/>
                                     <h:inputText id="dni" />
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <h:outputLabel for="fechaNac" value="Fecha de Nacimiento:"/>
-                                    <h:inputText id="fechaNac"/>
-                                </h:panelGroup>
-                                <h:commandButton value="Enviar" class="btn btn-sm btn-primary center-block" style="margin-top: 10px;" />
-                                <h:commandButton value="Enviar" class="btn btn-sm btn-primary center-block" style="margin-top: 10px; "/>
-                            </h:panelGrid>
-                        </h:form>
+
+                                    <h:outputLabel for="fechaNac3" value="Fecha de Nacimiento:"/>
+                                    <rich:calendar id="fechaNac3" value="#{paciente.fechaNacimiento}" 
+                                                   locale="ES_es" inputSize="15"  datePattern="dd/MM/yyyy"/>
+                                </h:panelGrid>
+                                <div class="botones">
+                                    <h:commandButton value="Enviar" />
+                                    <h:commandButton value="Limpiar" type="reset" style="margin-left: 10px;"  />
+                                </div>
+                            </h:form>
+                        </rich:panel>
                     </aside>
 
                 </ui:define>

@@ -32,12 +32,12 @@ public class GenericoDAO<T> implements IGenericoDAO<T> {
     public void add(T objeto) {
         try {
             iniciaSesion();
-            sesion.saveOrUpdate(objeto);
+            sesion.save(objeto);
             sesion.flush();
 
         } catch (HibernateException he) {
             manejaExcepcion(he);
-        } finally {
+        }finally {
             cierraSesion();
         }
     }

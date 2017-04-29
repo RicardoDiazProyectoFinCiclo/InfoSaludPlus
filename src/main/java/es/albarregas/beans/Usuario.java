@@ -5,7 +5,7 @@ package es.albarregas.beans;
 
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
-import es.albarregas.persistencia.FacesUtil;
+import es.albarregas.persistencia.FacesUtils;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.Date;
@@ -27,7 +27,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -44,17 +43,17 @@ public class Usuario implements Serializable, Cloneable {
     @GeneratedValue(strategy = IDENTITY)
     protected int id;
     @Column(nullable = false)
-    @Size(min = 3, max = 30, message = "El tamaño del campo NOMBRE debe ser entre {min} y {max} caracteres")
-    protected String nombre;
+//    @Size(min = 3, max = 30, message = "El tamaño del campo NOMBRE debe ser entre {min} y {max} caracteres")
+    protected String nombre = "";
     @Column(nullable = false)
-    @Size(min = 3, max = 30, message = "El tamaño del campo APELLIDOS debe ser entre {min} y {max} caracteres")
-    protected String apellidos;
+//    @Size(min = 3, max = 30, message = "El tamaño del campo APELLIDOS debe ser entre {min} y {max} caracteres")
+    protected String apellidos = "";
     @Column(nullable = false)
     protected String nif;
     @Column(nullable = false, unique = true)
-    protected String email;
+    protected String email = "";
     @Column(nullable = false)
-    protected String clave;
+    protected String clave = "";
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date fechaAlta;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -66,10 +65,15 @@ public class Usuario implements Serializable, Cloneable {
     @JoinColumn(name = "idCentro")
     protected Centro centro;
     protected Blob imagen;
-    protected String tipo = "u";
-
+    /*
+    p = paciente, m = medico, a = administrador, e = enfermera, o = otro. enfermeros y otros serían para posteriores versiones
+     */
+    @Column(columnDefinition = "set('p','m','a','e','o') DEFAULT 'p' not null")
+    protected String tipo = "p";
+    @Column(columnDefinition = "set('s','n') DEFAULT 'n' not null")
+    protected String bloqueado = "n";
     @Transient
-    protected String claveRep;
+    protected String claveRep = "";
 
     @Transient
     protected String mensaje;
@@ -81,8 +85,7 @@ public class Usuario implements Serializable, Cloneable {
     }
 
     public void cambioContrasenia() {
-        FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "La contraseña ha sido cambiada", "La contraseña ha sido cambiada"));
+        FacesUtils.addMessage(null, "info", "La contraseña ha sido cambiada");
     }
 
     public int getId() {
@@ -181,6 +184,14 @@ public class Usuario implements Serializable, Cloneable {
         this.tipo = tipo;
     }
 
+    public String getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(String bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
     public String getClaveRep() {
         return claveRep;
     }
@@ -203,29 +214,29 @@ public class Usuario implements Serializable, Cloneable {
 
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
-        entidad = "Usuario as u WHERE u.email = '" + getEmail() + "' AND u.clave = '" + getClave() + "'";
+        entidad = "Usuario as u WHERE u.email = '" + this.getEmail() + "' AND u.clave = '" + this.getClave() + "'";
         List<Usuario> listaUsuarios = igd.get(entidad);
 
         //Si la lista que nos devuelve no está vacía debe contener el usuario en el primer elemento de la lista
         if (!listaUsuarios.isEmpty()) {
-            FacesUtil.addSession("usuario", igd.getOne(listaUsuarios.get(0).id, listaUsuarios.get(0).getClass()));
-            salida = "";
+            FacesUtils.addSession("usuario", igd.getOne(listaUsuarios.get(0).id, listaUsuarios.get(0).getClass()));
         } else {
-            setMensaje("El usuario y/o contraseña no existe");
+            System.out.println("Usuario " + this.getEmail() + " no encontrado");
+            FacesUtils.addMessage(null, "error", "El usuario y/o contraseña no existe");
         }
 
         return salida;
     }
 
+    public String cerrarSesion() {
+        System.out.println("Cerrando sesión...");
+        FacesUtils.deleteSession();
+        return "";
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
-    }
-
-    public String cerrarSesion() {
-        System.out.println("Cerrando sesión...");
-        FacesUtil.deleteSession();
-        return "inicio";
     }
 
 }

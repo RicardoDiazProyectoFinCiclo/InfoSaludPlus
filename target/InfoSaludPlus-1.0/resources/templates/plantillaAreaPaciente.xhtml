@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <f:view>
+        <h:head>
+            <title>Info Salud Plus</title>
+            <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+            <h:outputStylesheet library="css" name="estilo.css"  />
+            <h:outputScript library="js" name="jquery-3.1.1.min.js"/>
+            <h:outputScript library="js" name="bootstrap.min.js"/>
+        </h:head>
+        <h:body>
+            <ui:include src="../inc/cabecera.xhtml"/>
+            
+            <ui:include src="../inc/navegacionPrincipal.xhtml"/>
+            
+            <div id="secciones" class="row">
+                <ui:insert name="secciones">
+
+                </ui:insert>
+            </div>
+
+            <footer>
+
+                <p>Creado por Ricardo Díaz © 2017</p>
+                <p>Esto es una maqueta, puede tener ligeras variaciones con respecto al resultado final.</p>
+            </footer>
+
+
+        </h:body>
+    </f:view>
+</html>
+

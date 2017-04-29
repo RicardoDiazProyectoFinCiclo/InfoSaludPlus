@@ -51,12 +51,16 @@ aside{
     color: white; 
 }
 
-.menuItemLb{
+/* Color para los elementos del menú que queramos que sean blancos */
+.menuItemLb, .menuItemLb > .rf-ddm-itm-lbl{
     color: rgb(250,250,255); 
     font-family: Arial; 
     font-size: 11pt;
 }
 
+/*
+    Clase para los mensajes de error a medida
+*/
 .mensajeError{
     color: rgb(150,0,0);
     font-weight: bold;
@@ -76,4 +80,70 @@ input{
 
 label{
     font-size: 11pt;
+}
+
+/*
+    Mensaje de bienvenida al loguearte
+*/
+.msgBienvenida, .msgBienvenida > .rf-ddm-itm-lbl{
+    background: inherit;
+    color: rgb(245,245,255);
+    font: italic bold 10pt sans-serif;
+    border: inherit;
+}
+
+/*
+    Capa de los botones
+*/
+div.botones{
+    text-align: center;
+}
+
+/*
+    Estilo general de los botones
+*/
+.boton{
+    margin: 10px 20px;
+    padding: 5px;
+    border-radius: 10px;
+    font: bold 12pt Arial, sans-serif !important;
+}
+/*
+    Mensajes de ok
+*/
+.msgOk{
+    font: bold 12pt Arial, sans-serif;
+    color: rgb(0,150,0);
+}
+
+/*
+    Clase para las cabeceras de los modales
+*/
+.cabeceraModal{
+    font: bold 12pt Arial, sans-serif;
+    text-align: center;
+}
+
+label{
+    margin-right: 10px;
+}
+
+
+/*
+    Clase de los mensajes de error individuales
+*/
+
+.rf-msg-err{
+    margin-left: 10px;
+}
+
+/*
+    Clase de los mensajes de error globales
+*/
+.rf-msgs, .rf-msgs-err, .rf-msgs-sum{
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    font: bold 12pt Arial, sans-serif !important;
+    color: rgb(170,20,20) !important; 
 }
