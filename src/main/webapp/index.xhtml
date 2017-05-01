@@ -4,70 +4,66 @@
       xmlns:h="http://java.sun.com/jsf/html" 
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
-
       xmlns:rich="http://richfaces.org/rich">
 
     <f:view>
-        <h:head>
-            <title>Facelet Title</title>
-        </h:head>
-        <h:body class="container-fluid">
-            <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
 
-                <ui:define name="accesosMenu">
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+            <ui:define name="titulo">InfoSaludPlus |  inicio</ui:define>
+            <ui:define name="accesosMenu">
 
-                </ui:define>
+            </ui:define>
 
-                <ui:define name="secciones">
+            <ui:define name="secciones">
 
-                    <section class="col-sm-9 row">
-                        <article class="col-sm-5 col-sm-offset-1"> 
-                            <h3>Estrenamos página web</h3>
-                            <p>Info Salud plus abre su página web a partir de Junio</p>
+                <section class="col-sm-9 row">
+                    <article class="col-sm-5 col-sm-offset-1"> 
+                        <h3>Estrenamos página web</h3>
+                        <p>Info Salud plus abre su página web a partir de Junio</p>
 
-                            <p>Los pacientes, que a partir de su apertura, podrán pedir la cita
-                                a través del servicio online, celebran la próxima apertura.</p>
+                        <p>Los pacientes, que a partir de su apertura, podrán pedir la cita
+                            a través del servicio online, celebran la próxima apertura.</p>
 
-                            <figure>
-                                <h:graphicImage library="images" name="gente-feliz.jpg" width="300" height="200"/>
-                                <figcaption>Pacientes de Info Salud Plus celebrando la próxima apertura</figcaption>
-                            </figure>
-                        </article>
-                        <article class="col-sm-offset-1 col-sm-5"> 
-                            <h3>Nuevos avances médicos</h3>
-                            <p>El equipo de Info Salud plus ha descubierto una bacteria para luchar contra las
-                                hemorroides.
-                            </p>
-                            <figure>
-                                <h:graphicImage library="images" name="avanceCientifico.jpg" width="300" height="200"/>
-                                <figcaption>Científicos de Info Salud Plus descubriendo la nueva bacteria</figcaption>
-                            </figure>
-                        </article>
-                    </section>
-                    <aside class="col-sm-offset-1 col-sm-2">
-                        <h3>Cita previa</h3>
-                        <p>Cita previa online de forma rápida para acudir a nuestros centros de salud.</p>
-                        <rich:panel>
-                            <h:form>
-                                <h:panelGrid columns="1">
-                                    <h:outputLabel for="dni" value="DNI:"/>
-                                    <h:inputText id="dni" />
+                        <figure>
+                            <h:graphicImage library="images" name="gente-feliz.jpg" width="300" height="200"/>
+                            <figcaption>Pacientes de Info Salud Plus celebrando la próxima apertura</figcaption>
+                        </figure>
+                    </article>
+                    <article class="col-sm-offset-1 col-sm-5"> 
+                        <h3>Nuevos avances médicos</h3>
+                        <p>El equipo de Info Salud plus ha descubierto una bacteria para luchar contra las
+                            hemorroides.
+                        </p>
+                        <figure>
+                            <h:graphicImage library="images" name="avanceCientifico.jpg" width="300" height="200"/>
+                            <figcaption>Científicos de Info Salud Plus descubriendo la nueva bacteria</figcaption>
+                        </figure>
+                    </article>
+                </section>
+                <aside class="col-sm-offset-1 col-sm-2">
+                    <h3>Cita previa</h3>
+                    <p>Cita previa online de forma rápida para acudir a nuestros centros de salud.</p>
+                    <rich:panel>
+                        <h:form>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="dni" value="DNI:"/>
+                                <h:inputText id="dni" />
 
-                                    <h:outputLabel for="fechaNac3" value="Fecha de Nacimiento:"/>
-                                    <rich:calendar id="fechaNac3" value="#{paciente.fechaNacimiento}" 
-                                                   locale="ES_es" inputSize="15"  datePattern="dd/MM/yyyy"/>
-                                </h:panelGrid>
-                                <div class="botones">
-                                    <h:commandButton value="Enviar" />
-                                    <h:commandButton value="Limpiar" type="reset" style="margin-left: 10px;"  />
-                                </div>
-                            </h:form>
-                        </rich:panel>
-                    </aside>
+                                <h:outputLabel for="fechaNac3" value="Fecha de Nacimiento:"/>
+                                <rich:calendar id="fechaNac3" value="#{paciente.fechaNacimiento}" 
+                                               locale="ES_es" inputSize="15"  datePattern="dd/MM/yyyy"/>
+                            </h:panelGrid>
+                            <div class="botones">
+                                <h:commandButton value="Enviar" action="inicioAreaPaciente"/>
+                                <h:commandButton value="Limpiar" type="reset" style="margin-left: 10px;"  />
+                            </div>
+                        </h:form>
+                    </rich:panel>
+                </aside>
 
-                </ui:define>
-            </ui:decorate>
-        </h:body>
+            </ui:define>
+        </ui:decorate>
+
     </f:view>
 </html>
 

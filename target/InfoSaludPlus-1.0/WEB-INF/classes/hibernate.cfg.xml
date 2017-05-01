@@ -12,15 +12,15 @@
         <property name="hibernate.connection.pool_size">1</property>
         <property name="hibernate.connection.datasource">java:comp/env/jdbc/ISP</property>
     
-        <mapping class="es.albarregas.beans.Usuario"/>
-        <mapping class="es.albarregas.beans.Medico"/>
-        <mapping class="es.albarregas.beans.Paciente"/>
-        <mapping class="es.albarregas.beans.Centro"/>
-        <mapping class="es.albarregas.beans.Cita"/>
-        <mapping class="es.albarregas.beans.Servicio"/>
-        <mapping class="es.albarregas.beans.Informe"/>
-        <mapping class="es.albarregas.beans.Direccion"/>
-        <mapping class="es.albarregas.beans.Pueblo"/>
-        <mapping class="es.albarregas.beans.Provincia"/>
+        <mapping class="es.albarregas.modelo.Usuario"/>
+        <mapping class="es.albarregas.modelo.Medico"/>
+        <mapping class="es.albarregas.modelo.Paciente"/>
+        <mapping class="es.albarregas.modelo.Centro"/>
+        <mapping class="es.albarregas.modelo.Cita"/>
+        <mapping class="es.albarregas.modelo.Servicio"/>
+        <mapping class="es.albarregas.modelo.Informe"/>
+        <mapping class="es.albarregas.modelo.Direccion"/>
+        <mapping class="es.albarregas.modelo.Pueblo"/>
+        <mapping class="es.albarregas.modelo.Provincia"/>
     </session-factory>
 </hibernate-configuration>

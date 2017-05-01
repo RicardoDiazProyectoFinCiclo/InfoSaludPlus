@@ -25,7 +25,7 @@
     </h:outputStylesheet>
 
 
-    <h:form>
+    <h:form id="formMenuPrincipal">
 
         <rich:toolbar height="26px" id="menuPrincipal">
             <rich:dropDownMenu mode="ajax">
@@ -63,9 +63,18 @@
                 </c:if>
                 <c:if test="#{sessionScope.usuario != null}">
                     <!-- El mode client de menuItem anula el action y actionListener -->
-                    <rich:menuItem mode="client"  id="msgBienvenida" styleClass="msgBienvenida" label="Bienvenido, #{sessionScope.usuario.nombre} #{sessionScope.usuario.numSegSoc}" />
-                    <rich:menuItem label="Panel de control" styleClass="menuItemLb" />
-                    <rich:menuItem label="Cerrar sesión" action="#{usuario.cerrarSesion()}" styleClass="menuItemLb"/>
+                    <rich:menuItem mode="client"  id="msgBienvenida" styleClass="msgBienvenida" label="Bienvenid@, #{sessionScope.usuario.nombre} #{sessionScope.usuario.apellidos}" />
+                    <c:if test="#{sessionScope.usuario.tipo == 'p'}">
+                        <rich:menuItem label="Área del Paciente" styleClass="menuItemLb" action="inicioAreaPaciente" execute="@form"/>
+                    </c:if>
+                    <c:if test="#{sessionScope.usuario.tipo == 'm'}">
+                        <rich:menuItem label="Área del Médico" styleClass="menuItemLb" />
+                    </c:if>
+                    <c:if test="#{sessionScope.usuario.tipo == 'a'}">
+                        <rich:menuItem label="Área del Admin" styleClass="menuItemLb" />
+                    </c:if>
+
+                    <rich:menuItem label="Cerrar sesión" action="#{accesoBean.cerrarSesion()}"  styleClass="menuItemLb" execute="@form"/>
                 </c:if>
             </rich:toolbarGroup>
         </rich:toolbar>
@@ -90,7 +99,7 @@
         </f:facet>
         <h:form id="formularioRegistro">
             <rich:focus/>
-            <rich:graphValidator value="#{paciente}" id="gvRegistro">
+            <rich:graphValidator value="#{accesoBean}" id="gvRegistro">
                 <rich:panel>
                     <rich:messages styleClass="msgErrorGlobal" for="gvRegistro" />
                     <rich:messages styleClass="msgErrorGlobal" globalOnly="true" />
@@ -98,47 +107,47 @@
                     <h:panelGrid  columns="3" class="panel" id="grid" >
 
                         <h:outputLabel value="Nombre " for="nombre"/>
-                        <t:inputText id="nombre" size="30" value="#{paciente.nombre}" maxlength="30">
+                        <h:inputText id="nombre" size="30" value="#{accesoBean.paciente.nombre}" maxlength="30">
                             <f:validateLength minimum="3"/>
-                        </t:inputText>
+                        </h:inputText>
                         <rich:message for="nombre" ajaxRendered="true" styleClass="msgError" />
 
                         <h:outputLabel value="Apellidos " for="apellidos" /> 
-                        <h:inputText id="apellidos" size="30" value="#{paciente.apellidos}" maxlength="40" >
+                        <h:inputText id="apellidos" size="30" value="#{accesoBean.paciente.apellidos}" maxlength="40" >
                             <f:validateLength minimum="3"/>
                         </h:inputText>
                         <rich:message for="apellidos" ajaxRendered="true"  styleClass="msgError"/>
 
                         <h:outputLabel value="NIF/DNI " for="dni"/> 
-                        <h:inputText id="dni" size="9" value="#{paciente.nif}" maxlength="9" validatorMessage="Formato DNI incorrecto. Ej: 012345678A">
+                        <h:inputText id="dni" size="9" value="#{accesoBean.paciente.nif}" maxlength="9" validatorMessage="Formato DNI incorrecto. Ej: 012345678A">
                             <f:validateRegex pattern="^[0-9]{8}[a-zA-Z]{1}"/>
                         </h:inputText>
                         <rich:message for="dni" ajaxRendered="true" styleClass="msgError" />
 
                         <h:outputLabel value="Número Seguridad Social " for="numSegSoc"/> 
-                        <h:inputText id="numSegSoc" size="15" value="#{paciente.numSegSoc}" maxlength="15" >
+                        <h:inputText id="numSegSoc" size="15" value="#{accesoBean.paciente.numSegSoc}" maxlength="15" >
                             <f:validateLength minimum="2"/>
                         </h:inputText>
                         <rich:message for="numSegSoc" ajaxRendered="true" />
 
                         <h:outputLabel value="Email "  for="email"/> 
-                        <h:inputText id="email" size="30" value="#{paciente.email}" pt:placeholder="paciente@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
+                        <h:inputText id="email" size="30" value="#{accesoBean.paciente.email}" pt:placeholder="paciente@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                         </h:inputText>
                         <rich:message for="email" ajaxRendered="true" />
 
                         <h:outputLabel value="Fecha de nacimiento: " for="fechaNac" /> 
-                        <rich:calendar id="fechaNac" value="#{paciente.fechaNacimiento}" />
+                        <rich:calendar id="fechaNac" value="#{accesoBean.paciente.fechaNacimiento}" />
                         <rich:message for="fechaNac" ajaxRendered="true"  />
 
                         <h:outputLabel value="Contraseña: "  for="clave"/> 
-                        <h:inputSecret id="clave" size="15" value="#{paciente.clave}">
+                        <h:inputSecret id="clave" size="15" value="#{accesoBean.paciente.clave}">
                             <f:validateLength minimum="4" maximum="20"/>
                         </h:inputSecret>
                         <rich:message for="clave" ajaxRendered="true" />
 
                         <h:outputLabel value="Repetir contraseña: " for="claveRep"/>
-                        <h:inputSecret id="claveRep" size="15" value="#{paciente.claveRep}">
+                        <h:inputSecret id="claveRep" size="15" value="#{accesoBean.paciente.claveRep}">
                             <f:validateLength minimum="4" maximum="20"/>
                         </h:inputSecret>
 
@@ -147,11 +156,12 @@
                     </h:panelGrid>
                     <div class="botones">
                         <a4j:commandButton value="Registrarse" 
-                                           execute="@form"
-                                           action="#{paciente.registro()}" 
+                                           execute="@all"
+                                           action="#{accesoBean.registro()}" 
                                            oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('registro')}.hide(); #{rich:component('confirmRegistro')}.show(); } 
                                            highlightInvalidInputs(); "
                                            styleClass="boton"
+                                           status="guardarSave"
                                            /> 
                         <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
                     </div>
@@ -199,17 +209,21 @@
                     <rich:messages styleClass="msgErrorGlobal" globalOnly="true" />
                     <h:panelGrid columns="3">
                         <h:outputLabel value="Email: " for="email2"/>
-                        <h:inputText id="email2" size="30" value="#{usuario.email}" pt:placeholder="ejemplo@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
+                        <h:inputText id="email2" size="30" value="#{accesoBean.usuario.email}" pt:placeholder="ejemplo@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                         </h:inputText>
                         <rich:message for="email2" ajaxRendered="true" />
 
                         <h:outputLabel value="Contraseña: " for="clave2"/> 
-                        <h:inputSecret id="clave2" value="#{usuario.clave}" required="true" requiredMessage="El campo contraseña no puede estar vacío"/>
+                        <h:inputSecret id="clave2" value="#{accesoBean.usuario.clave}" required="true" requiredMessage="El campo contraseña no puede estar vacío"/>
                         <rich:message for="clave2"/>
                     </h:panelGrid>
                     <div class="botones">
-                        <a4j:commandButton value="Login" styleClass="boton" render="menuPrincipal" action="#{usuario.login()}" execute="@form" oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('login')}.hide(); } "/>
+                        <a4j:commandButton value="Login" styleClass="boton"
+                                           action="#{accesoBean.login()}"
+                                           render="menuPrincipal" 
+                                           oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('login')}.hide(); } "
+                                           status="esperaWait"/>
                         <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
                     </div>
                 </rich:panel>
@@ -217,6 +231,24 @@
         </h:form>
 
     </rich:popupPanel>
+
+    <a4j:status name="esperaWait" >
+        <f:facet name="start">
+            <div style="position: fixed; top: 47%; left: 47%; z-index: 2000; padding: 5px 10px; border: solid 1px black; background: whitesmoke;">
+                <h:outputText value="Cargando ..."/>
+                <h:graphicImage value="/resources/images/icono-carga.gif"  />
+            </div>
+        </f:facet>
+    </a4j:status>
+
+    <a4j:status name="guardarSave" >
+        <f:facet name="start">
+            <div style="position: fixed; top: 47%; left: 47%; z-index: 2000; padding: 5px 10px; border: solid 1px black; background: whitesmoke;">
+                <h:outputText value="Guardando ..."/>
+                <h:graphicImage value="/resources/images/icono-carga.gif"  />
+            </div>
+        </f:facet>
+    </a4j:status>
 
     <h:outputScript>
         //Script para poner bordes rojos cuando hay error en los formularios

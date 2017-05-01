@@ -38,7 +38,10 @@ public class FacesUtils {
         ExternalContext externalContext = context.getExternalContext();
         Object session = externalContext.getSession(false);
         HttpSession httpSession = (HttpSession) session;
-        httpSession.invalidate();
+        if(session != null){
+            httpSession.invalidate();
+        }
+        
     }
     
     /*
