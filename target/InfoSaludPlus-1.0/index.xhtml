@@ -13,6 +13,9 @@
             <ui:define name="accesosMenu">
 
             </ui:define>
+            <ui:define name="migaPan">
+                <h:outputText value="Inicio" style="font-weight:bold" />
+            </ui:define>
 
             <ui:define name="secciones">
 
@@ -41,9 +44,9 @@
                     </article>
                 </section>
                 <aside class="col-sm-offset-1 col-sm-2">
-                    <h3>Cita previa</h3>
-                    <p>Cita previa online de forma rápida para acudir a nuestros centros de salud.</p>
-                    <rich:panel>
+
+                    <rich:panel header="Cita previa">
+                        <h:outputText value="Cita previa online de forma rápida para acudir a nuestros centros de salud."/>
                         <h:form>
                             <h:panelGrid columns="1">
                                 <h:outputLabel for="dni" value="DNI:"/>

@@ -3,7 +3,7 @@ body{
     font-size: 11pt;
 }
 
-header, footer, #secciones, nav{
+header, footer, #secciones, #menuPrincipal{
     margin-top: 10px;
 }
 
@@ -40,12 +40,12 @@ figcaption{
     color: darkgrey;
 }
 
-aside{
+/*aside{
     background: rgb(240,240,240);
     border: dotted 1px black;
     padding: 50px;
     min-height: 420px;
-}
+}*/
 
 .menuPrincipal{
     color: white; 
@@ -146,4 +146,9 @@ label{
     margin: 10px auto;
     font: bold 12pt Arial, sans-serif !important;
     color: rgb(170,20,20) !important; 
+}
+
+.cabeMenuHori{
+    color: white;
+    font: bold 14pt Arial, sans-serif !important;
 }

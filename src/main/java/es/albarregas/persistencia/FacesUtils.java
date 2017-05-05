@@ -16,23 +16,27 @@ import javax.servlet.http.HttpSession;
  */
 public class FacesUtils {
 
-    /*
-        Método para añadir atributo a la sesión (nombre, valor)
-    */
+    
+    /**
+     * Método para añadir atributo a la sesión (nombre, valor)
+     * @param key
+     * @param value 
+     */
     public static void addSession(String key, Object value) {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(key, value);
     }
 
-    /*
-        Método para eliminar un atributo de la sesión (nombre)
-    */
+    /**
+     * Método para eliminar un atributo de la sesión (nombre)
+     * @param key 
+     */
     public static void deleteAttributeSession(String key){
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(key);
     }
     
-    /*
-       Método para eliminar la sesión
-    */
+    /**
+     * Método para eliminar la sesión completa
+     */
     public static void deleteSession() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
@@ -44,9 +48,21 @@ public class FacesUtils {
         
     }
     
-    /*
-        Método para añadir mensaje a las vistas (idCliente,mensaje)
-    */
+    /**
+     * Método para obtener la sesión
+     * @param key
+     * @return 
+     */
+    public static Object getSession(String key){
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(key);
+    }
+    
+    /**
+     * Método para añadir mensaje a las vistas (idCliente,mensaje)
+     * @param idCliente
+     * @param tipo
+     * @param mensaje 
+     */
     public static void addMessage(String idCliente, String tipo, String mensaje){
         
         FacesMessage.Severity severity = null;

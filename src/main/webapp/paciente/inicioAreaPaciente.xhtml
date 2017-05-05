@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" 
-     xmlns:h="http://java.sun.com/jsf/html" 
-     xmlns:f="http://java.sun.com/jsf/core"
-     xmlns:ui="http://java.sun.com/jsf/facelets" 
-     xmlns:a4j="http://richfaces.org/a4j" 
-     xmlns:rich="http://richfaces.org/rich"
-     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-     xmlns:t="http://myfaces.apache.org/tomahawk"
-     xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
 
     <f:view>
         <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
@@ -18,6 +18,11 @@
 
             <ui:define name="accesosMenu">
 
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área del Paciente" />
             </ui:define>
 
             <ui:define name="secciones">
@@ -30,7 +35,7 @@
                     </h:outputStylesheet>
                     <h:form>
                         <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
-                            <rich:panelMenuGroup label="Panel del paciente">
+                            <rich:panelMenuGroup label="Panel del paciente" selectable="false" expanded="true" disabled="true" styleClass="cabeMenuHori">
                                 <rich:panelMenuItem label="Inicio" name="Item_1_1" />
                                 <rich:panelMenuItem label="Datos personales" name="datos_personales" />
                                 <rich:panelMenuItem label="Partes médicos" name="partes_medicos" />
@@ -38,84 +43,75 @@
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
                             </rich:panelMenuGroup>
                         </rich:panelMenu>
-                        <a4j:outputPanel ajaxRendered="true">
-                            <rich:panel rendered="#{not empty panelMenuBean.current}">
-                                <h:outputText value="#{panelMenuBean.current} selected" id="current" />
-                            </rich:panel>
-                        </a4j:outputPanel>
                     </h:form>
                 </nav>
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">
-
-                    <h2>Panel de Paciente</h2>
-
+                    
                     <h:form id="formularioCambioDatos">
                         <rich:focus/>
                         <rich:graphValidator value="#{paciente}" id="gvRegistro">
-                            <rich:panel>
+                            <rich:panel style="background: rgb(245,245,245)" header="Modificar datos del paciente">
                                 <rich:messages styleClass="msgErrorGlobal" for="gvRegistro" />
                                 <rich:messages styleClass="msgErrorGlobal" globalOnly="true" />
 
                                 <h:panelGrid  columns="3" class="panel" id="grid" >
-
-                                    <h:outputLabel value="Nombre " for="nombre"/>
-                                    <h:inputText id="nombre" size="30" value="#{paciente.nombre}" maxlength="30">
+                                    <h:outputLabel value="Nombre: " for="nombre3"/>
+                                    <h:inputText id="nombre3" size="30" value="#{accesoBean.paciente.nombre}" maxlength="30">
                                         <f:validateLength minimum="3"/>
                                     </h:inputText>
-                                    <rich:message for="nombre" ajaxRendered="true" styleClass="msgError" />
+                                    <rich:message for="nombre3" ajaxRendered="true" styleClass="msgError" />
 
-                                    <h:outputLabel value="Apellidos " for="apellidos" /> 
-                                    <h:inputText id="apellidos" size="30" value="#{paciente.apellidos}" maxlength="40" >
+                                    <h:outputLabel value="Apellidos: " for="apellidos3" /> 
+                                    <h:inputText id="apellidos3" size="30" value="#{accesoBean.paciente.apellidos}" maxlength="40" >
                                         <f:validateLength minimum="3"/>
                                     </h:inputText>
-                                    <rich:message for="apellidos" ajaxRendered="true"  styleClass="msgError"/>
+                                    <rich:message for="apellidos3" ajaxRendered="true"  styleClass="msgError"/>
 
-                                    <h:outputLabel value="NIF/DNI " for="dni"/> 
-                                    <h:inputText id="dni" size="9" value="#{paciente.nif}" maxlength="9" validatorMessage="Formato DNI incorrecto. Ej: 012345678A">
+                                    <h:outputLabel value="NIF/DNI: " for="dni3"/> 
+                                    <h:inputText id="dni3" size="9" value="#{accesoBean.paciente.nif}" maxlength="9" validatorMessage="Formato DNI incorrecto. Ej: 012345678A">
                                         <f:validateRegex pattern="^[0-9]{8}[a-zA-Z]{1}"/>
                                     </h:inputText>
-                                    <rich:message for="dni" ajaxRendered="true" styleClass="msgError" />
+                                    <rich:message for="dni3" ajaxRendered="true" styleClass="msgError" />
 
-                                    <h:outputLabel value="Número Seguridad Social " for="numSegSoc"/> 
-                                    <h:inputText id="numSegSoc" size="15" value="#{paciente.numSegSoc}" maxlength="15" >
+                                    <h:outputLabel value="Número Seguridad Social: " for="numSegSoc3"/> 
+                                    <h:inputText id="numSegSoc3" size="15" value="#{accesoBean.paciente.numSegSoc}" maxlength="15" >
                                         <f:validateLength minimum="2"/>
                                     </h:inputText>
-                                    <rich:message for="numSegSoc" ajaxRendered="true" />
+                                    <rich:message for="numSegSoc3" ajaxRendered="true" />
 
-                                    <h:outputLabel value="Email "  for="email"/> 
-                                    <h:inputText id="email" size="30" value="#{paciente.email}" pt:placeholder="paciente@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
+                                    <h:outputLabel value="Fecha de nacimiento: " for="fechaNac3" /> 
+                                    <rich:calendar id="fechaNac3" value="#{accesoBean.paciente.fechaNacimiento}" 
+                                                   locale="ES_es" inputSize="15"  datePattern="dd/MM/yyyy"/>
+                                    <rich:message for="fechaNac3" ajaxRendered="true"  />
+
+                                    <h:outputLabel value="Email: "  for="email3"/> 
+                                    <h:inputText id="email3" size="30" value="#{accesoBean.paciente.email}" pt:placeholder="paciente@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
                                         <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                     </h:inputText>
-                                    <rich:message for="email" ajaxRendered="true" />
+                                    <rich:message for="email3" ajaxRendered="true" />
 
-                                    <h:outputLabel value="Fecha de nacimiento: " for="fechaNac" /> 
-                                    <rich:calendar id="fechaNac" value="#{paciente.fechaNacimiento}" />
-                                    <rich:message for="fechaNac" ajaxRendered="true"  />
-
-                                    <h:outputLabel value="Contraseña: "  for="clave"/> 
-                                    <h:inputSecret id="clave" size="15" value="#{paciente.clave}">
+                                    <h:outputLabel value="Contraseña: "  for="clave3"/> 
+                                    <h:inputSecret id="clave3" size="15" value="#{accesoBean.paciente.clave}">
                                         <f:validateLength minimum="4" maximum="20"/>
                                     </h:inputSecret>
-                                    <rich:message for="clave" ajaxRendered="true" />
+                                    <rich:message for="clave3" ajaxRendered="true" />
 
-                                    <h:outputLabel value="Repetir contraseña: " for="claveRep"/>
-                                    <h:inputSecret id="claveRep" size="15" value="#{paciente.claveRep}">
+                                    <h:outputLabel value="Repetir contraseña: " for="claveRep3"/>
+                                    <h:inputSecret id="claveRep3" size="15" value="#{accesoBean.paciente.claveRep}">
                                         <f:validateLength minimum="4" maximum="20"/>
                                     </h:inputSecret>
-
-                                    <rich:message for="claveRep" ajaxRendered="true"/>
-
+                                    <rich:message for="claveRep3" ajaxRendered="true"/>
+                                    
                                 </h:panelGrid>
                                 <div class="botones">
-                                    <a4j:commandButton value="Registrarse" 
-                                                       execute="@all"
-                                                       action="#{paciente.registro()}" 
-                                                       oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('registro')}.hide(); #{rich:component('confirmRegistro')}.show(); } 
-                                                       highlightInvalidInputs(); "
+                                    <a4j:commandButton value="Modificar datos" 
+                                                       render="menuPrincipal formularioCambioDatos"
+                                                       execute="@form"
+                                                       action="#{accesoBean.modificarDatosPer()}" 
                                                        styleClass="boton"
-                                                       status="guardarSave"
-                                                       /> 
+                                                       status="guardarSave"/> 
+                                    
                                     <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
                                 </div>
                             </rich:panel>

@@ -81,12 +81,6 @@
 
     </h:form>
 
-    <br />
-    <a4j:outputPanel ajaxRendered="true">
-        <h:outputText value="Inicio" style="font-weight:bold" />
-    </a4j:outputPanel>
-    <br />
-
     <!-- Modal de registro -->
     <rich:popupPanel id="registro" modal="true" resizeable="false" autosized="true"  onmaskclick="#{rich:component('registro')}.hide()">
         <f:facet name="header">
@@ -99,12 +93,12 @@
         </f:facet>
         <h:form id="formularioRegistro">
             <rich:focus/>
-            <rich:graphValidator value="#{accesoBean}" id="gvRegistro">
-                <rich:panel>
-                    <rich:messages styleClass="msgErrorGlobal" for="gvRegistro" />
-                    <rich:messages styleClass="msgErrorGlobal" globalOnly="true" />
+            <rich:graphValidator id="gvRegistro" value="#{accesoBean}">
+                <rich:panel >
+                    <rich:messages styleClass="msgErrorGlobal" for="gvRegistro" globalOnly="true"/>
+                    <rich:messages styleClass="msgErrorGlobal" for="formularioRegistro"  />
 
-                    <h:panelGrid  columns="3" class="panel" id="grid" >
+                    <h:panelGrid  columns="3" class="panel" >
 
                         <h:outputLabel value="Nombre " for="nombre"/>
                         <h:inputText id="nombre" size="30" value="#{accesoBean.paciente.nombre}" maxlength="30">
@@ -130,15 +124,15 @@
                         </h:inputText>
                         <rich:message for="numSegSoc" ajaxRendered="true" />
 
+                        <h:outputLabel value="Fecha de nacimiento: " for="fechaNac" /> 
+                        <rich:calendar id="fechaNac" value="#{accesoBean.paciente.fechaNacimiento}" locale="ES_es" inputSize="15"  datePattern="dd/MM/yyyy" />
+                        <rich:message for="fechaNac" ajaxRendered="true"  />
+
                         <h:outputLabel value="Email "  for="email"/> 
                         <h:inputText id="email" size="30" value="#{accesoBean.paciente.email}" pt:placeholder="paciente@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                         </h:inputText>
                         <rich:message for="email" ajaxRendered="true" />
-
-                        <h:outputLabel value="Fecha de nacimiento: " for="fechaNac" /> 
-                        <rich:calendar id="fechaNac" value="#{accesoBean.paciente.fechaNacimiento}" />
-                        <rich:message for="fechaNac" ajaxRendered="true"  />
 
                         <h:outputLabel value="Contraseña: "  for="clave"/> 
                         <h:inputSecret id="clave" size="15" value="#{accesoBean.paciente.clave}">
@@ -152,17 +146,16 @@
                         </h:inputSecret>
 
                         <rich:message for="claveRep" ajaxRendered="true"/>
-
                     </h:panelGrid>
                     <div class="botones">
                         <a4j:commandButton value="Registrarse" 
                                            execute="@all"
                                            action="#{accesoBean.registro()}" 
-                                           oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('registro')}.hide(); #{rich:component('confirmRegistro')}.show(); } 
-                                           highlightInvalidInputs(); "
+                                           oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('registro')}.hide(); #{rich:component('confirmRegistro')}.show(); }"
                                            styleClass="boton"
-                                           status="guardarSave"
-                                           /> 
+                                           status="guardarSave" >
+                            <a4j:param value="p" assignTo="#{accesoBean.usuario.tipo}"/>
+                        </a4j:commandButton> 
                         <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
                     </div>
                 </rich:panel>
@@ -170,8 +163,8 @@
         </h:form>
 
     </rich:popupPanel>
+    
     <!-- Modal de confirmación de registro -->
-
     <rich:popupPanel id="confirmRegistro" modal="true" resizeable="false" autosized="true" domElementAttachment="form">
         <f:facet name="header">
             <h:outputText value="Registro correcto" styleClass="cabeceraModal" />
@@ -193,7 +186,7 @@
     </rich:popupPanel>
 
     <!-- Modal de login -->
-    <rich:popupPanel id="login" modal="true" resizeable="false" autosized="true" onmaskclick="#{rich:component('login')}.hide()" >
+    <rich:popupPanel id="login" modal="true" resizeable="false" autosized="true" onmaskclick="#{rich:component('login')}.hide()"  >
         <f:facet name="header">
             <h:outputText value="Panel de login" styleClass="cabeceraModal" />
         </f:facet>
@@ -203,10 +196,10 @@
             </h:outputLink>
         </f:facet>
         <h:form id="formularioLogin">
-            <rich:graphValidator id="gvLogin">
-                <rich:panel>
-                    <rich:messages styleClass="msgErrorGlobal" for="gvLogin" />
-                    <rich:messages styleClass="msgErrorGlobal" globalOnly="true" />
+            <rich:graphValidator id="gvLogin"> 
+                <rich:panel id="loginP" >
+<!--                    <rich:message ajaxRendered="true"  styleClass="msgErrorGlobal" for="gvLogin"  />-->
+                    <rich:messages styleClass="msgErrorGlobal" for="formularioLogin" />
                     <h:panelGrid columns="3">
                         <h:outputLabel value="Email: " for="email2"/>
                         <h:inputText id="email2" size="30" value="#{accesoBean.usuario.email}" pt:placeholder="ejemplo@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
@@ -250,19 +243,5 @@
         </f:facet>
     </a4j:status>
 
-    <h:outputScript>
-        //Script para poner bordes rojos cuando hay error en los formularios
-        highlightInvalidInputs = function () {
-        var rows = $(#{rich:element('grid')}).find('tr');
-        rows.find('input').removeClass('invalid');
-        rows.has('.rf-msg-err').find('input').addClass('invalid')
-        }
-    </h:outputScript>
-    <style>
-        /* Estilo para poner bordes rojos cuando hay error en los formularios */
-        .invalid {
-            border-color: #D91C0D !important;
-        }
-    </style>
 </nav>
 

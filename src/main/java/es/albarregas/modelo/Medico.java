@@ -75,13 +75,4 @@ public class Medico extends Usuario {
         this.citas = citas;
     }
 
-    public String registro() {
-
-        DAOFactory df = DAOFactory.getDAOFactory();
-        IGenericoDAO igd = df.getGenericoDAO();
-        System.out.println("Registrando medico ");
-        setFechaAlta(new Date());
-        igd.add(this);
-        return "pagina2";
-    }
 }

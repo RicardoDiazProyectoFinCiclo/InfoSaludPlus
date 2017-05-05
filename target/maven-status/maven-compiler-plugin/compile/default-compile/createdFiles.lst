@@ -3,6 +3,7 @@ es\albarregas\dao\IGenericoDAO.class
 es\albarregas\daofactory\DAOFactory.class
 es\albarregas\modelo\Informe.class
 es\albarregas\modelo\Medico.class
+util\Utilidades.class
 es\albarregas\modelo\Servicio.class
 es\albarregas\persistencia\HibernateUtil.class
 es\albarregas\modelo\Usuario.class

@@ -20,9 +20,16 @@
         </h:head>
         <h:body class="container-fluid">
             <ui:include src="../inc/cabecera.xhtml"/>
-            
+
             <ui:include src="../inc/navegacionPrincipal.xhtml"/>
-            
+
+            <a4j:outputPanel id="migaPan" ajaxRendered="true">
+                <ui:insert name="migaPan">
+
+                </ui:insert>
+            </a4j:outputPanel>
+            <br />
+
             <div id="secciones" class="row container-fluid">
                 <ui:insert name="secciones">
 

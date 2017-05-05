@@ -49,7 +49,7 @@ public class Usuario implements Serializable, Cloneable {
     protected String nif;
     @Column(nullable = false, unique = true)
     protected String email = "";
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "Text")
     protected String clave = "";
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     protected Date fechaAlta;
