@@ -22,7 +22,6 @@ import javax.persistence.Table;
  * @author Ricardo
  */
 @Entity
-@ManagedBean(name = "pueblo")
 @Table(name = "Pueblos")
 public class Pueblo implements Serializable {
 
@@ -30,13 +29,13 @@ public class Pueblo implements Serializable {
     @Column(name = "idPueblo")
     @GeneratedValue(strategy = IDENTITY)
     private int id;
-    @Column(nullable = false)
-    private String codigoPostal;
-    @Column(nullable = false)
-    private String nombre;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "idProvincia")
     private Provincia provincia;
+    @Column(nullable = false)
+    private String codigoPostal = "";
+    @Column(nullable = false)
+    private String nombre = "";
 
     public int getId() {
         return id;

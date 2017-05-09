@@ -27,7 +27,7 @@
 
     <h:form id="formMenuPrincipal">
 
-        <rich:toolbar height="26px" id="menuPrincipal">
+        <rich:toolbar height="26px" id="menuPrincipal" style="margin-top: 10px;">
             <rich:dropDownMenu mode="ajax">
                 <f:facet name="label">
                     <h:panelGrid cellpadding="0" cellspacing="0" columns="2" style="vertical-align:middle">
@@ -84,18 +84,19 @@
     <!-- Modal de registro -->
     <rich:popupPanel id="registro" modal="true" resizeable="false" autosized="true"  onmaskclick="#{rich:component('registro')}.hide()">
         <f:facet name="header">
-            <h:outputText value="Regístrate" styleClass="cabeceraModal" />
+            <h:outputText value="Regístrate como paciente" styleClass="cabeceraModal" />
         </f:facet>
         <f:facet name="controls">
-            <h:outputLink value="#" onclick="#{rich:component('registro')}.hide(); return false;" style="color: inherit">
+            <h:outputLink value="#" onclick="#{rich:component('registro')}.hide();
+                        return false;" style="color: inherit">
                 X
             </h:outputLink>
         </f:facet>
         <h:form id="formularioRegistro">
-            <rich:focus/>
+            <rich:focus preserve="true" delayed="true"/>
             <rich:graphValidator id="gvRegistro" value="#{accesoBean}">
-                <rich:panel >
-                    <rich:messages styleClass="msgErrorGlobal" for="gvRegistro" globalOnly="true"/>
+                <rich:panel>
+                    <rich:messages styleClass="msgErrorGlobal" for="gvRegistro"/>
                     <rich:messages styleClass="msgErrorGlobal" for="formularioRegistro"  />
 
                     <h:panelGrid  columns="3" class="panel" >
@@ -128,8 +129,44 @@
                         <rich:calendar id="fechaNac" value="#{accesoBean.paciente.fechaNacimiento}" locale="ES_es" inputSize="15"  datePattern="dd/MM/yyyy" />
                         <rich:message for="fechaNac" ajaxRendered="true"  />
 
+                        <h:outputLabel value="Código Postal " for="cp" /> 
+                        <h:inputText id="cp"  value="#{accesoBean.pueblo.codigoPostal}"   maxlength="5"  validatorMessage="Formato incorrecto. Ej: 06800" > 
+                            <a4j:ajax event="keyup" render="provincia localidad" listener="#{accesoBean.escuchadorCP()}"  rendered="false"  />     
+                        </h:inputText>
+                        <rich:message for="cp"  styleClass="msgError" />
+
+                        <h:outputLabel value="Provincia " for="provincia" /> 
+                        <h:inputText id="provincia" size="30"  value="#{accesoBean.provincia.nombre}" disabled="true"  validatorMessage="Introduzca un Código Postal correcto" />
+                        <rich:message for="provincia"  styleClass="msgError"/>     
+
+                        <h:outputLabel value="Localidad " for="localidad" /> 
+                        <h:selectOneMenu id="localidad" value="#{accesoBean.pueblo.id}" required="true" requiredMessage="Seleccione una localidad (Necesario un CP correcto)">
+                            <f:selectItem  itemLabel="Seleccione una localidad" itemValue="#{null}"/>
+                            <f:selectItems  value="#{accesoBean.listPueblos}" var="pue" itemValue="#{pue.id}"  itemLabel="#{pue.nombre}"/>
+                        </h:selectOneMenu>
+                        <rich:message for="localidad"   styleClass="msgError"/>
+
+                        <h:outputLabel value="Direccion " for="direccion"/>
+                        <h:inputText id="direccion" size="30" value="#{accesoBean.direccion.direccion}" maxlength="50" >
+                            <f:validateLength minimum="3"/>
+                        </h:inputText>
+                        <rich:message for="direccion" ajaxRendered="true"  styleClass="msgError"/>
+
+                        <h:outputLabel value="Teléfono " for="telefono"/>
+                        <h:inputText id="telefono" size="30" value="#{accesoBean.direccion.telefono}" maxlength="9" validatorMessage="Formato teléfono incorrecto. Ej: 902202122">
+                            <f:validateRegex pattern="^[679]{1}\d{8}$"/>
+                        </h:inputText>
+                        <rich:message for="telefono" ajaxRendered="true"  styleClass="msgError"/>
+
+                        <h:outputLabel value="Centro " for="centro" /> 
+                        <h:selectOneMenu id="centro" value="#{accesoBean.centro.id}" required="true" requiredMessage="Seleccione un centro de salud">
+                            <f:selectItem  itemLabel="Seleccione un centro" itemValue="#{null}" />
+                            <f:selectItems  value="#{accesoBean.listCentros}" var="cen" itemValue="#{cen.id}"  itemLabel="#{cen.nombre}"/>
+                        </h:selectOneMenu>
+                        <rich:message for="centro"  styleClass="msgError"/>
+
                         <h:outputLabel value="Email "  for="email"/> 
-                        <h:inputText id="email" size="30" value="#{accesoBean.paciente.email}" pt:placeholder="paciente@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
+                        <h:inputText id="email" size="30" value="#{accesoBean.paciente.email}" pt:placeholder="ejemplo@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                         </h:inputText>
                         <rich:message for="email" ajaxRendered="true" />
@@ -149,7 +186,7 @@
                     </h:panelGrid>
                     <div class="botones">
                         <a4j:commandButton value="Registrarse" 
-                                           execute="@all"
+                                           execute="@form"
                                            action="#{accesoBean.registro()}" 
                                            oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('registro')}.hide(); #{rich:component('confirmRegistro')}.show(); }"
                                            styleClass="boton"
@@ -162,8 +199,11 @@
             </rich:graphValidator>
         </h:form>
 
+        <h:form>
+
+        </h:form>
     </rich:popupPanel>
-    
+
     <!-- Modal de confirmación de registro -->
     <rich:popupPanel id="confirmRegistro" modal="true" resizeable="false" autosized="true" domElementAttachment="form">
         <f:facet name="header">
@@ -198,7 +238,7 @@
         <h:form id="formularioLogin">
             <rich:graphValidator id="gvLogin"> 
                 <rich:panel id="loginP" >
-<!--                    <rich:message ajaxRendered="true"  styleClass="msgErrorGlobal" for="gvLogin"  />-->
+                    <!--                    <rich:message ajaxRendered="true"  styleClass="msgErrorGlobal" for="gvLogin"  />-->
                     <rich:messages styleClass="msgErrorGlobal" for="formularioLogin" />
                     <h:panelGrid columns="3">
                         <h:outputLabel value="Email: " for="email2"/>
@@ -225,23 +265,7 @@
 
     </rich:popupPanel>
 
-    <a4j:status name="esperaWait" >
-        <f:facet name="start">
-            <div style="position: fixed; top: 47%; left: 47%; z-index: 2000; padding: 5px 10px; border: solid 1px black; background: whitesmoke;">
-                <h:outputText value="Cargando ..."/>
-                <h:graphicImage value="/resources/images/icono-carga.gif"  />
-            </div>
-        </f:facet>
-    </a4j:status>
 
-    <a4j:status name="guardarSave" >
-        <f:facet name="start">
-            <div style="position: fixed; top: 47%; left: 47%; z-index: 2000; padding: 5px 10px; border: solid 1px black; background: whitesmoke;">
-                <h:outputText value="Guardando ..."/>
-                <h:graphicImage value="/resources/images/icono-carga.gif"  />
-            </div>
-        </f:facet>
-    </a4j:status>
 
 </nav>
 

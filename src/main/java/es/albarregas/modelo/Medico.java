@@ -31,9 +31,6 @@ public class Medico extends Usuario {
     @JoinColumn(name = "idServicio")
     private Servicio servicio;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "idMedico")
-    private List<Cita> citas;
 
     public String getNumColegiado() {
         return numColegiado;
@@ -65,14 +62,6 @@ public class Medico extends Usuario {
 
     public void setServicio(Servicio servicio) {
         this.servicio = servicio;
-    }
-
-    public List<Cita> getCitas() {
-        return citas;
-    }
-
-    public void setCitas(List<Cita> citas) {
-        this.citas = citas;
     }
 
 }

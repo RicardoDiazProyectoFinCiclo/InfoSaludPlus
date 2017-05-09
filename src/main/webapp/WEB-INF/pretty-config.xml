@@ -18,5 +18,10 @@
         <pattern value="/inicioAreaPaciente/" />
         <view-id value="/faces/paciente/inicioAreaPaciente.xhtml" />
     </url-mapping>
+    
+    <url-mapping id="informesMedicosPaciente">	
+        <pattern value="/informesMedicosPaciente/" />
+        <view-id value="/faces/paciente/informesMedicosPaciente.xhtml" />
+    </url-mapping>
 
 </pretty-config>

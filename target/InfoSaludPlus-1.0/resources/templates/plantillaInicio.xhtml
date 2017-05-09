@@ -37,6 +37,24 @@
             </div>
 
             <ui:include src="../inc/pie.xhtml"/>
+
+            <a4j:status name="esperaWait" >
+                <f:facet name="start">
+                    <div style="position: fixed; top: 47%; left: 47%; z-index: 2000; padding: 5px 10px; border: solid 1px black; background: whitesmoke;">
+                        <h:outputText value="Cargando ..."/>
+                        <h:graphicImage value="/resources/images/icono-carga.gif"  />
+                    </div>
+                </f:facet>
+            </a4j:status>
+
+            <a4j:status name="guardarSave" >
+                <f:facet name="start">
+                    <div style="position: fixed; top: 47%; left: 47%; z-index: 2000; padding: 5px 10px; border: solid 1px black; background: whitesmoke;">
+                        <h:outputText value="Guardando ..."/>
+                        <h:graphicImage value="/resources/images/icono-carga.gif"  />
+                    </div>
+                </f:facet>
+            </a4j:status>
         </h:body>
     </f:view>
 </html>

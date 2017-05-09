@@ -18,7 +18,7 @@ public class Provincia implements Serializable {
     @Id
     @Column(name = "idProvincia")
     private int id;
-    private String nombre;
+    private String nombre = "";
 
     public int getId() {
         return id;

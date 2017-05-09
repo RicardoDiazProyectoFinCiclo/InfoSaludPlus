@@ -32,11 +32,11 @@ public class Informe implements Serializable {
     @JoinColumn(name = "idPaciente")
     private Paciente paciente;
     @Column(nullable = false)
-    private String titulo;
+    private String titulo = "";
     @Column(nullable = false)
-    private String descripcion;
-    private String tratamiento;
-    private String observacion;
+    private String descripcion = "";
+    private String tratamiento = "";
+    private String observacion = "";
     @Column(nullable = false)
     private Date fecha;
 

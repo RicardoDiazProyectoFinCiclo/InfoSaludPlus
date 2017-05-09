@@ -5,7 +5,6 @@ import es.albarregas.daofactory.DAOFactory;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.ArrayList;
-import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,9 +27,10 @@ public class Centro implements Serializable {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "idCentro")
     private int id;
-    private String nombre;
+    @Column(nullable = false)
+    private String nombre = "";
     @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "idCentro")
+    @JoinColumn(name = "idDireccion")
     private Direccion direccion;
     private Blob imagen;
 
@@ -78,13 +78,13 @@ public class Centro implements Serializable {
     }
 
     public ArrayList allCentros() {
-       
+
         DAOFactory df = DAOFactory.getDAOFactory();
         IGenericoDAO igd = df.getGenericoDAO();
         ArrayList listaCentros = (ArrayList<Centro>) igd.get("Centro");
-        if(listaCentros == null){
+        if (listaCentros == null) {
             listaCentros = new ArrayList();
         }
         return listaCentros;
-    }    
+    }
 }

@@ -32,24 +32,12 @@ public class Paciente extends Usuario {
     @Column(nullable = false)
     private String numSegSoc;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "idUsuario")
-    private List<Cita> citas;
-
     public String getNumSegSoc() {
         return numSegSoc;
     }
 
     public void setNumSegSoc(String numSegSoc) {
         this.numSegSoc = numSegSoc;
-    }
-
-    public List<Cita> getCitas() {
-        return citas;
-    }
-
-    public void setCitas(List<Cita> citas) {
-        this.citas = citas;
     }
 
 }

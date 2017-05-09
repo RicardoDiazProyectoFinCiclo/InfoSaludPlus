@@ -11,6 +11,7 @@ es\albarregas\persistencia\FacesUtils.class
 es\albarregas\modelo\Centro.class
 es\albarregas\modelo\Direccion.class
 es\albarregas\dao\GenericoDAO.class
+managedbean\InformePacienteManagedBean.class
 es\albarregas\modelo\Paciente.class
 es\albarregas\modelo\Provincia.class
 es\albarregas\modelo\Pueblo.class

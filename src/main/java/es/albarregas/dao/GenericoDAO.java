@@ -9,7 +9,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 
-public class GenericoDAO<T> implements IGenericoDAO<T> {
+public class GenericoDAO<T> implements IGenericoDAO<T>, Serializable {
 
     private Session sesion;
 

@@ -46,7 +46,7 @@ public class Usuario implements Serializable, Cloneable {
     @Column(nullable = false)
     protected String apellidos = "";
     @Column(nullable = false)
-    protected String nif;
+    protected String nif = "";
     @Column(nullable = false, unique = true)
     protected String email = "";
     @Column(nullable = false, columnDefinition = "Text")
@@ -58,7 +58,7 @@ public class Usuario implements Serializable, Cloneable {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idDireccion")
     protected Direccion direccion;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "idCentro")
     protected Centro centro;
     protected Blob imagen;  
