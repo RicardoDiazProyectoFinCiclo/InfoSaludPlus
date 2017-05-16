@@ -3,17 +3,13 @@
                xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.3.3
                                    		http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.3.3.xsd">
 	
-    
+    <!-- Navegación común -->
     <url-mapping id="inicio">
         <pattern value="/inicio/" />
         <view-id value="/faces/index.xhtml" />
     </url-mapping>
-	
-    <!--    <url-mapping id="login">
-        <pattern value="/login" />
-        <view-id value="/login.html" />
-    </url-mapping>-->
 
+    <!-- Navegación pacientes -->
     <url-mapping id="inicioAreaPaciente">	
         <pattern value="/inicioAreaPaciente/" />
         <view-id value="/faces/paciente/inicioAreaPaciente.xhtml" />
@@ -24,4 +20,30 @@
         <view-id value="/faces/paciente/informesMedicosPaciente.xhtml" />
     </url-mapping>
 
+    <!-- Navegación médicos -->
+    
+    <url-mapping id="inicioAreaMedico">	
+        <pattern value="/inicioAreaMedico/" />
+        <view-id value="/faces/medico/inicioAreaMedico.xhtml" />
+    </url-mapping>
+  
+    <url-mapping id="misPacientes">	
+        <pattern value="/misPacientes/" />
+        <view-id value="/faces/medico/misPacientes.xhtml" />
+    </url-mapping>
+  
+  
+    <!-- Navegación administradores -->
+    
+    <url-mapping id="inicioAreaAdmin">	
+        <pattern value="/inicioAreaAdmin/" />
+        <view-id value="/faces/administrador/inicioAreaAdmin.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="aniadirPersonalSanitario">	
+        <pattern value="/aniadirPersonalSanitario/" />
+        <view-id value="/faces/medico/aniadirPersonalSanitario.xhtml" />
+    </url-mapping>
+    
+    
 </pretty-config>

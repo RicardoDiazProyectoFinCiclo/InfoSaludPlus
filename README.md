@@ -1,4 +1,5 @@
 # InfoSaludPlus
+- Registro y modificación del medico terminada. Ya existe cuenta de administrador en BD, y acceso al panel. El paciente puede elegir médico. Añadido mini manual de usuario. Versión nueva (llena) de BD añadida. 16/05/2017
 - Registro y login de usuario paciente terminados (espero), modificación de datos del paciente terminados, nueva versión de base de datos añadida. 09/05/2017 
 - Encripto la contraseña. Mejora del registro y el login (registro funcional, pero no completo), mejora de los mensajes de error-info. Iniciando la modificación de datos personales del paciente. Ligera modificación de base de datos. 05/05/2017 21:50
 - Reorganizando el código para programar de una manera más eficiente y organizada, separando modelos y managed beans. Mejorando la gestión de las rutas (url) para que queden más "profesional" y se recarguen bien -todo esto es tiempo de investigación-. 02/05/2017 00:55h

@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
+
+    <f:view>
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
+            <ui:define name="titulo">InfoSaludPlus | Area Administración</ui:define>
+
+
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área de administración" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <nav id="panelLateral" class="row col-sm-2">
+                    <h:outputStylesheet>
+                        .cols {
+                        vertical-align: top;
+                        }
+                    </h:outputStylesheet>
+                    <h:form>
+                        <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
+                            <rich:panelMenuGroup label="Panel del administrador" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                                <rich:panelMenuItem style="color:blue;" mode="client" label="Datos personales" name="datos_personales" />
+                                <rich:panelMenuItem label="Añadir personal sanitario" name="aniadir_personal_sanitario" action="aniadirPersonalSanitario" execute="true" />
+                                <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" />
+                                <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+                            </rich:panelMenuGroup>
+                        </rich:panelMenu>
+                    </h:form>
+                </nav>
+
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">                          
+
+                    <h:form id="formularioCambioDatos">
+                        <rich:focus preserve="true" delayed="true"/>
+                        <rich:graphValidator id="gvDatos">
+                            <rich:panel title="Datos del administrador" header="Datos del administrador" style=" margin-bottom: 20px; background: rgb(245,245,255);">
+                                <rich:messages styleClass="msgErrorGlobal" for="formularioCambioDatos"  />
+
+                                <h:panelGrid  columns="3" class="panel" >
+
+                                    <h:outputLabel value="Nombre " for="nombre3"/>
+                                    <h:inputText id="nombre3" size="30" value="#{accesoBean.usuario.nombre}" maxlength="30">
+                                        <f:validateLength minimum="3"/>
+                                    </h:inputText>
+                                    <rich:message for="nombre3" ajaxRendered="true" styleClass="msgError" />
+
+                                    <h:outputLabel value="Apellidos " for="apellidos3" /> 
+                                    <h:inputText id="apellidos3" size="30" value="#{accesoBean.usuario.apellidos}" maxlength="40" >
+                                        <f:validateLength minimum="3"/>
+                                    </h:inputText>
+                                    <rich:message for="apellidos3" ajaxRendered="true"  styleClass="msgError"/>
+
+                                    <h:outputLabel value="NIF/DNI " for="dni3"/> 
+                                    <h:inputText id="dni3" size="9" readonly="true" value="#{accesoBean.usuario.nif}" maxlength="9" validatorMessage="Formato DNI incorrecto. Ej: 012345678A">
+                                        <f:validateRegex pattern="^[0-9]{8}[a-zA-Z]{1}"/>
+                                    </h:inputText>
+                                    <rich:message for="dni3" ajaxRendered="true" styleClass="msgError" />
+
+
+                                    <h:outputLabel value="Email "  for="email3"/> 
+                                    <h:inputText id="email3" readonly="true" size="30" value="#{accesoBean.usuario.email}" pt:placeholder="ejemplo@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    </h:inputText>
+                                    <h:message for="email3" styleClass="msgError"/>
+                                </h:panelGrid>
+                                <div class="botones">
+                                    <a4j:commandButton value="Modificar datos personales" 
+                                                       render="menuPrincipal formularioCambioDatos"
+                                                       execute="@form"
+                                                       action="#{accesoBean.modificarDatos()}"
+                                                       oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('modificacionOk')}.show(); }"
+                                                       styleClass="boton"
+                                                       status="guardarSave"/> 
+
+                                    <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
+                                </div>
+                            </rich:panel>
+                        </rich:graphValidator>
+                    </h:form>     
+
+
+                    <rich:popupPanel id="modificacionOk" modal="true" resizeable="false" autosized="true">
+                        <f:facet name="header">
+                            <h:outputText value="Modificación correcta" styleClass="cabeceraModal" />
+                        </f:facet>
+                        <f:facet name="controls">
+                            <h:outputLink value="#" onclick="#{rich:component('modificacionOk')}.hide(); return false;" style="color: inherit">
+                                X
+                            </h:outputLink>
+                        </f:facet>
+                        <h:form>
+
+                            <rich:panel>
+                                <h:outputText styleClass="msgOk" value="Se han modificado los datos de manera correcta"/>
+                                <div class="botones">
+                                    <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true"  onclick="#{rich:component('modificacionOk')}.hide();"/>
+                                </div>            
+                            </rich:panel>
+                        </h:form>
+                    </rich:popupPanel>
+
+                </section>
+
+            </ui:define>
+        </ui:decorate>
+    </f:view>
+</html>
+

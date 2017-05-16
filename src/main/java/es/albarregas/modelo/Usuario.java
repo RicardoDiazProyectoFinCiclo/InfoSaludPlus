@@ -45,7 +45,7 @@ public class Usuario implements Serializable, Cloneable {
     protected String nombre = "";
     @Column(nullable = false)
     protected String apellidos = "";
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     protected String nif = "";
     @Column(nullable = false, unique = true)
     protected String email = "";

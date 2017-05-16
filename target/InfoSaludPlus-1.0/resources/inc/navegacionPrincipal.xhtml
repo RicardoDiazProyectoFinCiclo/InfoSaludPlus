@@ -68,10 +68,10 @@
                         <rich:menuItem label="Área del Paciente" styleClass="menuItemLb" action="inicioAreaPaciente" execute="@form"/>
                     </c:if>
                     <c:if test="#{sessionScope.usuario.tipo == 'm'}">
-                        <rich:menuItem label="Área del Médico" styleClass="menuItemLb" />
+                        <rich:menuItem label="Área del Médico" styleClass="menuItemLb" action="inicioAreaMedico" />
                     </c:if>
                     <c:if test="#{sessionScope.usuario.tipo == 'a'}">
-                        <rich:menuItem label="Área del Admin" styleClass="menuItemLb" />
+                        <rich:menuItem label="Área del Admin" styleClass="menuItemLb" action="inicioAreaAdmin" />
                     </c:if>
 
                     <rich:menuItem label="Cerrar sesión" action="#{accesoBean.cerrarSesion()}"  styleClass="menuItemLb" execute="@form"/>
@@ -181,13 +181,14 @@
                         <h:inputSecret id="claveRep" size="15" value="#{accesoBean.paciente.claveRep}">
                             <f:validateLength minimum="4" maximum="20"/>
                         </h:inputSecret>
-
                         <rich:message for="claveRep" ajaxRendered="true"/>
+                        
                     </h:panelGrid>
+                    
                     <div class="botones">
                         <a4j:commandButton value="Registrarse" 
                                            execute="@form"
-                                           action="#{accesoBean.registro()}" 
+                                           action="#{accesoBean.registroPaciente()}" 
                                            oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('registro')}.hide(); #{rich:component('confirmRegistro')}.show(); }"
                                            styleClass="boton"
                                            status="guardarSave" >
@@ -197,10 +198,6 @@
                     </div>
                 </rich:panel>
             </rich:graphValidator>
-        </h:form>
-
-        <h:form>
-
         </h:form>
     </rich:popupPanel>
 

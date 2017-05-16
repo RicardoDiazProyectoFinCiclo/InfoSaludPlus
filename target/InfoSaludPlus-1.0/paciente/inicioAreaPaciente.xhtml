@@ -116,9 +116,16 @@
                                     <h:selectOneMenu id="centro3" value="#{accesoBean.centro.id}"  required="true" requiredMessage="Seleccione un centro de salud">
                                         <f:selectItem  itemLabel="Seleccione un centro" itemValue="#{null}" />
                                         <f:selectItems  value="#{accesoBean.listCentros}" var="cen" itemValue="#{cen.id}"  itemLabel="#{cen.nombre}"/>
+                                        <a4j:ajax event="change" render="medico3" listener="#{accesoBean.medicosPorCentros()}"/>
                                     </h:selectOneMenu>
                                     <rich:message for="centro3"  styleClass="msgError"/>
-
+                                    
+                                    <h:outputLabel value="Medico " for="medico3" /> 
+                                    <h:selectOneMenu id="medico3" value="#{accesoBean.medico.id}"  required="true" requiredMessage="Seleccione médico">
+                                        <f:selectItem  itemLabel="Seleccione un médico" itemValue="#{null}" />
+                                        <f:selectItems  value="#{accesoBean.listMedicos}" var="med" itemValue="#{med.id}"  itemLabel="#{med.nombre}"/>
+                                    </h:selectOneMenu>
+                                    <rich:message for="medico3"  styleClass="msgError"/>
 
                                     <h:outputLabel value="Email "  for="email3"/> 
                                     <h:inputText id="email3" readonly="true" size="30" value="#{accesoBean.paciente.email}" pt:placeholder="ejemplo@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 

@@ -1,15 +1,9 @@
 package es.albarregas.modelo;
 
-import es.albarregas.dao.IGenericoDAO;
-import es.albarregas.daofactory.DAOFactory;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,13 +16,13 @@ import javax.persistence.Table;
 public class Medico extends Usuario {
 
     @Column(nullable = false)
-    private String numColegiado;
-    private String jefe;
+    private String numColegiado = "";
+    @Column(columnDefinition = "set('n','s') DEFAULT 'n' not null")
+    private String jefe = "n";
     @Column(nullable = false)
-    private String titulos;
-
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "idServicio")
+    private String titulos = "";
+    @OneToOne
+    @JoinColumn(name = "idServicio",columnDefinition = "int(11) DEFAULT 1")
     private Servicio servicio;
 
 

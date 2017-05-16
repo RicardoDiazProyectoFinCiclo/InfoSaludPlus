@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
+
+    <f:view>
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
+            <ui:define name="titulo">InfoSaludPlus | Area de personal médico</ui:define>
+
+
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área de personal médico" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <nav id="panelLateral" class="row col-sm-2">
+                    <h:outputStylesheet>
+                        .cols {
+                        vertical-align: top;
+                        }
+                    </h:outputStylesheet>
+                    <h:form>
+                        <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
+                            <rich:panelMenuGroup label="Panel del personal médico" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                                <rich:panelMenuItem style="color:blue;" mode="client" label="Datos personales" name="datos_personales" />
+                                <rich:panelMenuItem label="Mis pacientes" name="mis_pacientes" action="misPacientes" />
+                                <rich:panelMenuItem label="Partes médicos" name="partes_medicos" execute="true" action="#{informeBean.generar()}" />
+                                <rich:panelMenuItem label="Área de citas" name="area_citas" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+                            </rich:panelMenuGroup>
+                        </rich:panelMenu>
+                    </h:form>
+                </nav>
+
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">                          
+
+                    <h:form id="formularioCambioDatos">
+                        <rich:focus preserve="true" delayed="true"/>
+                        <rich:graphValidator id="gvDatos">
+                            <rich:panel title="Datos del médico" header="Datos del médico" style=" margin-bottom: 20px; background: rgb(245,245,255);">
+                                <rich:messages styleClass="msgErrorGlobal" for="formularioCambioDatos"  />
+
+                                <h:panelGrid  columns="3" class="panel" >
+
+                                    <h:outputLabel value="Nombre " for="nombre3"/>
+                                    <h:inputText id="nombre3" size="30" value="#{accesoBean.medico.nombre}" maxlength="30">
+                                        <f:validateLength minimum="3"/>
+                                    </h:inputText>
+                                    <rich:message for="nombre3" ajaxRendered="true" styleClass="msgError" />
+
+                                    <h:outputLabel value="Apellidos " for="apellidos3" /> 
+                                    <h:inputText id="apellidos3" size="30" value="#{accesoBean.medico.apellidos}" maxlength="40" >
+                                        <f:validateLength minimum="3"/>
+                                    </h:inputText>
+                                    <rich:message for="apellidos3" ajaxRendered="true"  styleClass="msgError"/>
+
+                                    <h:outputLabel value="NIF/DNI " for="dni3"/> 
+                                    <h:inputText id="dni3" size="9" readonly="true" value="#{accesoBean.medico.nif}" maxlength="9" validatorMessage="Formato DNI incorrecto. Ej: 012345678A">
+                                        <f:validateRegex pattern="^[0-9]{8}[a-zA-Z]{1}"/>
+                                    </h:inputText>
+                                    <rich:message for="dni3" ajaxRendered="true" styleClass="msgError" />
+
+                                    <h:outputLabel value="Número Colegiado " for="numCol3"/> 
+                                    <h:inputText id="numCol3" size="15" value="#{accesoBean.medico.numColegiado}" maxlength="15" >
+                                        <f:validateLength minimum="2"/>
+                                    </h:inputText>
+                                    <rich:message for="numCol3" ajaxRendered="true" />
+
+                                    <h:outputLabel value="Fecha de nacimiento: " for="fechaNac3" /> 
+                                    <rich:calendar id="fechaNac3" readonly="true" value="#{accesoBean.medico.fechaNacimiento}" locale="ES_es" inputSize="15"  datePattern="dd/MM/yyyy" />
+                                    <rich:message for="fechaNac3" ajaxRendered="true"  />
+
+                                    <h:outputLabel value="Código Postal " for="cp3" /> 
+                                    <h:inputText id="cp3"  value="#{accesoBean.pueblo.codigoPostal}"   maxlength="5"  validatorMessage="Formato incorrecto. Ej: 06800" > 
+                                        <a4j:ajax event="keyup" render="provincia3 localidad3" listener="#{accesoBean.escuchadorCP()}"  rendered="false"  />     
+                                    </h:inputText>
+                                    <rich:message for="cp3"  styleClass="msgError" />
+
+                                    <h:outputLabel value="Provincia " for="provincia3" /> 
+                                    <h:inputText id="provincia3" size="30"  value="#{accesoBean.provincia.nombre}" readonly="true"  validatorMessage="Introduzca un Código Postal correcto" />
+                                    <rich:message for="provincia3"  styleClass="msgError"/>     
+
+                                    <h:outputLabel value="Localidad " for="localidad3" /> 
+                                    <h:selectOneMenu id="localidad3" value="#{accesoBean.pueblo.id}" required="true" requiredMessage="Seleccione una localidad (Necesario un CP correcto)">
+                                        <f:selectItem  itemLabel="Seleccione una localidad" itemValue="#{null}"/>
+                                        <f:selectItems  value="#{accesoBean.listPueblos}" var="pue" itemValue="#{pue.id}"  itemLabel="#{pue.nombre}"/>
+                                    </h:selectOneMenu>
+                                    <rich:message for="localidad3"   styleClass="msgError"/>
+
+                                    <h:outputLabel value="Direccion " for="direccion3"/>
+                                    <h:inputText id="direccion3" size="30" value="#{accesoBean.direccion.direccion}" maxlength="50" >
+                                        <f:validateLength minimum="3"/>
+                                    </h:inputText>
+                                    <rich:message for="direccion3" ajaxRendered="true"  styleClass="msgError"/>
+
+                                    <h:outputLabel value="Teléfono " for="telefono3"/>
+                                    <h:inputText id="telefono3" size="30" value="#{accesoBean.direccion.telefono}" maxlength="9" validatorMessage="Formato teléfono incorrecto. Ej: 902202122">
+                                        <f:validateRegex pattern="^[679]{1}\d{8}$"/>
+                                    </h:inputText>
+                                    <rich:message for="telefono3" ajaxRendered="true"  styleClass="msgError"/>
+
+                                    <h:outputLabel value="Centro " for="centro3" /> 
+                                    <h:selectOneMenu id="centro3" value="#{accesoBean.centro.id}"  required="true" requiredMessage="Seleccione un centro de salud">
+                                        <f:selectItem  itemLabel="Seleccione un centro" itemValue="#{null}" />
+                                        <f:selectItems  value="#{accesoBean.listCentros}" var="cen" itemValue="#{cen.id}"  itemLabel="#{cen.nombre}"/>
+                                    </h:selectOneMenu>
+                                    <rich:message for="centro3"  styleClass="msgError"/>
+
+                                    <h:outputLabel value="Email "  for="email3"/> 
+                                    <h:inputText id="email3" readonly="true" size="30" value="#{accesoBean.medico.email}" pt:placeholder="ejemplo@gmail.com" validatorMessage="Formato email incorrecto. Ej: ricardo@gmail.com"> 
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    </h:inputText>
+                                    <h:message for="email3" styleClass="msgError"/>
+
+                                    <h:outputLabel value="Jefe de Sección " for="jefe3"/>
+                                    <h:selectOneRadio id="jefe3" value="#{accesoBean.medico.jefe}">
+                                        <f:selectItem itemValue="n" itemLabel="No"/>
+                                        <f:selectItem itemValue="s" itemLabel="Si"/>
+                                    </h:selectOneRadio>
+                                    <h:message for="jefe3" styleClass="msgError"/>
+                                    
+                                    <h:outputLabel for="titulos" value="Títulos"/>
+                                    <h:inputTextarea rows="4" cols="30"  value="#{accesoBean.medico.titulos}" id="titulos" >
+                                        <f:validateLength maximum="255"/>
+                                    </h:inputTextarea>
+                                    <h:message for="titulos" styleClass="msgError"/>
+
+
+                                </h:panelGrid>
+                                <div class="botones">
+                                    <a4j:commandButton value="Modificar datos personales" 
+                                                       render="menuPrincipal formularioCambioDatos"
+                                                       execute="@form"
+                                                       action="#{accesoBean.modificarDatos()}"
+                                                       oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('modificacionOk')}.show(); }"
+                                                       styleClass="boton"
+                                                       status="guardarSave"/> 
+
+                                    <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
+                                </div>
+                            </rich:panel>
+                        </rich:graphValidator>
+                    </h:form>     
+
+
+                    <rich:popupPanel id="modificacionOk" modal="true" resizeable="false" autosized="true">
+                        <f:facet name="header">
+                            <h:outputText value="Modificación correcta" styleClass="cabeceraModal" />
+                        </f:facet>
+                        <f:facet name="controls">
+                            <h:outputLink value="#" onclick="#{rich:component('modificacionOk')}.hide(); return false;" style="color: inherit">
+                                X
+                            </h:outputLink>
+                        </f:facet>
+                        <h:form>
+
+                            <rich:panel>
+                                <h:outputText styleClass="msgOk" value="Se han modificado los datos de manera correcta"/>
+                                <div class="botones">
+                                    <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true"  onclick="#{rich:component('modificacionOk')}.hide();"/>
+                                </div>            
+                            </rich:panel>
+                        </h:form>
+                    </rich:popupPanel>
+
+                </section>
+
+            </ui:define>
+        </ui:decorate>
+    </f:view>
+</html>
+

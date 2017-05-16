@@ -4,6 +4,8 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+    <!-- Navegación común -->
+    
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
@@ -17,16 +19,19 @@
             <to-view-id>/paciente/inicioAreaPaciente.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/pagina2.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>inicio</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
+            <from-outcome>inicioAreaAdmin</from-outcome>
+            <to-view-id>/administrador/inicioAreaAdmin.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaMedico</from-outcome>
+            <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
     </navigation-rule>
+    
+    <!-- Navegación de pacientes -->
     
     <navigation-rule>
         <from-view-id>/paciente/inicioAreaPaciente.xhtml</from-view-id>
@@ -55,5 +60,81 @@
             <redirect>true</redirect>
         </navigation-case>           
     </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/paciente/informesMedicosPaciente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaPaciente</from-outcome>
+            <to-view-id>/paciente/inicioAreaPaciente.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>           
+    </navigation-rule>
+    
+    <!-- Navegación de médicos -->
+    
+    <navigation-rule>
+        <from-view-id>/medico/inicioAreaMedico.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>misPacientes</from-outcome>
+            <to-view-id>/medico/misPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/medico/misPacientes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaMedico</from-outcome>
+            <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <!-- Navegación de administradores -->
+    
+    
+    <navigation-rule>
+        <from-view-id>/administrador/aniadirPersonalSanitario.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaAdmin</from-outcome>
+            <to-view-id>/administrador/inicioAreaAdmin.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/administrador/inicioAreaAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>aniadirPersonalSanitario</from-outcome>
+            <to-view-id>/administrador/aniadirPersonalSanitario.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
     
 </faces-config>
