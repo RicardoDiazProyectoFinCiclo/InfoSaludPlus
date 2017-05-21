@@ -415,8 +415,17 @@ public class AccesoManagedBean implements Cloneable, Serializable {
         df.getGenericoDAO().update(usuario);
     }
 
+    /**
+     * Función para seleccionar los médicos disponibles (solo pueden tener x pacientes) por centro seleccionado
+     */
     public void medicosPorCentros() {
-        listMedicos = igd.get("Medico m Where m.centro.id = '" + paciente.getCentro().getId() + "'");
+        
+        //Consulta en la que seleccionamos los medicos por el centro seleccionado y que tengan menos de x pacientes (subconsulta)
+        //Para que los médicos tengan así un tope de pacientes (ponemos 2 de prueba).
+        String consulta = "Medico m Where m.centro.id = " + paciente.getCentro().getId() 
+                + " AND  m.id NOT IN (SELECT p.medico.id from Paciente p WHERE NOT (p.medico.id IS NULL) GROUP BY p.medico.id HAVING COUNT(p.medico.id) > 4 ) ";
+        listMedicos = igd.get(consulta);
+
     }
 
 }

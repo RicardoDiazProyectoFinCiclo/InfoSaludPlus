@@ -70,6 +70,7 @@ figcaption{
 
 .panel{
     background: none;
+    box-shadow: none;
 }
 
 input{
@@ -152,3 +153,26 @@ label{
     color: white;
     font: bold 14pt Arial, sans-serif !important;
 }
+
+.submenuLateral{
+    color: black;
+    margin-left: 10px;
+    padding: 5px;
+}
+
+/* DATATABLE */
+.even-row {
+    background-color: #FCFFFE;
+}
+
+.odd-row {
+    background-color: #ECF3FE;
+}
+
+.even-row:hover,
+.odd-row:hover {
+    background-color: #FFEBDA;
+    cursor: pointer;
+}
+
+/* FIN DATATABLE */

@@ -37,8 +37,8 @@
                         <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
                             <rich:panelMenuGroup label="Panel del paciente" selectable="false" expanded="true" styleClass="cabeMenuHori">
                                 <rich:panelMenuItem style="color:blue;" label="Datos personales" name="datos_personales" />
-                                <rich:panelMenuItem label="Partes médicos" name="partes_medicos" execute="true" action="#{informePacienteMB.generar()}" />
-                                <rich:panelMenuItem label="Área de citas" name="area_citas" />
+                                <rich:panelMenuItem label="Mis informes" name="partes_medicos" execute="true" action="verInformesPaciente" />
+                                <rich:panelMenuItem label="Mis citas" name="area_citas" />
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
                             </rich:panelMenuGroup>
                         </rich:panelMenu>

@@ -37,8 +37,9 @@
                         <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
                             <rich:panelMenuGroup label="Panel del personal médico" selectable="false" expanded="true" styleClass="cabeMenuHori">
                                 <rich:panelMenuItem style="color:blue;" mode="client" label="Datos personales" name="datos_personales" />
-                                <rich:panelMenuItem label="Mis pacientes" name="mis_pacientes" action="misPacientes" />
-                                <rich:panelMenuItem label="Partes médicos" name="partes_medicos" execute="true" action="#{informeBean.generar()}" />
+                                <rich:panelMenuItem label="Mis pacientes" name="mis_pacientes" action="misPacientes" /> 
+                                <rich:panelMenuItem label="Realizar informe" name="realizar_informe" action="realizarInforme" /> 
+                                <rich:panelMenuItem label="Ver informes" name="mis_pacientes" action="verInformesMedico" /> 
                                 <rich:panelMenuItem label="Área de citas" name="area_citas" />
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
                             </rich:panelMenuGroup>
@@ -132,7 +133,7 @@
                                         <f:selectItem itemValue="s" itemLabel="Si"/>
                                     </h:selectOneRadio>
                                     <h:message for="jefe3" styleClass="msgError"/>
-                                    
+
                                     <h:outputLabel for="titulos" value="Títulos"/>
                                     <h:inputTextarea rows="4" cols="30"  value="#{accesoBean.medico.titulos}" id="titulos" >
                                         <f:validateLength maximum="255"/>

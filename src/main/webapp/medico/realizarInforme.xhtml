@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
+
+    <f:view>
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
+            <ui:define name="titulo">InfoSaludPlus | Area de personal médico</ui:define>
+
+
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área de personal médico" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <nav id="panelLateral" class="row col-sm-2">
+                    <h:outputStylesheet>
+                        .cols {
+                        vertical-align: top;
+                        }
+                    </h:outputStylesheet>
+                    <h:form>
+                        <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
+                            <rich:panelMenuGroup label="Panel del personal médico" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                                <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaMedico" />
+                                <rich:panelMenuItem label="Mis pacientes" name="mis_pacientes" action="misPacientes" /> 
+                                <rich:panelMenuItem mode="client" style="color:blue;" label="Realizar informe" name="realizar_informe" /> 
+                                <rich:panelMenuItem label="Ver informes" name="mis_pacientes" action="verInformesMedico" /> 
+                                <rich:panelMenuItem label="Área de citas" name="area_citas" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+                            </rich:panelMenuGroup>
+                        </rich:panelMenu>
+                    </h:form>
+                </nav>
+
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1 text-center">                          
+                    <rich:dataTable id="tablaInformes"    value="#{informeBean.listPacientes}" style="margin-left: 100px" var="pac" rows="5" binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row">
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Apellidos"/>
+                            </f:facet>
+                            <h:outputText value="#{pac.apellidos}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{pac.nombre}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="NIF"/>
+                            </f:facet>
+                            <h:outputText value="#{pac.nif}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Nº SS"/>
+                            </f:facet>
+                            <h:outputText value="#{pac.numSegSoc}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Fecha de Nacimiento"/>
+                            </f:facet>
+                            <h:outputText value="#{pac.fechaNacimiento}">
+                                <f:convertDateTime dateStyle="full" timeZone="es"/>
+                            </h:outputText>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Realizar Informe"/>
+                            </f:facet>
+                            <h:form>
+                                <a4j:commandLink  render="informeDatosPaciente informeDatosPie" action="#{informeBean.iniciarInforme()}" oncomplete="#{rich:component('informe')}.show()" >
+                                    <h:graphicImage library="icons" name="edit.gif" alt="Añadir" />
+                                </a4j:commandLink>
+                            </h:form>
+                        </rich:column>
+                    </rich:dataTable>
+
+
+
+                    <!-- Informe -->
+                    <rich:popupPanel id="informe" modal="true" autosized="true" onmaskclick="#{rich:component('informe')}.hide()">
+                        <f:facet name="header">
+                            <h:outputText value="Informe médico" styleClass="cabeceraModal" />
+                        </f:facet>
+                        <f:facet name="controls">
+                            <h:outputLink value="#" onclick="#{rich:component('informe')}.hide();
+                                    return false;" style="color: inherit">
+                                X
+                            </h:outputLink>
+                        </f:facet>
+
+                        <rich:panel style="margin-bottom: 5px;" id="informeDatosPaciente">
+                            <h4 class="text-left">Datos del paciente</h4>
+                            <div style="width: 49%; display: inline-block">
+                                <h:outputText style="display:block;"  value="Nombre: #{informeBean.paciente.nombre} #{informeBean.paciente.apellidos}" />
+                                <h:outputText style="display:block;"  value="NIF/DNI: #{informeBean.paciente.nif}" />
+                                <h:outputText style="display:block;" value="Nº SS: #{informeBean.paciente.numSegSoc}"  />
+                                <h:outputText style="display:block;" value="Fecha nacimiento: #{informeBean.paciente.fechaNacimiento}" />
+                            </div>
+                            <div style="width: 49%; display: inline-block">
+                                <h:outputText style="display:block;" value="Dirección: #{informeBean.paciente.direccion.direccion}, #{informeBean.paciente.direccion.pueblo.nombre} (#{informeBean.paciente.direccion.pueblo.codigoPostal}), #{informeBean.paciente.direccion.pueblo.provincia.nombre}" />
+                                <h:outputText style="display:block;"  value="Teléfono: #{informeBean.paciente.direccion.telefono}" />
+                                <h:outputText style="display:block;" value="Centro: #{informeBean.paciente.centro.nombre}"/>
+                                <h:outputText style="display:block;" value="Email: #{informeBean.paciente.email}"/>
+                            </div>
+                        </rich:panel>
+                        <h:form id="formularioInforme">
+                            <rich:focus preserve="true" delayed="true"/>
+                            <rich:graphValidator id="gvInforme" value="#{informeBean}">
+                                <rich:panel>                         
+
+                                    <h:panelGrid columns="1" width="100%">
+                                        <h:outputLabel value="Título" for="titulo"/>
+                                        <h:inputText id="titulo" value="#{informeBean.informe.titulo}" style="display: block; width: 100%" >
+                                            <f:validateLength minimum="2" maximum="60"/>
+                                        </h:inputText>
+                                        <rich:message for="titulo" styleClass="msgError" ajaxRendered="true"/>
+
+                                        <h:outputLabel for="descripcion" value="Motivo de la consulta" />
+                                        <h:inputTextarea id="descripcion" value="#{informeBean.informe.descripcion}" style="display: block; width: 100%" rows="3" >
+                                            <f:validateLength minimum="2" maximum="255" />
+                                        </h:inputTextarea>
+                                        <rich:message for="descripcion" styleClass="msgError" ajaxRendered="true"/>
+
+                                        <h:outputLabel value="Resultado de las observaciones" for="observacion" />
+                                        <h:inputTextarea id="observacion" value="#{informeBean.informe.observacion}" style="display: block; width: 100%" rows="3" >
+                                            <f:validateLength minimum="2" maximum="255"/>
+                                        </h:inputTextarea>
+                                        <rich:message for="observacion" styleClass="msgError" ajaxRendered="true"/>
+
+                                        <h:outputLabel for="tratamiento" value="Tratamiento y recomendaciones" />
+                                        <h:inputTextarea id="tratamiento" value="#{informeBean.informe.tratamiento}" style="display: block; width: 100%" rows="2" >
+                                            <f:validateLength minimum="2" maximum="255"/>
+                                        </h:inputTextarea>
+                                        <rich:message for="tratamiento" styleClass="msgError" ajaxRendered="true"/>
+
+                                    </h:panelGrid>
+
+                                    <div class="botones">
+                                        <a4j:commandButton value="Guardar Informe" 
+                                                           execute="@form"
+                                                           action="#{informeBean.guardarInforme()}" 
+                                                           oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('informe')}.hide(); #{rich:component('confirmInforme')}.show(); }"                                                         
+                                                           styleClass="boton"
+                                                           render="formularioInforme"
+                                                           status="guardarSave" >
+                                        </a4j:commandButton> 
+                                        <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
+                                    </div>
+                                </rich:panel>
+                            </rich:graphValidator>
+                        </h:form>
+
+                        <h:panelGrid columns="2" width="100%" style="text-align: center;" id="informeDatosPie">
+                            <h:outputText value="Dr/a: #{informeBean.medico.nombre} #{informeBean.medico.apellidos}"/>
+                            <h:outputText value="Fecha: #{informeBean.informe.fecha} ">
+                                <f:convertDateTime dateStyle="full" timeZone="es"/>
+                            </h:outputText>                            
+                            
+                        </h:panelGrid>
+                    </rich:popupPanel>
+
+                    <!-- Modal de confirmación de informe -->
+                    <rich:popupPanel id="confirmInforme" modal="true" resizeable="false" autosized="true" domElementAttachment="form">
+                        <f:facet name="header">
+                            <h:outputText value="Informe correcto" styleClass="cabeceraModal" />
+                        </f:facet>
+                        <f:facet name="controls">
+                            <h:outputLink value="#" onclick="#{rich:component('confirmInforme')}.hide(); return false;" style="color: inherit">
+                                X
+                            </h:outputLink>
+                        </f:facet>
+                        <h:form>
+
+                            <rich:panel>
+                                <h:outputText styleClass="msgOk" value="El informe se ha generado correctamente."/>
+                                <div class="botones">
+                                    <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true" render="menuPrincipal"  onclick="#{rich:component('confirmInforme')}.hide();"/>
+                                </div>            
+                            </rich:panel>
+                        </h:form>
+                    </rich:popupPanel>
+
+                </section>
+
+            </ui:define>
+        </ui:decorate>
+    </f:view>
+</html>
+

@@ -15,9 +15,9 @@
         <view-id value="/faces/paciente/inicioAreaPaciente.xhtml" />
     </url-mapping>
     
-    <url-mapping id="informesMedicosPaciente">	
-        <pattern value="/informesMedicosPaciente/" />
-        <view-id value="/faces/paciente/informesMedicosPaciente.xhtml" />
+    <url-mapping id="verInformesPaciente">	
+        <pattern value="/verInformesPaciente/" />
+        <view-id value="/faces/paciente/verInformesPaciente.xhtml" />
     </url-mapping>
 
     <!-- Navegación médicos -->
@@ -32,7 +32,17 @@
         <view-id value="/faces/medico/misPacientes.xhtml" />
     </url-mapping>
   
-  
+    <url-mapping id="realizarInforme">	
+        <pattern value="/realizarInforme/" />
+        <view-id value="/faces/medico/realizarInforme.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="verInformesMedico">	
+        <pattern value="/verInformesMedico/" />
+        <view-id value="/faces/medico/verInformesMedico.xhtml" />
+    </url-mapping>
+
+
     <!-- Navegación administradores -->
     
     <url-mapping id="inicioAreaAdmin">	

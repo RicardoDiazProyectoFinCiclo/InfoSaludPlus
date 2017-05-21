@@ -36,9 +36,10 @@
                     <h:form>
                         <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
                             <rich:panelMenuGroup label="Panel del personal médico" selectable="false" expanded="true" styleClass="cabeMenuHori">
-                                <rich:panelMenuItem label="Datos personales" name="datos_personales" />
-                                <rich:panelMenuItem style="color:blue;" mode="client" label="Mis pacientes" name="mis_pacientes" />
-                                <rich:panelMenuItem label="Partes médicos" name="partes_medicos" execute="true" action="#{informeBean.generar()}" />
+                                <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaMedico" />
+                                <rich:panelMenuItem mode="client" style="color:blue;" label="Mis pacientes" name="mis_pacientes" action="misPacientes" /> 
+                                <rich:panelMenuItem label="Realizar informe" name="realizar_informe" action="realizarInforme" /> 
+                                <rich:panelMenuItem label="Ver informes" name="mis_pacientes" action="verInformesMedico" /> 
                                 <rich:panelMenuItem label="Área de citas" name="area_citas" />
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
                             </rich:panelMenuGroup>

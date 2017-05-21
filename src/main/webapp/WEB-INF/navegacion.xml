@@ -41,14 +41,15 @@
             <redirect>true</redirect>
         </navigation-case>
         <navigation-case>
-            <from-outcome>informesMedicosPaciente</from-outcome>
-            <to-view-id>/paciente/informesMedicosPaciente.xhtml</to-view-id>
+            <from-outcome>verInformesPaciente</from-outcome>
+            <to-view-id>/paciente/verInformesPaciente.xhtml</to-view-id>
             <redirect>true</redirect>
-        </navigation-case>            
+        </navigation-case>  
+                  
     </navigation-rule>
     
     <navigation-rule>
-        <from-view-id>/paciente/informesMedicosPaciente.xhtml</from-view-id>
+        <from-view-id>/paciente/verInformesPaciente.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>inicio</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
@@ -60,20 +61,7 @@
             <redirect>true</redirect>
         </navigation-case>           
     </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/paciente/informesMedicosPaciente.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>inicio</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect>true</redirect>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>inicioAreaPaciente</from-outcome>
-            <to-view-id>/paciente/inicioAreaPaciente.xhtml</to-view-id>
-            <redirect>true</redirect>
-        </navigation-case>           
-    </navigation-rule>
+
     
     <!-- Navegación de médicos -->
     
@@ -89,6 +77,16 @@
             <to-view-id>/medico/misPacientes.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>realizarInforme</from-outcome>
+            <to-view-id>/medico/realizarInforme.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>verInformesMedico</from-outcome>
+            <to-view-id>/medico/verInformesMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
     </navigation-rule>
     
     <navigation-rule>
@@ -101,6 +99,64 @@
         <navigation-case>
             <from-outcome>inicioAreaMedico</from-outcome>
             <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>realizarInforme</from-outcome>
+            <to-view-id>/medico/realizarInforme.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>verInformesMedico</from-outcome>
+            <to-view-id>/medico/verInformesMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/medico/realizarInforme.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaMedico</from-outcome>
+            <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>misPacientes</from-outcome>
+            <to-view-id>/medico/misPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>verInformesMedico</from-outcome>
+            <to-view-id>/medico/verInformesMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/medico/verInformesMedico.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaMedico</from-outcome>
+            <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>misPacientes</from-outcome>
+            <to-view-id>/medico/misPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>realizarInforme</from-outcome>
+            <to-view-id>/medico/realizarInforme.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
     </navigation-rule>
