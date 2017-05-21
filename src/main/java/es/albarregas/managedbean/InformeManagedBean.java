@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package managedbean;
+package es.albarregas.managedbean;
 
 import es.albarregas.dao.GenericoDAO;
 import es.albarregas.daofactory.DAOFactory;

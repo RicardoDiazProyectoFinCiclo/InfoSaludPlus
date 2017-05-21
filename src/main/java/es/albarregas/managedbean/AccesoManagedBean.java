@@ -1,4 +1,4 @@
-package managedbean;
+package es.albarregas.managedbean;
 
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
@@ -17,7 +17,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import util.Utilidades;
+import es.albarregas.util.Utilidades;
 
 /**
  *

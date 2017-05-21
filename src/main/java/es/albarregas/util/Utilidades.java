@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package util;
+package es.albarregas.util;
 
 import java.security.MessageDigest;
 import org.apache.commons.codec.binary.Base64;
