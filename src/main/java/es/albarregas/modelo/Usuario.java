@@ -3,16 +3,8 @@
  */
 package es.albarregas.modelo;
 
-import es.albarregas.dao.IGenericoDAO;
-import es.albarregas.daofactory.DAOFactory;
-import es.albarregas.persistencia.FacesUtils;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Date;
-import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +18,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
-import javax.validation.constraints.AssertTrue;
 
 /**
  *
@@ -61,7 +52,9 @@ public class Usuario implements Serializable, Cloneable {
     @OneToOne
     @JoinColumn(name = "idCentro")
     protected Centro centro;
-    protected Blob imagen;  
+    @JoinColumn(name = "idImagen")
+    @OneToOne(cascade = {CascadeType.ALL})
+    protected Imagen imagen;
     // p = paciente, m = medico, a = administrador, e = enfermera, o = otro. enfermeros y otros serían para posteriores versiones 
     @Column(columnDefinition = "set('p','m','a','e','o') DEFAULT 'p' not null")
     protected String tipo = "p";
@@ -144,11 +137,11 @@ public class Usuario implements Serializable, Cloneable {
         this.centro = centro;
     }
 
-    public Blob getImagen() {
+    public Imagen getImagen() {
         return imagen;
     }
 
-    public void setImagen(Blob imagen) {
+    public void setImagen(Imagen imagen) {
         this.imagen = imagen;
     }
 

@@ -32,7 +32,9 @@ public class Centro implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idDireccion")
     private Direccion direccion;
-    private Blob imagen;
+    @JoinColumn(name = "idImagen")
+    @OneToOne(cascade = {CascadeType.ALL})
+    private Imagen imagen;
 
     public int getId() {
         return id;
@@ -58,11 +60,11 @@ public class Centro implements Serializable {
         this.direccion = direccion;
     }
 
-    public Blob getImagen() {
+    public Imagen getImagen() {
         return imagen;
     }
 
-    public void setImagen(Blob imagen) {
+    public void setImagen(Imagen imagen) {
         this.imagen = imagen;
     }
 

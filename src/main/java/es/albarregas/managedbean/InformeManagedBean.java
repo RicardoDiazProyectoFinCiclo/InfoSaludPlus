@@ -6,6 +6,7 @@
 package es.albarregas.managedbean;
 
 import es.albarregas.dao.GenericoDAO;
+import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
 import es.albarregas.modelo.Informe;
 import es.albarregas.modelo.Medico;
@@ -22,7 +23,7 @@ import javax.faces.bean.ViewScoped;
 import org.richfaces.component.UIDataTable;
 
 /**
- *
+ * Managed Bean para tratar la subida y bajada de imágenes de forma aislada para reutilizar código y evitar problemas
  * @author Ricardo
  */
 @ViewScoped
@@ -37,8 +38,8 @@ public class InformeManagedBean implements Cloneable, Serializable {
     private List<Paciente> listPacientes;
     private UIDataTable panelInforme;
 
-    DAOFactory df = null;
-    GenericoDAO igd = null;
+    DAOFactory df;
+    IGenericoDAO igd;
 
     public Usuario getUsuario() {
         return usuario;
@@ -101,6 +102,8 @@ public class InformeManagedBean implements Cloneable, Serializable {
     @PostConstruct
     public void init() {
         df = DAOFactory.getDAOFactory();
+        igd = df.getGenericoDAO();
+        
         if (FacesUtils.getSession("usuario") != null) {
             usuario = (Usuario) FacesUtils.getSession("usuario");
         }
@@ -112,12 +115,12 @@ public class InformeManagedBean implements Cloneable, Serializable {
         //Con el switch reutilizamos mucho código, sino tendríamos que hacer dos ManagedBeans muy parecidos para cada tipo de usuario
         switch (usuario.getTipo()) {
             case "p":
-                listInformes = df.getGenericoDAO().get("Informe i WHERE i.paciente.id = " + usuario.getId());
+                listInformes = igd.get("Informe i WHERE i.paciente.id = " + usuario.getId());
                 break;
             case "m":
-                listInformes = df.getGenericoDAO().get("Informe i WHERE i.medico.id = " + usuario.getId());
-                listPacientes = df.getGenericoDAO().get("Paciente p WHERE p.medico.id = " + usuario.getId());
-                medico = (Medico) df.getGenericoDAO().getOne(usuario.getId(), Medico.class);
+                listInformes = igd.get("Informe i WHERE i.medico.id = " + usuario.getId());
+                listPacientes = igd.get("Paciente p WHERE p.medico.id = " + usuario.getId());
+                medico = (Medico) igd.getOne(usuario.getId(), Medico.class);
                 break;
             default:
                 break;
@@ -156,7 +159,7 @@ public class InformeManagedBean implements Cloneable, Serializable {
         informe.setMedico(medico);
         informe.setPaciente(paciente);
         informe.setFecha(new Date());
-        df.getGenericoDAO().add(informe);
+        igd.add(informe);
         return "";
 
     }

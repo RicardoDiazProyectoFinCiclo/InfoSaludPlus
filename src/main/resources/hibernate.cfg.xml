@@ -22,5 +22,6 @@
         <mapping class="es.albarregas.modelo.Direccion"/>
         <mapping class="es.albarregas.modelo.Pueblo"/>
         <mapping class="es.albarregas.modelo.Provincia"/>
+        <mapping class="es.albarregas.modelo.Imagen"/>
     </session-factory>
 </hibernate-configuration>

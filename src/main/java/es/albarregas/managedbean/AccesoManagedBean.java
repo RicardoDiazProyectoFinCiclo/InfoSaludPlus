@@ -4,6 +4,7 @@ import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
 import es.albarregas.modelo.Centro;
 import es.albarregas.modelo.Direccion;
+import es.albarregas.modelo.Imagen;
 import es.albarregas.modelo.Medico;
 import es.albarregas.modelo.Paciente;
 import es.albarregas.modelo.Provincia;
@@ -11,13 +12,27 @@ import es.albarregas.modelo.Pueblo;
 import es.albarregas.modelo.Servicio;
 import es.albarregas.modelo.Usuario;
 import es.albarregas.persistencia.FacesUtils;
+import es.albarregas.util.Utilidades;
+import java.awt.image.RenderedImage;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
+import static java.lang.System.out;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import es.albarregas.util.Utilidades;
+import javax.imageio.ImageIO;
+import javax.inject.Scope;
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
 
 /**
  *
@@ -36,14 +51,15 @@ public class AccesoManagedBean implements Cloneable, Serializable {
     private Pueblo pueblo;
     private Centro centro;
     private Servicio servicio;
+    private Imagen imagen;
     private List<Centro> listCentros;
     private List<Pueblo> listPueblos;
     private List<Servicio> listServicios;
     private List<Medico> listMedicos;
     private String codigoPostal;
 
-    private IGenericoDAO igd = null;
-    private DAOFactory df = null;
+    private IGenericoDAO igd;
+    private DAOFactory df;
 
     public Usuario getUsuario() {
         return usuario;
@@ -165,29 +181,31 @@ public class AccesoManagedBean implements Cloneable, Serializable {
         this.pueblo = new Pueblo();
         this.centro = new Centro();
         this.servicio = new Servicio();
-        this.listCentros = igd.get("Centro");
-        this.listServicios = igd.get("Servicio");
+        this.imagen = new Imagen();
 
-        System.out.println("Entrando en el postconstructor");
+        this.setListCentros(igd.get("Centro"));
+        this.setListServicios(igd.get("Servicio"));
+
         entidad = "";
         if (FacesUtils.getSession("usuario") != null) {
             usuario = (Usuario) FacesUtils.getSession("usuario");
             switch (usuario.getTipo()) {
                 case "p":
-                    paciente = (Paciente) df.getGenericoDAO().getOne(usuario.getId(), paciente.getClass());
+                    paciente = (Paciente) igd.getOne(usuario.getId(), paciente.getClass());
                     direccion = paciente.getDireccion();
                     pueblo = direccion.getPueblo();
-                    listPueblos = igd.get("Pueblo Where codigoPostal = '" + this.getPueblo().getCodigoPostal() + "'");
+                    this.setListPueblos(igd.get("Pueblo Where codigoPostal = '" + this.getPueblo().getCodigoPostal() + "'"));
                     provincia = pueblo.getProvincia();
                     centro = paciente.getCentro();
-                    if(paciente.getMedico() != null){
+                    if (paciente.getMedico() != null) {
                         medico = paciente.getMedico();
-                    }          
+                    }
                     //El paciente solo puede elegir médicos de su centro
                     medicosPorCentros();
+
                     break;
                 case "m":
-                    medico = (Medico) df.getGenericoDAO().getOne(usuario.getId(), medico.getClass());
+                    medico = (Medico) igd.getOne(usuario.getId(), medico.getClass());
                     direccion = medico.getDireccion();
                     pueblo = direccion.getPueblo();
                     servicio = medico.getServicio();
@@ -200,6 +218,20 @@ public class AccesoManagedBean implements Cloneable, Serializable {
             }
         }
 
+    }
+
+    public String limpiarDatos() {
+        paciente = new Paciente();
+        usuario = new Usuario();
+        direccion = new Direccion();
+        pueblo = new Pueblo();
+        provincia = new Provincia();
+        centro = new Centro();
+        servicio = new Servicio();
+        usuario.setNombre("");
+        System.out.println("Limpiando datos");
+
+        return "";
     }
 
     /**
@@ -290,12 +322,7 @@ public class AccesoManagedBean implements Cloneable, Serializable {
             medico.setCentro(centro);
             medico.setTipo("m"); // p = paciente, m = medico, a = admin
             igd.add(medico);
-            //Seteamos el email y clave en usuario para tenerlo en el login, sino petaría porque el login es por usuario
-            usuario.setEmail(medico.getEmail());
-            usuario.setClave(claveSinEncriptar);
             System.out.println("Medico registrado! ");
-            // hacer login después del registro solo está pensado para pacientes, en el futuro ya veremos
-            // this.login();
         }
         return "";
     }
@@ -311,25 +338,6 @@ public class AccesoManagedBean implements Cloneable, Serializable {
         return "/index.xhtml?faces-redirect=true";
     }
 
-    //Esto es para validar que las contraseñas del registro sean iguales
-//    @AssertTrue(message = "Las contraseñas son diferentes")
-//    public boolean isPasswordsEquals() {
-//        boolean pass = false;
-//
-//        switch (usuario.getTipo()) {
-//            case "p":
-//                pass = paciente.getClave().equals(paciente.getClaveRep());
-//                break;
-//            case "m":
-//                pass = medico.getClave().equals(medico.getClaveRep());
-//                break;
-//            default:
-//                break;
-//        }
-//
-//        System.out.println("Contraseñas iguales?: " + pass);
-//        return pass;
-//    }
     /**
      * Función para lanzar un mensaje de cambio de contraseña
      */
@@ -394,7 +402,10 @@ public class AccesoManagedBean implements Cloneable, Serializable {
         paciente.setDireccion(direccion);
         paciente.setCentro(centro);
         paciente.setMedico(medico);
-        df.getGenericoDAO().update(paciente);
+        igd.update(paciente);
+        //Recuperamos el usuario que hemos modificado para meterlo de nuevo en la sesión
+        usuario = (Usuario) igd.getOne(paciente.getId(), Usuario.class);
+        FacesUtils.addSession("usuario", usuario);
     }
 
     /**
@@ -405,27 +416,29 @@ public class AccesoManagedBean implements Cloneable, Serializable {
         direccion.setPueblo(pueblo);
         medico.setDireccion(direccion);
         medico.setCentro(centro);
-        df.getGenericoDAO().update(medico);
+        igd.update(medico);
+        //Recuperamos el usuario que hemos modificado para meterlo de nuevo en la sesión
+        usuario = (Usuario) igd.getOne(medico.getId(), Usuario.class);
+        FacesUtils.addSession("usuario", usuario);
     }
 
     /**
      * Función donde se actualizan los datos del administrador
      */
     public void modificarDatosAdmin() {
-        df.getGenericoDAO().update(usuario);
+        igd.update(usuario);
     }
 
     /**
-     * Función para seleccionar los médicos disponibles (solo pueden tener x pacientes) por centro seleccionado
+     * Función para seleccionar los médicos disponibles (solo pueden tener x
+     * pacientes) por centro seleccionado
      */
     public void medicosPorCentros() {
-        
         //Consulta en la que seleccionamos los medicos por el centro seleccionado y que tengan menos de x pacientes (subconsulta)
         //Para que los médicos tengan así un tope de pacientes (ponemos 2 de prueba).
-        String consulta = "Medico m Where m.centro.id = " + paciente.getCentro().getId() 
+        String consulta = "Medico m Where m.centro.id = " + paciente.getCentro().getId()
                 + " AND  m.id NOT IN (SELECT p.medico.id from Paciente p WHERE NOT (p.medico.id IS NULL) GROUP BY p.medico.id HAVING COUNT(p.medico.id) > 4 ) ";
         listMedicos = igd.get(consulta);
-
     }
 
 }

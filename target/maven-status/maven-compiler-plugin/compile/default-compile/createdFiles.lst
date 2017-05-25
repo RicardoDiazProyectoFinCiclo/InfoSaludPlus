@@ -1,7 +1,9 @@
 es\albarregas\daofactory\MySQLDAOFactory.class
+es\albarregas\managedbean\ImagenManagedBean.class
 es\albarregas\dao\IGenericoDAO.class
 es\albarregas\daofactory\DAOFactory.class
 es\albarregas\managedbean\AccesoManagedBean.class
+es\albarregas\modelo\Imagen.class
 es\albarregas\modelo\Informe.class
 es\albarregas\modelo\Medico.class
 es\albarregas\modelo\Servicio.class

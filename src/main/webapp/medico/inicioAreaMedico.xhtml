@@ -55,6 +55,26 @@
                             <rich:panel title="Datos del médico" header="Datos del médico" style=" margin-bottom: 20px; background: rgb(245,245,255);">
                                 <rich:messages styleClass="msgErrorGlobal" for="formularioCambioDatos"  />
 
+                                <table border="0" style=" margin-bottom: 20px;">
+                                    <tr>
+                                        <th><h:outputLabel style="text-align: center;" value="Foto del paciente"/></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th> <a4j:mediaOutput  id="media" element="img" style="height: 200px; width: 150px; border: solid 1px black; " createContent="#{imagenBean.pintar}"
+                                                               value="#{row}"  cacheable="false" >
+                                            </a4j:mediaOutput>
+                                        </th>
+                                        <th style="vertical-align: bottom; padding-left: 20px;">
+                                            <rich:fileUpload id="upload" maxFilesQuantity="1"  fileUploadListener="#{imagenBean.aniadirImagen}"
+                                                             style="width: 250px; height: 100px;vertical-align: top;" listHeight="200px" 
+                                                             render="media" acceptedTypes=".jpg, .gif, .png, .bmp"
+                                                             immediateUpload="false">
+                                            </rich:fileUpload>
+                                        </th>
+                                    </tr>
+                                </table>
+
                                 <h:panelGrid  columns="3" class="panel" >
 
                                     <h:outputLabel value="Nombre " for="nombre3"/>
@@ -161,11 +181,6 @@
                     <rich:popupPanel id="modificacionOk" modal="true" resizeable="false" autosized="true">
                         <f:facet name="header">
                             <h:outputText value="Modificación correcta" styleClass="cabeceraModal" />
-                        </f:facet>
-                        <f:facet name="controls">
-                            <h:outputLink value="#" onclick="#{rich:component('modificacionOk')}.hide(); return false;" style="color: inherit">
-                                X
-                            </h:outputLink>
                         </f:facet>
                         <h:form>
 

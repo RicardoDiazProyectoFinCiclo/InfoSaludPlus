@@ -29,7 +29,6 @@ public class Servicio implements Serializable {
     private String nombre;
     @Column(nullable = false)
     private String descripcion;
-//    private Blob imagen;
 
     public int getId() {
         return id;
@@ -55,11 +54,4 @@ public class Servicio implements Serializable {
         this.descripcion = descripcion;
     }
 
-//    public Blob getImagen() {
-//        return imagen;
-//    }
-//
-//    public void setImagen(Blob imagen) {
-//        this.imagen = imagen;
-//    }
 }

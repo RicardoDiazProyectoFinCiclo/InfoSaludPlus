@@ -1,4 +1,5 @@
 # InfoSaludPlus
+- Los pacientes y médicos pueden subir fotos/imágenes en su perfil, y modificarlas por otras. Mejoro la recarga de las sesiones al modificar datos. Nueva version BBDD subida. 25/05/2017
 - El médico puede añadir informes médicos y también verlos. El paciente puede ver sus informes médicos (queda por limar algunas asperezas) en su área privada. 21/05/2017
 - Registro y modificación del medico terminada. Ya existe cuenta de administrador en BD, y acceso al panel. El paciente puede elegir médico. Añadido mini manual de usuario. Versión nueva (llena) de BD añadida. 16/05/2017
 - Registro y login de usuario paciente terminados (espero), modificación de datos del paciente terminados, nueva versión de base de datos añadida. 09/05/2017 

@@ -9,6 +9,16 @@
         <default-locale>es</default-locale>
         <supported-locale>en</supported-locale>
     </locale-config>
+    
+    <!-- Para subir archivos -->
+    <context-param>
+        <param-name>createTempFiles</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>maxRequestSize</param-name>
+        <param-value>150000</param-value>
+    </context-param>
 
     <!-- filtro de Ajax4JSF -->
     <context-param>

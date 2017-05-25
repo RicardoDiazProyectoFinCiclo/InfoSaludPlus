@@ -8,10 +8,11 @@
       xmlns:rich="http://richfaces.org/rich"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:t="http://myfaces.apache.org/tomahawk"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"  lang="es">
 
     <f:view>
         <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
 
             <ui:define name="titulo">InfoSaludPlus | Area Pacientes</ui:define>
 
@@ -52,6 +53,26 @@
                         <rich:graphValidator id="gvDatos">
                             <rich:panel title="Datos del paciente" header="Datos del paciente" style=" margin-bottom: 20px; background: rgb(245,245,255);">
                                 <rich:messages styleClass="msgErrorGlobal" for="formularioCambioDatos"  />
+
+                                <table border="0" style=" margin-bottom: 20px;">
+                                    <tr>
+                                        <th><h:outputLabel style="text-align: center;" value="Foto del paciente"/></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th> <a4j:mediaOutput  id="media" element="img" style="height: 200px; width: 150px; border: solid 1px black; " createContent="#{imagenBean.pintar}"
+                                                               value="#{row}"  cacheable="false" >
+                                            </a4j:mediaOutput>
+                                        </th>
+                                        <th style="vertical-align: bottom; padding-left: 20px;">
+                                            <rich:fileUpload id="upload" maxFilesQuantity="1"  fileUploadListener="#{imagenBean.aniadirImagen}"
+                                                             style="width: 250px; height: 100px;vertical-align: top;" listHeight="200px" 
+                                                             render="media" acceptedTypes=".jpg, .gif, .png, .bmp"
+                                                             immediateUpload="false">
+                                            </rich:fileUpload>
+                                        </th>
+                                    </tr>
+                                </table>
 
                                 <h:panelGrid  columns="3" class="panel" >
 
@@ -119,7 +140,7 @@
                                         <a4j:ajax event="change" render="medico3" listener="#{accesoBean.medicosPorCentros()}"/>
                                     </h:selectOneMenu>
                                     <rich:message for="centro3"  styleClass="msgError"/>
-                                    
+
                                     <h:outputLabel value="Medico " for="medico3" /> 
                                     <h:selectOneMenu id="medico3" value="#{accesoBean.medico.id}"  required="true" requiredMessage="Seleccione médico">
                                         <f:selectItem  itemLabel="Seleccione un médico" itemValue="#{null}" />
@@ -132,6 +153,9 @@
                                         <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                     </h:inputText>
                                     <h:message for="email3" styleClass="msgError"/>
+
+
+
                                 </h:panelGrid>
                                 <div class="botones">
                                     <a4j:commandButton value="Modificar datos personales" 
@@ -146,17 +170,12 @@
                                 </div>
                             </rich:panel>
                         </rich:graphValidator>
-                    </h:form>     
+                    </h:form>    
 
 
                     <rich:popupPanel id="modificacionOk" modal="true" resizeable="false" autosized="true">
                         <f:facet name="header">
                             <h:outputText value="Modificación correcta" styleClass="cabeceraModal" />
-                        </f:facet>
-                        <f:facet name="controls">
-                            <h:outputLink value="#" onclick="#{rich:component('modificacionOk')}.hide(); return false;" style="color: inherit">
-                                X
-                            </h:outputLink>
                         </f:facet>
                         <h:form>
 
@@ -168,6 +187,7 @@
                             </rich:panel>
                         </h:form>
                     </rich:popupPanel>
+                    
 
                 </section>
 

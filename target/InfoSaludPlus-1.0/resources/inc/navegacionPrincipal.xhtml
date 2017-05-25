@@ -63,7 +63,7 @@
                 </c:if>
                 <c:if test="#{sessionScope.usuario != null}">
                     <!-- El mode client de menuItem anula el action y actionListener -->
-                    <rich:menuItem mode="client"  id="msgBienvenida" styleClass="msgBienvenida" label="Bienvenid@, #{sessionScope.usuario.nombre} #{sessionScope.usuario.apellidos}" />
+                    <rich:menuItem mode="client"  id="msgBienvenida" styleClass="msgBienvenida" label="Bienvenido/a, #{sessionScope.usuario.nombre} #{sessionScope.usuario.apellidos}" />
                     <c:if test="#{sessionScope.usuario.tipo == 'p'}">
                         <rich:menuItem label="Área del Paciente" styleClass="menuItemLb" action="inicioAreaPaciente" execute="@form"/>
                     </c:if>
@@ -194,7 +194,7 @@
                                            status="guardarSave" >
                             <a4j:param value="p" assignTo="#{accesoBean.usuario.tipo}"/>
                         </a4j:commandButton> 
-                        <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true"/>
+                        <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" actionListener="#{accesoBean.limpiarDatos()}" immediate="true"  />
                     </div>
                 </rich:panel>
             </rich:graphValidator>
