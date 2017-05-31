@@ -9,7 +9,6 @@
         <default-locale>es</default-locale>
         <supported-locale>en</supported-locale>
     </locale-config>
-    
     <!-- Para subir archivos -->
     <context-param>
         <param-name>createTempFiles</param-name>
@@ -19,24 +18,15 @@
         <param-name>maxRequestSize</param-name>
         <param-value>150000</param-value>
     </context-param>
-
     <!-- filtro de Ajax4JSF -->
     <context-param>
         <param-name>org.richfaces.skin</param-name>
         <param-value>classic</param-value>
     </context-param>
     <!-- Making the RichFaces skin spread to standard HTML controls -->
-
     <context-param>
         <param-name>org.richfaces.CONTROL_SKINNING</param-name>
         <param-value>enable</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>javax.faces.CONFIG_FILES</param-name>
-        <param-value>/WEB-INF/navegacion.xml,
-            /WEB-INF/vistas.xml,
-            /WEB-INF/mensajes.xml</param-value>
     </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -59,18 +49,24 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>-->
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>/WEB-INF/navegacion.xml,
+            /WEB-INF/vistas.xml,
+            /WEB-INF/mensajes.xml,
+            /WEB-INF/centros.xml</param-value>
+    </context-param>
     <filter>
         <filter-name>Pretty Filter</filter-name>
         <filter-class>com.ocpsoft.pretty.PrettyFilter</filter-class>
     </filter>
-    <filter-mapping> 
-        <filter-name>Pretty Filter</filter-name> 
-        <url-pattern>/*</url-pattern> 
-        <dispatcher>FORWARD</dispatcher> 
-        <dispatcher>REQUEST</dispatcher> 
+    <filter-mapping>
+        <filter-name>Pretty Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
         <dispatcher>ERROR</dispatcher>
-    </filter-mapping> 
-
+    </filter-mapping>
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
         <welcome-file>index.xhtml</welcome-file>

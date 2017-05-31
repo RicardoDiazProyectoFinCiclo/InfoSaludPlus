@@ -13,26 +13,12 @@ import es.albarregas.modelo.Servicio;
 import es.albarregas.modelo.Usuario;
 import es.albarregas.persistencia.FacesUtils;
 import es.albarregas.util.Utilidades;
-import java.awt.image.RenderedImage;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
-import static java.lang.System.out;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import javax.imageio.ImageIO;
-import javax.inject.Scope;
-import org.richfaces.event.FileUploadEvent;
-import org.richfaces.model.UploadedFile;
 
 /**
  *

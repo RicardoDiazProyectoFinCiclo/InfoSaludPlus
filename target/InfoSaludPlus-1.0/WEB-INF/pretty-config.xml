@@ -55,5 +55,13 @@
         <view-id value="/faces/medico/aniadirPersonalSanitario.xhtml" />
     </url-mapping>
     
+    <url-mapping id="gestionarCentros">	
+        <pattern value="/gestionarCentros/" />
+        <view-id value="/faces/administrador/gestionarCentros.xhtml" />
+    </url-mapping>
     
+    <url-mapping id="gestionarServicios">	
+        <pattern value="/gestionarServicios/" />
+        <view-id value="/faces/administrador/gestionarServicios.xhtml" />
+    </url-mapping>
 </pretty-config>

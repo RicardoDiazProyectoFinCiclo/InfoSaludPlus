@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
+
+    <f:view>
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
+            <ui:define name="titulo">InfoSaludPlus | Area Administración</ui:define>
+
+
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área de administración" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <nav id="panelLateral" class="row col-sm-2">
+                    <h:outputStylesheet>
+                        .cols {
+                        vertical-align: top;
+                        }
+                    </h:outputStylesheet>
+                    <h:form>
+                        <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
+                            <rich:panelMenuGroup label="Panel del administrador" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                                <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaAdmin" />
+                                <rich:panelMenuItem label="Añadir personal sanitario" name="aniadir_personal_sanitario" action="aniadirPersonalSanitario" execute="true" />
+                                <rich:panelMenuItem  label="Gestionar centros" action="gestionarCentros" />
+                                <rich:panelMenuItem style="color:blue;" mode="client" label="Gestionar servicios" action="gestionarServicios" />
+                                <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" />
+                                <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+                            </rich:panelMenuGroup>
+
+                        </rich:panelMenu>
+
+                    </h:form>
+                </nav>
+
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1" > 
+                    <h:form>
+                        <rich:panel>
+                            <f:facet name="header">
+                                <h:outputText value="Servicios ( #{servicioBean.contadorListServicios} )" />
+                            </f:facet>
+
+                            <rich:dataTable id="tablaServicios"   sortMode="single" value="#{servicioBean.listServicios}" style="text-align: center; width: 100%" 
+                                            var="ser" rows="5"  rowClasses="odd-row, even-row" binding="#{servicioBean.panelServicio}">
+                                <rich:column  width="15%" sortBy="#{ser.id}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Identificador"/>
+                                    </f:facet>
+                                    <h:outputText value="#{ser.id} "/>
+                                </rich:column>
+
+                                <rich:column width="30%" sortBy="#{ser.nombre}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre del servicio"/>
+                                    </f:facet>
+                                    <h:outputText value="#{ser.nombre}" />
+                                </rich:column>
+
+                                <rich:column width="40%" sortBy="#{ser.descripcion}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Descripcion del servicio"/>
+                                    </f:facet>
+                                    <h:outputText rendered="#{not empty ser.descripcion}" value="#{ser.descripcion}" />
+                                </rich:column>
+
+                                <rich:column width="15%" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Modificar"/>
+                                    </f:facet>
+
+                                    <a4j:commandLink  render="formServicios,cabModalServicios" 
+                                                      resetValues="true" action="#{servicioBean.levantarModalModificar()}" 
+                                                      oncomplete="#{rich:component('modalServicios')}.show()" execute="@this" >
+                                        <h:graphicImage library="icons" name="edit.gif" alt="Añadir" title="Añadir Servicio" />
+                                    </a4j:commandLink>
+
+                                </rich:column>
+                                <f:facet name="footer">
+                                    <rich:dataScroller for="tablaServicios" fastStep="3" />
+                                </f:facet>
+                            </rich:dataTable>
+
+                        </rich:panel>
+
+
+                        <a4j:commandButton value="Añadir servicio" execute="@this" action="#{servicioBean.levantarModalAniadir()}" render="formServicios,cabModalServicios" styleClass="botonFuera" oncomplete="#{rich:component('modalServicios')}.show();" />
+
+
+                    </h:form>
+                    <rich:popupPanel id="modalServicios" modal="true" resizeable="false" autosized="true"  onmaskclick="#{rich:component('modalServicios')}.hide()">
+                        <f:facet name="header">
+                            <a4j:outputPanel id="cabModalServicios">
+                                <h:outputText value="Añadir servicio" rendered="#{servicioBean.aniadirModificar eq 0}" />
+                                <h:outputText value="Modificar servicio" rendered="#{servicioBean.aniadirModificar eq 1}"/>
+                            </a4j:outputPanel>
+                        </f:facet>
+
+                        <h:form id="formServicios">
+
+                            <rich:focus preserve="true" delayed="true"/>
+                            <rich:graphValidator id="gvServicios" value="#{servicioBean}">
+                                <rich:panel>
+                                    <h:messages for="gvServicios"/>
+
+                                 
+                                    <h:panelGrid columns="3" id="datosServicio" class="panel">
+
+                                        <h:outputLabel for="nombreServicio" value="Nombre del servicio" />
+                                        <h:inputText id="nombreServicio"  value="#{servicioBean.servicio.nombre}" maxlength="25">
+                                            <f:validateLength minimum="4" />
+                                        </h:inputText>
+                                        <rich:message for="nombreServicio" style="msgError" ajaxRendered="true" />
+
+                                        <h:outputLabel for="descripcionServicio" value="Descripción del servicio" />
+                                        <h:inputText id="descripcionServicio"  value="#{servicioBean.servicio.descripcion}" maxlength="25">
+                                            <f:validateLength minimum="4" />
+                                        </h:inputText>
+                                        <rich:message for="descripcionServicio" style="msgError" ajaxRendered="true" />
+
+                                    </h:panelGrid>
+
+                                    <div class="botones">
+                                        <a4j:commandButton rendered="#{servicioBean.aniadirModificar eq 0}" 
+                                                           styleClass="boton" 
+                                                           value="Añadir servicio" 
+                                                           action="#{servicioBean.aniadirServicio()}" 
+                                                           execute="@form" status="guardarSave" render="tablaServicios"
+                                                           oncomplete="if (#{empty facesContext.messageList}) {#{rich:component('servicioOk')}.show(); #{rich:component('modalServicios')}.hide();}"/>
+
+                                        <a4j:commandButton rendered="#{servicioBean.aniadirModificar eq 1}" 
+                                                           styleClass="boton" 
+                                                           value="Modificar servicio" 
+                                                           action="#{servicioBean.modificarServicio()}" execute="@form" status="guardarSave"
+                                                           oncomplete="if (#{empty facesContext.messageList}) {#{rich:component('servicioOk')}.show(); #{rich:component('modalServicios')}.hide(); }"/>
+                                        <a4j:commandButton value="Cerrar" immediate="true" oncomplete="#{rich:component('modalServicios')}.hide();" styleClass="boton"/>
+                                    </div>
+                                </rich:panel>
+                            </rich:graphValidator>
+                        </h:form>
+
+                    </rich:popupPanel>
+
+
+                    <rich:popupPanel id="servicioOk" modal="true" resizeable="false" autosized="true">
+                        <f:facet name="header">
+                            <h:outputText  value="Modificación correcta" rendered="#{servicioBean.aniadirModificar eq 1}" styleClass="cabeceraModal" />
+                            <h:outputText  value="Inserción correcta" rendered="#{servicioBean.aniadirModificar eq 0}" styleClass="cabeceraModal" />
+                        </f:facet>
+                        <h:form>
+
+                            <rich:panel>
+                                <h:outputText styleClass="msgOk" rendered="#{servicioBean.aniadirModificar eq 1}" value="Los datos han sido modificados correctamente"/>
+                                <h:outputText styleClass="msgOk" rendered="#{servicioBean.aniadirModificar eq 0}" value="Los datos han sido añadidos correctamente"/>
+                                <div class="botones">
+                                    <a4j:commandButton value="Cerrar" render="tablaServicios, servicioOk"  styleClass="boton" immediate="true"  onclick="#{rich:component('servicioOk')}.hide();"/>
+                                </div>            
+                            </rich:panel>
+                        </h:form>
+                    </rich:popupPanel>
+                </section>
+
+            </ui:define>
+        </ui:decorate>
+    </f:view>
+</html>
+

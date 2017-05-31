@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
+
+    <f:view>
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
+            <ui:define name="titulo">InfoSaludPlus | Area Administración</ui:define>
+
+
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área de administración" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <nav id="panelLateral" class="row col-sm-2">
+                    <h:outputStylesheet>
+                        .cols {
+                        vertical-align: top;
+                        }
+                    </h:outputStylesheet>
+                    <h:form>
+                        <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
+                            <rich:panelMenuGroup label="Panel del administrador" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                                <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaAdmin" />
+                                <rich:panelMenuItem label="Añadir personal sanitario" name="aniadir_personal_sanitario" action="aniadirPersonalSanitario" execute="true" />
+                                <rich:panelMenuItem style="color:blue;" mode="client" label="Gestionar centros" action="gestionarCentros" />
+                                <rich:panelMenuItem label="Gestionar servicios" action="gestionarServicios" />
+                                <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" />
+                                <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+                            </rich:panelMenuGroup>
+
+                        </rich:panelMenu>
+
+                    </h:form>
+                </nav>
+
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1" > 
+                    <h:form>
+                        <rich:panel>
+                            <f:facet name="header">
+                                <h:outputText value="Centros ( #{centroBean.contadorListCentros} )" />
+                            </f:facet>
+
+                            <rich:dataTable id="tablaCentros"   sortMode="single" value="#{centroBean.listCentros}" style="text-align: center; width: 100%" 
+                                            var="cen" rows="5"  rowClasses="odd-row, even-row" binding="#{centroBean.panelCentro}">
+                                <rich:column  width="15%" sortBy="#{cen.id}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Identificador"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cen.id} "/>
+                                </rich:column>
+
+                                <rich:column width="30%" sortBy="#{cen.nombre}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre de referencia"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cen.nombre}" />
+                                </rich:column>
+
+                                <rich:column width="40%" sortBy="#{cen.direccion}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Dirección de centro"/>
+                                    </f:facet>
+                                    <h:outputText rendered="#{not empty cen.direccion}" value="#{cen.direccion.direccion}, #{cen.direccion.pueblo.nombre} - #{cen.direccion.pueblo.provincia.nombre} (#{cen.direccion.pueblo.codigoPostal})" />
+                                </rich:column>
+
+                                <rich:column width="15%" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Modificar"/>
+                                    </f:facet>
+
+                                    <a4j:commandLink  render="formCentros,cabModalCentros" 
+                                                      resetValues="true" action="#{centroBean.levantarModalModificar()}" 
+                                                      oncomplete="#{rich:component('modalCentros')}.show()" execute="@this" >
+                                        <h:graphicImage library="icons" name="edit.gif" alt="Añadir" />
+                                    </a4j:commandLink>
+
+                                </rich:column>
+                                <f:facet name="footer">
+                                    <rich:dataScroller for="tablaCentros" page="#{centroBean.pagina}" fastStep="3" />
+                                </f:facet>
+                            </rich:dataTable>
+
+                        </rich:panel>
+
+
+                        <a4j:commandButton value="Añadir centro" execute="@this" action="#{centroBean.levantarModalAniadir()}" render="formCentros,cabModalCentros" styleClass="botonFuera" oncomplete="#{rich:component('modalCentros')}.show();" />
+
+
+                    </h:form>
+                    <rich:popupPanel id="modalCentros" modal="true" resizeable="false" autosized="true"  onmaskclick="#{rich:component('modalCentros')}.hide()">
+                        <f:facet name="header">
+                            <a4j:outputPanel id="cabModalCentros">
+                                <h:outputText value="Añadir centro" rendered="#{centroBean.aniadirModificar eq 0}" />
+                                <h:outputText value="Modificar centro" rendered="#{centroBean.aniadirModificar eq 1}"/>
+                            </a4j:outputPanel>
+                        </f:facet>
+
+                        <h:form id="formCentros">
+
+                            <rich:focus preserve="true" delayed="true"/>
+                            <rich:graphValidator id="gvCentros" value="#{centroBean}">
+                                <rich:panel>
+                                    <h:messages for="gvCentros"/>
+
+                                    <a4j:outputPanel rendered="#{centroBean.aniadirModificar eq 1}">
+                                        <table border="0" style=" margin-bottom: 20px;">
+                                            <tr>
+                                                <th><h:outputLabel style="text-align: center;" value="Foto del centro"/></th>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <th> <a4j:mediaOutput  id="media" element="img" style="height: 200px; width: 150px; border: solid 1px black; " createContent="#{imagenBean.pintarImagenCentro}"
+                                                                       value="#{row}"  cacheable="false" >
+                                                    </a4j:mediaOutput>
+                                                </th>
+                                                <th style="vertical-align: bottom; padding-left: 20px;">
+                                                    <rich:fileUpload id="upload" maxFilesQuantity="1"   fileUploadListener="#{imagenBean.aniadirImagenCentro}"
+                                                                     style="width: 250px; height: 100px;vertical-align: top;" listHeight="200px" 
+                                                                     render="media" acceptedTypes=".jpg, .gif, .png, .bmp"
+                                                                     immediateUpload="false">
+
+                                                        <a4j:param value="#{centroBean.centro.id}" assignTo="#{imagenBean.idCentro}"/>
+                                                    </rich:fileUpload>
+                                                </th>
+                                            </tr>
+                                        </table>
+                                    </a4j:outputPanel>
+                                    <h:panelGrid columns="3" id="datosCentro" class="panel">
+
+                                        <h:outputLabel for="nombreCentro" value="Nombre del centro" />
+                                        <h:inputText id="nombreCentro"  value="#{centroBean.centro.nombre}" maxlength="25">
+                                            <f:validateLength minimum="4" />
+                                        </h:inputText>
+                                        <rich:message for="nombreCentro" style="msgError" ajaxRendered="true" />
+
+                                        <h:outputLabel value="Código Postal " for="cp3" /> 
+                                        <h:inputText id="cp3"  value="#{centroBean.pueblo.codigoPostal}"   maxlength="5"  validatorMessage="Formato incorrecto. Ej: 06800" > 
+                                            <a4j:ajax event="keyup" render="provincia3 localidad3" listener="#{centroBean.escuchadorCP()}"  rendered="false"  />     
+                                        </h:inputText>
+                                        <rich:message for="cp3"  styleClass="msgError"  ajaxRendered="true"/>
+
+                                        <h:outputLabel value="Provincia " for="provincia3" /> 
+                                        <h:inputText id="provincia3" size="30"  value="#{centroBean.provincia.nombre}" readonly="true" required="true"  validatorMessage="Introduzca un Código Postal correcto" />
+                                        <rich:message for="provincia3"  styleClass="msgError" ajaxRendered="true"/>     
+
+                                        <h:outputLabel value="Localidad " for="localidad3" /> 
+                                        <h:selectOneMenu id="localidad3" value="#{centroBean.pueblo.id}" required="true" requiredMessage="Seleccione una localidad (Necesario un CP correcto)">
+                                            <f:selectItem  itemLabel="Seleccione una localidad" itemValue="#{null}"/>
+                                            <f:selectItems  value="#{centroBean.listPueblos}" var="pue" itemValue="#{pue.id}"  itemLabel="#{pue.nombre}"/>
+                                        </h:selectOneMenu>
+                                        <rich:message for="localidad3"   styleClass="msgError" ajaxRendered="true"/>
+
+                                        <h:outputLabel value="Direccion " for="direccion3"/>
+                                        <h:inputText id="direccion3" size="30" value="#{centroBean.direccion.direccion}" maxlength="50" >
+                                            <f:validateLength minimum="3"/>
+                                        </h:inputText>
+                                        <rich:message for="direccion3" ajaxRendered="true"  styleClass="msgError"/>
+
+                                        <h:outputLabel value="Teléfono " for="telefono3"/>
+                                        <h:inputText id="telefono3" size="30" value="#{centroBean.direccion.telefono}" maxlength="9" validatorMessage="Formato teléfono incorrecto. Ej: 902202122">
+                                            <f:validateRegex pattern="^[679]{1}\d{8}$"/>
+                                        </h:inputText>
+                                        <rich:message for="telefono3" ajaxRendered="true"  styleClass="msgError"/>
+
+                                    </h:panelGrid>
+
+                                    <div class="botones">
+                                        <a4j:commandButton rendered="#{centroBean.aniadirModificar eq 0}" 
+                                                           styleClass="boton" 
+                                                           value="Añadir centro" 
+                                                           action="#{centroBean.aniadirCentro()}" 
+                                                           execute="@form" status="guardarSave" render="tablaCentros"
+                                                           oncomplete="if (#{empty facesContext.messageList}) {#{rich:component('centroOk')}.show(); #{rich:component('modalCentros')}.hide();}"/>
+
+                                        <a4j:commandButton rendered="#{centroBean.aniadirModificar eq 1}" 
+                                                           styleClass="boton" 
+                                                           value="Modificar centro" 
+                                                           action="#{centroBean.modificarCentro()}" execute="@form" status="guardarSave"
+                                                           oncomplete="if (#{empty facesContext.messageList}) {#{rich:component('centroOk')}.show(); #{rich:component('modalCentros')}.hide(); }"/>
+                                        <a4j:commandButton value="Cerrar" immediate="true" oncomplete="#{rich:component('modalCentros')}.hide();" styleClass="boton"/>
+                                    </div>
+                                </rich:panel>
+                            </rich:graphValidator>
+                        </h:form>
+
+                    </rich:popupPanel>
+
+
+                    <rich:popupPanel id="centroOk" modal="true" resizeable="false" autosized="true">
+                        <f:facet name="header">
+                            <h:outputText  value="Modificación correcta" rendered="#{centroBean.aniadirModificar eq 1}" styleClass="cabeceraModal" />
+                            <h:outputText  value="Inserción correcta" rendered="#{centroBean.aniadirModificar eq 0}" styleClass="cabeceraModal" />
+                        </f:facet>
+                        <h:form>
+
+                            <rich:panel>
+                                <h:outputText styleClass="msgOk" rendered="#{centroBean.aniadirModificar eq 1}" value="Los datos han sido modificados correctamente"/>
+                                <h:outputText styleClass="msgOk" rendered="#{centroBean.aniadirModificar eq 0}" value="Los datos han sido añadidos correctamente"/>
+                                <div class="botones">
+                                    <a4j:commandButton value="Cerrar" render="tablaCentros, centroOk"  styleClass="boton" immediate="true"  onclick="#{rich:component('centroOk')}.hide();"/>
+                                </div>            
+                            </rich:panel>
+                        </h:form>
+                    </rich:popupPanel>
+                </section>
+
+            </ui:define>
+        </ui:decorate>
+    </f:view>
+</html>
+

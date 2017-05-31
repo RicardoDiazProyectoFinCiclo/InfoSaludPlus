@@ -38,11 +38,15 @@
                             <rich:panelMenuGroup label="Panel del administrador" selectable="false" expanded="true" styleClass="cabeMenuHori">
                                 <rich:panelMenuItem style="color:blue;" mode="client" label="Datos personales" name="datos_personales" />
                                 <rich:panelMenuItem label="Añadir personal sanitario" name="aniadir_personal_sanitario" action="aniadirPersonalSanitario" execute="true" />
+                                <rich:panelMenuItem label="Centros" action="gestionarCentros" />
+                                <rich:panelMenuItem label="Gestionar servicios" action="gestionarServicios" />
                                 <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" />
                                 <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" />
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
                             </rich:panelMenuGroup>
+
                         </rich:panelMenu>
+
                     </h:form>
                 </nav>
 
@@ -108,7 +112,7 @@
                         <h:form>
 
                             <rich:panel>
-                                <h:outputText styleClass="msgOk" value="Se han modificado los datos de manera correcta"/>
+                                <h:outputText styleClass="msgOk" value="Los datos han sido modificados correctamente"/>
                                 <div class="botones">
                                     <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true"  onclick="#{rich:component('modificacionOk')}.hide();"/>
                                 </div>            

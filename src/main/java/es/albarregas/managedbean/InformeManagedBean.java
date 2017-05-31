@@ -5,7 +5,6 @@
  */
 package es.albarregas.managedbean;
 
-import es.albarregas.dao.GenericoDAO;
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
 import es.albarregas.modelo.Informe;

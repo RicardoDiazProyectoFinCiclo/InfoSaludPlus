@@ -38,6 +38,8 @@
                             <rich:panelMenuGroup label="Panel del administrador" selectable="false" expanded="true" styleClass="cabeMenuHori">
                                 <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaAdmin" />
                                 <rich:panelMenuItem style="color:blue;" mode="client" label="Añadir personal sanitario" name="aniadir_personal_sanitario" execute="true" />
+                                <rich:panelMenuItem label="Centros" action="gestionarCentros" />
+                                <rich:panelMenuItem label="Gestionar servicios" action="gestionarServicios" />
                                 <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" />
                                 <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" />
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
@@ -120,7 +122,7 @@
                                         <f:selectItems  value="#{accesoBean.listCentros}" var="cen" itemValue="#{cen.id}"  itemLabel="#{cen.nombre}"/>
                                     </h:selectOneMenu>
                                     <rich:message for="centro3"  styleClass="msgError"/>
-                                    
+
                                     <h:outputLabel value="Servicio " for="servicio3" /> 
                                     <h:selectOneMenu id="servicio3" value="#{accesoBean.servicio.id}" required="true" requiredMessage="Seleccione un servicio">
                                         <f:selectItem  itemLabel="Seleccione un servicio" itemValue="#{null}" />
@@ -145,14 +147,14 @@
                                         <f:validateLength minimum="4" maximum="20"/>
                                     </h:inputSecret>
                                     <rich:message for="claveRep3" ajaxRendered="true"/>
-                                    
+
                                     <h:outputLabel value="Jefe de Sección " for="jefe"/>
                                     <h:selectOneRadio id="jefe" value="#{accesoBean.medico.jefe}">
                                         <f:selectItem itemValue="n" itemLabel="No"/>
                                         <f:selectItem itemValue="s" itemLabel="Si"/>
                                     </h:selectOneRadio>
                                     <h:message for="jefe" styleClass="msgError"/>
-                                    
+
                                     <h:outputLabel for="titulos" value="Títulos"/>
                                     <h:inputTextarea rows="4" cols="30"  value="#{accesoBean.medico.titulos}" id="titulos" >
                                         <f:validateLength maximum="255"/>

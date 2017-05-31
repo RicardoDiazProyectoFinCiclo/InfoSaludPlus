@@ -36,12 +36,15 @@
                     </h:outputStylesheet>
                     <h:form>
                         <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
-                            <rich:panelMenuGroup label="Panel del paciente" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                            <rich:panelMenuGroup style="margin-bottom: 0px;" label="Panel del paciente" selectable="false" expanded="true" styleClass="cabeMenuHori">
                                 <rich:panelMenuItem style="color:blue;" label="Datos personales" name="datos_personales" />
                                 <rich:panelMenuItem label="Mis informes" name="partes_medicos" execute="true" action="verInformesPaciente" />
                                 <rich:panelMenuItem label="Mis citas" name="area_citas" />
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+
                             </rich:panelMenuGroup>
+                            
+
                         </rich:panelMenu>
                     </h:form>
                 </nav>
@@ -187,7 +190,7 @@
                             </rich:panel>
                         </h:form>
                     </rich:popupPanel>
-                    
+
 
                 </section>
 

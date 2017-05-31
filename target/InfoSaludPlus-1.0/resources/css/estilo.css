@@ -107,6 +107,13 @@ div.botones{
     border-radius: 10px;
     font: bold 10pt Arial, sans-serif !important;
 }
+
+.botonFuera{
+    margin: 10px 20px;
+    padding: 5px 30px;
+    border-radius: 3px;
+    font: bold 10pt Arial, sans-serif !important;
+}
 /*
     Mensajes de ok
 */
