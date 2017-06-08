@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"  lang="es">
+
+    <f:view>
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
+
+            <ui:define name="titulo">InfoSaludPlus | Area Pacientes</ui:define>
+
+
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área del Paciente" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <nav id="panelLateral" class="row col-sm-2">
+                    <h:outputStylesheet>
+                        .cols {
+                        vertical-align: top;
+                        }
+                    </h:outputStylesheet>
+                    <h:form>
+                        <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
+                            <rich:panelMenuGroup style="margin-bottom: 0px;" label="Panel del paciente" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                                <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaPaciente" />
+                                <rich:panelMenuItem label="Mis informes" name="partes_medicos" execute="true" action="verInformesPaciente" />
+                                <rich:panelMenuItem style="color:blue;" mode="client" label="Cita previa" name="cita_previa"  />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
+                            </rich:panelMenuGroup>
+
+                        </rich:panelMenu>
+                    </h:form>
+                </nav>
+
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">                          
+
+                    <rich:panel header="Cita previa">
+                        <rich:graphValidator id="gvCitaPrevia">
+                            <h:form id="formularioCitaPrevia">
+                                <rich:messages for="formularioCitaPrevia"/>
+
+                                <h:panelGrid columns="1" styleClass="panel">
+                                    <h:outputLabel for="tipoCita" value="Seleccione su tipo de cita"/>
+                                    <h:selectOneRadio id="tipoCita" value="#{citaPreviaPacienteBean.tipoCita}">
+                                        <f:selectItem itemLabel="Administrativa" itemValue="administrativa" />
+                                        <f:selectItem itemLabel="Consulta" itemValue="consulta" />
+                                    </h:selectOneRadio>
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="Introduzca la fecha de la cita"/>
+                                        <rich:calendar  value="#{citaPreviaPacienteBean.fechaBusqueda}" 
+                                                        datePattern="dd/MM/yyyy" locale="ES_es" inputSize="15"  />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <h:outputLabel value="Introduzca la hora de la cita"/>
+                                        <h:selectOneMenu value="#{citaPreviaPacienteBean.horaBusqueda}" >        
+                                            <f:selectItems value="#{citaPreviaPacienteBean.horas}" var="hora" itemValue="#{hora}"  itemLabel="#{hora}" />
+                                        </h:selectOneMenu>
+                                        <h:selectOneMenu value="#{citaPreviaPacienteBean.minutoBusqueda}" >        
+                                            <f:selectItems value="#{citaPreviaPacienteBean.minutos}" var="minuto" itemValue="#{minuto}"  itemLabel="#{minuto}" />
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+
+                                <a4j:commandButton value="PEDIR CITA" styleClass="boton"  render="tablaHuecos" oncomplete="#{rich:component('modalTablaHuecos')}.show();"   action="#{citaPreviaPacienteBean.pedirCitaPrevia()}"/>
+                            </h:form>
+                        </rich:graphValidator>
+                    </rich:panel>
+
+
+                    <rich:popupPanel id="modalTablaHuecos" header="Pedir cita" width="700" height="300" resizeable="false" modal="true">
+                        <h:form>
+                            <rich:panel>
+                                <rich:dataTable  id="tablaHuecos"   sortMode="single" value="#{citaPreviaPacienteBean.listHuecos}" style="text-align: center; width: 100%" 
+                                                 var="hue" rows="5"  rowClasses="odd-row, even-row" binding="#{citaPreviaPacienteBean.tablaHuecos}">
+                                    <rich:column width="15%" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Seleccionar"/>
+                                        </f:facet>
+
+                                        <a4j:commandLink  render="datosCita" 
+                                                          execute="@this" resetValues="true"
+                                                          action="#{citaPreviaPacienteBean.seleccionarHueco()}" 
+                                                          oncomplete="#{rich:component('modalConfimCita')}.show()" >
+                                            <h:graphicImage library="icons" name="edit.gif" alt="Añadir" title="Elegir hueco" />
+                                        </a4j:commandLink>
+
+                                    </rich:column>
+
+                                    <rich:column width="15%">
+                                        <f:facet name="header">
+                                            <h:outputText value="Día"/>
+                                        </f:facet>
+                                        <h:outputText value="#{hue.diaFormateado()}" />
+                                    </rich:column>
+                                    <rich:column width="15%" sortBy="#{hue.fecha}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha"/>
+                                        </f:facet>
+                                        <h:outputText value="#{hue.fecha}" >
+                                            <f:convertDateTime pattern="dd-MM-yyyy"  />
+                                        </h:outputText>
+                                    </rich:column>
+                                    <rich:column width="15%">
+                                        <f:facet name="header">
+                                            <h:outputText value="Hora"/>
+                                        </f:facet>
+                                        <h:outputText value="#{hue.horaFormateada()}" >
+
+                                        </h:outputText>
+                                    </rich:column>
+
+                                    <rich:column width="15%" sortBy="#{hue.medico.servicio.nombre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Servicio"/>
+                                        </f:facet>
+                                        <h:outputText value="#{hue.medico.servicio.nombre}" />
+                                    </rich:column>
+
+                                    <rich:column width="15%" sortBy="#{hue.tipo}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Tipo de cita"/>
+                                        </f:facet>
+                                        <h:outputText value="#{hue.tipo}" />
+                                    </rich:column>
+
+                                    <rich:column width="25%" sortBy="#{hue.medico.nombre}">
+                                        <f:facet name="header">
+                                            <h:outputText value="Médico"/>
+                                        </f:facet>
+                                        <h:outputText value="#{hue.medico.nombre} #{hue.medico.apellidos}" />
+                                    </rich:column>
+
+                                    <f:facet name="footer">
+                                        <rich:dataScroller for="tablaHuecos" stepControls="hide" boundaryControls="auto" fastControls="auto" />
+                                    </f:facet>
+                                </rich:dataTable>
+                            </rich:panel>
+                        </h:form>
+                        <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true" onclick="#{rich:component('modalTablaHuecos')}.hide();" />
+
+                    </rich:popupPanel>
+
+                    <rich:popupPanel id="modalConfimCita" header="Confirmar cita" autosized="true" resizeable="false" modal="true">
+                        <h3><h:outputText value="Confirmar cita"/></h3>
+                        <rich:graphValidator id="gvConfirmCita">                         
+                            <h:form id="formDatosCita">
+                                <rich:messages for="formDatosCita" styleClass="msgErrorGlobal"/>
+                                <h:panelGrid id="datosCita" columns="2">
+                                    <h:outputText value="Paciente: "/>
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.paciente.nombre}"/>
+                                    <h:outputText value="Medico: " />
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.medico.nombre}"/>
+                                    <h:outputText value="Fecha: "/>
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.fecha} ">
+                                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                    </h:outputText>
+                                    <h:outputText value="Hora: "/>
+                                    <h:outputText value=" #{citaPreviaPacienteBean.citaElegida.horaFormateada()}"/>
+                                    <h:outputText value="Centro" />
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.centro.nombre}"/>
+                                </h:panelGrid>
+                                <div class="botones">
+                                    <a4j:commandButton value="Confirmar cita" rendered="#{not citaPreviaPacienteBean.indImprimir}" styleClass="boton" render="formDatosCita" action="#{citaPreviaPacienteBean.confirmarCita()}" />
+                                    <a4j:commandButton value="Cerrar" styleClass="boton"   immediate="true" onclick="#{rich:component('modalConfirmCita')}.hide();" />
+                                    <a4j:commandButton rendered="#{citaPreviaPacienteBean.indImprimir}" value="Imprimir" styleClass="boton"  />
+                                </div>
+                            </h:form>
+                        </rich:graphValidator>
+                    </rich:popupPanel>
+
+
+
+                </section>
+
+            </ui:define>
+        </ui:decorate>
+    </f:view>
+</html>
+

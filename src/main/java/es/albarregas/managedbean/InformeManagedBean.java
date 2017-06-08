@@ -11,7 +11,7 @@ import es.albarregas.modelo.Informe;
 import es.albarregas.modelo.Medico;
 import es.albarregas.modelo.Paciente;
 import es.albarregas.modelo.Usuario;
-import es.albarregas.persistencia.FacesUtils;
+import es.albarregas.util.FacesUtils;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;

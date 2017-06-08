@@ -11,7 +11,7 @@ import es.albarregas.modelo.Centro;
 import es.albarregas.modelo.Direccion;
 import es.albarregas.modelo.Provincia;
 import es.albarregas.modelo.Pueblo;
-import es.albarregas.persistencia.FacesUtils;
+import es.albarregas.util.FacesUtils;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;

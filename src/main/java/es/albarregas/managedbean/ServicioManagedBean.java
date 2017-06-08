@@ -8,7 +8,7 @@ package es.albarregas.managedbean;
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
 import es.albarregas.modelo.Servicio;
-import es.albarregas.persistencia.FacesUtils;
+import es.albarregas.util.FacesUtils;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;

@@ -37,14 +37,11 @@
                     <h:form>
                         <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
                             <rich:panelMenuGroup style="margin-bottom: 0px;" label="Panel del paciente" selectable="false" expanded="true" styleClass="cabeMenuHori">
-                                <rich:panelMenuItem style="color:blue;" label="Datos personales" name="datos_personales" />
+                                <rich:panelMenuItem  style="color:blue;" mode="client" label="Datos personales" name="datos_personales" action="inicioAreaPaciente" />
                                 <rich:panelMenuItem label="Mis informes" name="partes_medicos" execute="true" action="verInformesPaciente" />
-                                <rich:panelMenuItem label="Mis citas" name="area_citas" />
-                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
-
+                                <rich:panelMenuItem label="Cita previa" name="cita_previa" action="citaPrevia" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
                             </rich:panelMenuGroup>
-                            
-
                         </rich:panelMenu>
                     </h:form>
                 </nav>

@@ -42,7 +42,7 @@
                                 <rich:panelMenuItem style="color:blue;" mode="client" label="Gestionar servicios" action="gestionarServicios" />
                                 <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" />
                                 <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" />
-                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
                             </rich:panelMenuGroup>
 
                         </rich:panelMenu>
@@ -93,7 +93,7 @@
 
                                 </rich:column>
                                 <f:facet name="footer">
-                                    <rich:dataScroller for="tablaServicios" fastStep="3" />
+                                    <rich:dataScroller for="tablaServicios" stepControls="hide" boundaryControls="auto" fastControls="auto" />
                                 </f:facet>
                             </rich:dataTable>
 

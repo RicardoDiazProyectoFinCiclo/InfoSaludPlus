@@ -1,4 +1,5 @@
 # InfoSaludPlus
+- Citas en fase Beta. El paciente puede elegir una cita (administrativa o consulta), y seleccionarla y confirmarla. Falta pulirlo y hacer toda la parte de citas de médicos. 08/06/2017
 - Se pueden añadir y modificar centros (con foto/imagen y todo) y añadir y modificar Servicios (tareas del administrador). Reeplanteandome si hago la función de eliminarlos también. 31/05/2017
 - Los pacientes y médicos pueden subir fotos/imágenes en su perfil, y modificarlas por otras. Mejoro la recarga de las sesiones al modificar datos. Nueva version BBDD subida. 25/05/2017
 - El médico puede añadir informes médicos y también verlos. El paciente puede ver sus informes médicos (queda por limar algunas asperezas) en su área privada. 21/05/2017

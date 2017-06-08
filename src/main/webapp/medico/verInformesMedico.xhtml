@@ -41,7 +41,7 @@
                                 <rich:panelMenuItem label="Realizar informe" name="realizar_informe" action="realizarInforme" /> 
                                 <rich:panelMenuItem mode="client" style="color:blue;" label="Ver informes" name="mis_pacientes" action="verInformesMedico" /> 
                                 <rich:panelMenuItem label="Área de citas" name="area_citas" />
-                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
                             </rich:panelMenuGroup>
                         </rich:panelMenu>
                     </h:form>
@@ -116,7 +116,7 @@
                                     <h:outputText style="display:block;" value="Fecha nacimiento: #{informeBean.informe.paciente.fechaNacimiento}" />
                                 </div>
                                 <div style="width: 49%; display: inline-block">
-                                    <h:outputText style="display:block;" value="Dirección: #{informeBean.informe.paciente.direccion.direccion}, #{informeBean.informe.paciente.direccion.pueblo.nombre} (#{informeBean.paciente.direccion.pueblo.codigoPostal}), #{informeBean.informe.paciente.direccion.pueblo.provincia.nombre}" />
+                                    <h:outputText style="display:block;" value="Dirección: #{informeBean.informe.paciente.direccion.direccion}, #{informeBean.informe.paciente.direccion.pueblo.nombre} (#{informeBean.informe.paciente.direccion.pueblo.codigoPostal}), #{informeBean.informe.paciente.direccion.pueblo.provincia.nombre}" />
                                     <h:outputText style="display:block;"  value="Teléfono: #{informeBean.informe.paciente.direccion.telefono}" />
                                     <h:outputText style="display:block;" value="Centro: #{informeBean.informe.paciente.centro.nombre}"/>
                                     <h:outputText style="display:block;" value="Email: #{informeBean.informe.paciente.email}"/>

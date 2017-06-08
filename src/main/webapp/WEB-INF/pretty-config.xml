@@ -19,6 +19,11 @@
         <pattern value="/verInformesPaciente/" />
         <view-id value="/faces/paciente/verInformesPaciente.xhtml" />
     </url-mapping>
+    
+    <url-mapping id="citaPreviaPaciente">	
+        <pattern value="/citaPrevia/" />
+        <view-id value="/faces/paciente/citaPrevia.xhtml" />
+    </url-mapping>
 
     <!-- Navegación médicos -->
     
@@ -64,4 +69,6 @@
         <pattern value="/gestionarServicios/" />
         <view-id value="/faces/administrador/gestionarServicios.xhtml" />
     </url-mapping>
+    
+    
 </pretty-config>

@@ -1,6 +1,8 @@
 package es.albarregas.modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.CascadeType;
@@ -13,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -35,8 +38,11 @@ public class Cita implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "idCentro")
     private Centro centro;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date fecha;
+
+    //a = Administrativa, d = demanda
     @Column(nullable = false)
     private String tipo;
 
@@ -86,6 +92,28 @@ public class Cita implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String diaFormateado() {
+        String dia = "";
+        try {
+            String[] dias = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"};
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(fecha);
+            dia = dias[cal.get(Calendar.DAY_OF_WEEK) - 1];
+
+        } catch (Exception e) {
+            dia = "";
+            e.printStackTrace();
+        }
+
+        return dia;
+    }
+
+    public String horaFormateada() {
+        SimpleDateFormat smf = new SimpleDateFormat("HH:mm");
+
+        return smf.format(fecha);
     }
 
 }

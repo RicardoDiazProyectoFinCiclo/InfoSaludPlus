@@ -11,7 +11,7 @@ import es.albarregas.modelo.Provincia;
 import es.albarregas.modelo.Pueblo;
 import es.albarregas.modelo.Servicio;
 import es.albarregas.modelo.Usuario;
-import es.albarregas.persistencia.FacesUtils;
+import es.albarregas.util.FacesUtils;
 import es.albarregas.util.Utilidades;
 import java.io.Serializable;
 import java.util.Date;
@@ -299,7 +299,6 @@ public class AccesoManagedBean implements Cloneable, Serializable {
             //El email ya existe 
         } else {
             medico.setFechaAlta(new Date());
-            String claveSinEncriptar = medico.getClave();
             medico.setClave(Utilidades.encriptarMD5(medico.getClave()));
             pueblo.setProvincia(provincia);
             direccion.setPueblo(pueblo);

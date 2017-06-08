@@ -41,7 +41,7 @@
                                 <rich:panelMenuItem mode="client" style="color:blue;" label="Realizar informe" name="realizar_informe" /> 
                                 <rich:panelMenuItem label="Ver informes" name="mis_pacientes" action="verInformesMedico" /> 
                                 <rich:panelMenuItem label="Área de citas" name="area_citas" />
-                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
                             </rich:panelMenuGroup>
                         </rich:panelMenu>
                     </h:form>

@@ -10,7 +10,7 @@ import es.albarregas.daofactory.DAOFactory;
 import es.albarregas.modelo.Centro;
 import es.albarregas.modelo.Imagen;
 import es.albarregas.modelo.Usuario;
-import es.albarregas.persistencia.FacesUtils;
+import es.albarregas.util.FacesUtils;
 import java.awt.image.RenderedImage;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
