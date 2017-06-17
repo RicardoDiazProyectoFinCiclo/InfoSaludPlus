@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
+
+    <f:view>
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
+            <ui:define name="titulo">InfoSaludPlus | Area Administración</ui:define>
+
+
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área de administración" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <nav id="panelLateral" class="row col-sm-2">
+                    <h:outputStylesheet>
+                        .cols {
+                        vertical-align: top;
+                        }
+                    </h:outputStylesheet>
+                    <h:form>
+                        <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
+                            <rich:panelMenuGroup label="Panel del administrador" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                                <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaAdmin" />
+                                <rich:panelMenuItem label="Añadir personal sanitario" name="aniadir_personal_sanitario" action="aniadirPersonalSanitario" execute="true" />
+                                <rich:panelMenuItem label="Gestionar centros" action="gestionarCentros" />
+                                <rich:panelMenuItem label="Gestionar servicios" action="gestionarServicios" />
+                                <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" action="gestionarMedicos" />
+                                <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" action="gestionarPacientes" />
+                                <rich:panelMenuItem style="color:blue;" mode="client" label="Getionar Citas" name="gestionar_citas" action="gestionarCitas" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
+                            </rich:panelMenuGroup>
+
+                        </rich:panelMenu>
+
+                    </h:form>
+                </nav>
+
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1" > 
+                    <h:form>
+                        <rich:panel>
+                            <f:facet name="header">
+                                <h:outputText value="Citas ( #{gestionarCitasBean.listCitas.size()} )" />
+                            </f:facet>
+
+                            <rich:dataTable id="tablaCitas"   sortMode="single" value="#{gestionarCitasBean.listCitas}" style="text-align: center; width: 100%" 
+                                            var="cit" rows="5"  rowClasses="odd-row, even-row" binding="#{gestionarCitasBean.tablaCitas}" 
+                                            rendered="#{not empty gestionarCitasBean.listCitas}">
+                                <rich:column width="5%" sortBy="#{cen.id}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Identificador"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cit.id} "/>
+                                </rich:column>
+
+                                <rich:column width="15%" sortBy="#{cit.paciente.apellidos}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Paciente"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cit.paciente.apellidos}, #{cit.paciente.nombre}" />
+                                </rich:column>
+
+                                <rich:column width="15%" sortBy="#{cit.paciente.numSegSoc}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nº SS Paciente"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cit.paciente.numSegSoc}" />
+                                </rich:column>
+
+                                <rich:column width="15%" sortBy="#{cit.medico.apellidos}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Médico"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cit.medico.apellidos}, #{cit.medico.nombre}" />
+                                </rich:column>
+
+                                <rich:column width="15%" sortBy="#{cit.medico.numColegiado}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nº Colegiado Médico"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cit.medico.numColegiado}" />
+                                </rich:column>
+
+                                <rich:column width="10%" sortBy="#{cit.centro.nombre}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Centro"/>
+                                    </f:facet>
+                                    <h:outputText rendered="#{not empty cit.centro.nombre}" value="#{cit.centro.nombre}" />
+                                </rich:column>
+                                
+                                <rich:column width="10%" sortBy="#{cit.fecha}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Fecha"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cit.fecha}" >
+                                        <f:convertDateTime dateStyle="long" timeZone="es"/>
+                                    </h:outputText>
+                                </rich:column>
+                                
+                                <rich:column width="5%" sortBy="#{cit.horaFormateada()}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Hora"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cit.horaFormateada()}" />
+                                </rich:column>
+
+                                <f:facet name="footer">
+                                    <rich:dataScroller for="tablaCitas"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                                </f:facet>
+                            </rich:dataTable>
+                            <h:outputText rendered="#{empty gestionarCitasBean.listCitas}" value="No hay citas previas actualmente" />
+                        </rich:panel>
+
+
+
+
+
+                    </h:form>
+                </section>
+
+            </ui:define>
+        </ui:decorate>
+    </f:view>
+</html>
+

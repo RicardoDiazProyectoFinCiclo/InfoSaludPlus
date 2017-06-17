@@ -17,7 +17,7 @@ import javax.faces.bean.ViewScoped;
 import org.richfaces.component.UIDataTable;
 
 /**
- *
+ * Managed Bean para gestionar servicios 
  * @author Ricardo
  */
 @ViewScoped
@@ -89,12 +89,20 @@ public class ServicioManagedBean implements Serializable {
         }
     }
 
+    /**
+     * Método que carga datos del modal de añadir servicios (los datos están en el init())
+     * @return 
+     */
     public String levantarModalAniadir() {
         init();
 
         return "";
     }
 
+    /**
+     * Método que se ejecuta antes de levantar el modal de modificar servicios
+     * @return 
+     */
     public String levantarModalModificar() {
         init();
         System.out.println("Levantando modal servicios");
@@ -110,6 +118,10 @@ public class ServicioManagedBean implements Serializable {
         return "";
     }
 
+    /**
+     * Método para añadir un servicio a la BD
+     * @return 
+     */
     public String aniadirServicio() {
 
         try {
@@ -122,6 +134,10 @@ public class ServicioManagedBean implements Serializable {
 
     }
 
+    /**
+     * Modal para modificar un servicio de BD
+     * @return 
+     */
     public String modificarServicio() {
 
         try {

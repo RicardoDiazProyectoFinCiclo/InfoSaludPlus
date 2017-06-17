@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:a4j="http://richfaces.org/a4j" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
+
+    <f:view>
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+
+            <ui:define name="titulo">InfoSaludPlus | Area Administración</ui:define>
+
+
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+
+            <ui:define name="migaPan">
+                <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml" style="font-weight:bold">Inicio</h:outputLink>    
+                <h:outputText value=" / Área de administración" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <nav id="panelLateral" class="row col-sm-2">
+                    <h:outputStylesheet>
+                        .cols {
+                        vertical-align: top;
+                        }
+                    </h:outputStylesheet>
+                    <h:form>
+                        <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
+                            <rich:panelMenuGroup label="Panel del administrador" selectable="false" expanded="true" styleClass="cabeMenuHori">
+                                <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaAdmin" />
+                                <rich:panelMenuItem label="Añadir personal sanitario" name="aniadir_personal_sanitario" action="aniadirPersonalSanitario" execute="true" />
+                                <rich:panelMenuItem label="Gestionar centros" action="gestionarCentros" />
+                                <rich:panelMenuItem label="Gestionar servicios" action="gestionarServicios" />
+                                <rich:panelMenuItem style="color:blue;" mode="client" label="Gestionar medicos" name="gestionar_medicos" action="gestionarMedicos" />
+                                <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" action="gestionarPacientes" />
+                                <rich:panelMenuItem label="Getionar Citas" name="gestionar_citas" action="gestionarCitas" />
+                                <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
+                            </rich:panelMenuGroup>
+
+                        </rich:panelMenu>
+
+                    </h:form>
+                </nav>
+
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1" > 
+                    <h:form>
+                        <rich:panel>
+                            <f:facet name="header">
+                                <h:outputText value="Medicos ( #{gestionarMedicosBean.listMedicos.size()} )" />
+                            </f:facet>
+
+                                <rich:dataTable id="tablaMedicos"   sortMode="single" value="#{gestionarMedicosBean.listMedicos}" style="text-align: center; width: 100%" 
+                                            var="med" rows="5"  rowClasses="odd-row, even-row" binding="#{gestionarMedicosBean.tablaMedicos}" rendered="#{not empty gestionarMedicosBean.listMedicos}">
+                                <rich:column  width="5%" sortBy="#{cen.id}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Identificador"/>
+                                    </f:facet>
+                                    <h:outputText value="#{med.id} "/>
+                                </rich:column>
+
+                                <rich:column width="30%" sortBy="#{med.apellidos}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Apellidos"/>
+                                    </f:facet>
+                                    <h:outputText value="#{med.apellidos}" />
+                                </rich:column>
+                                    <rich:column width="30%" sortBy="#{med.nombre}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre"/>
+                                    </f:facet>
+                                    <h:outputText value="#{med.nombre}" />
+                                </rich:column>
+                                    
+                                    <rich:column width="30%" sortBy="#{med.numColegiado}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nº Colegiado"/>
+                                    </f:facet>
+                                        <h:outputText value="#{med.numColegiado}" />
+                                </rich:column>
+                                    
+                                <rich:column width="40%" sortBy="#{med.centro.nombre}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Centro"/>
+                                    </f:facet>
+                                    <h:outputText rendered="#{not empty med.centro.nombre}" value="#{med.centro.nombre}" />
+                                </rich:column>
+
+                                <f:facet name="footer">
+                                    <rich:dataScroller for="tablaMedicos"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                                </f:facet>
+                            </rich:dataTable>
+                            <h:outputText rendered="#{empty gestionarMedicosBean.listMedicos}" value="No hay médicos registrados" />
+                        </rich:panel>
+
+
+                        
+
+
+                    </h:form>
+                </section>
+
+            </ui:define>
+        </ui:decorate>
+    </f:view>
+</html>
+

@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:a4j="http://richfaces.org/a4j" 
       xmlns:rich="http://richfaces.org/rich"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:t="http://myfaces.apache.org/tomahawk"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
 
@@ -37,10 +37,9 @@
                         <rich:panelMenu style="width:200px" itemMode="ajax" groupMode="ajax">
                             <rich:panelMenuGroup label="Panel del personal médico" selectable="false" expanded="true" styleClass="cabeMenuHori">
                                 <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaMedico" />
-                                <rich:panelMenuItem label="Mis pacientes" name="mis_pacientes" action="misPacientes" /> 
-                                <rich:panelMenuItem label="Realizar informe" name="realizar_informe" action="realizarInforme" /> 
+                                <rich:panelMenuItem label="Mis pacientes" name="mis_pacientes" action="realizarInforme" /> 
                                 <rich:panelMenuItem mode="client" style="color:blue;" label="Ver informes" name="mis_pacientes" action="verInformesMedico" /> 
-                                <rich:panelMenuItem label="Área de citas" name="area_citas" />
+                                <rich:panelMenuItem label="Área de citas" name="area_citas" action="citasMedico" />
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
                             </rich:panelMenuGroup>
                         </rich:panelMenu>
@@ -48,140 +47,63 @@
                 </nav>
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1 text-center">                          
-                    <rich:dataTable id="tablaInformes"    value="#{informeBean.listInformes}" style="margin-left: 100px" var="inf" rows="5" binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row">
-                        <rich:column>
+                    <rich:dataTable id="tablaInformes" value="#{informeBean.listInformes}" style="margin-left: 100px" var="inf" rows="5" 
+                                    binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row">
+                        <rich:column sortBy="#{inf.paciente.apellidos}">
                             <f:facet name="header">
                                 <h:outputText value="Apellidos"/>
                             </f:facet>
                             <h:outputText value="#{inf.paciente.apellidos}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column sortBy="#{inf.paciente.nombre}">
                             <f:facet name="header">
                                 <h:outputText value="Nombre"/>
                             </f:facet>
                             <h:outputText value="#{inf.paciente.nombre}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column sortBy="#{inf.paciente.nif}">
                             <f:facet name="header">
                                 <h:outputText value="NIF"/>
                             </f:facet>
                             <h:outputText value="#{inf.paciente.nif}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column sortBy="#{inf.paciente.numSegSoc}">
                             <f:facet name="header">
                                 <h:outputText value="Nº SS"/>
                             </f:facet>
                             <h:outputText value="#{inf.paciente.numSegSoc}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column sortBy="#{inf.fecha}">
                             <f:facet name="header">
-                                <h:outputText value="Fecha de Nacimiento"/>
+                                <h:outputText value="Fecha del informe"/>
                             </f:facet>
-                            <h:outputText value="#{inf.paciente.fechaNacimiento}">
-                                <f:convertDateTime dateStyle="full" timeZone="es"/>
+                            <h:outputText value="#{inf.fecha}">
+                                <f:convertDateTime dateStyle="long" timeZone="es"/>
                             </h:outputText>
+                        </rich:column>
+                        <rich:column sortBy="#{inf.titulo}">
+                            <f:facet name="header">
+                                <h:outputText value="Título del informe"/>
+                            </f:facet>
+                            <h:outputText value="#{inf.titulo}"/>
                         </rich:column>
                         <rich:column>
                             <f:facet name="header">
                                 <h:outputText value="Ver informe"/>
                             </f:facet>
                             <h:form>
-                                <a4j:commandLink render="formularioInforme" action="#{informeBean.verInforme()}" oncomplete="#{rich:component('informe')}.show()" >
+                                <a4j:commandLink render="informeDatosPaciente, formularioInforme, informeDatosPie" action="#{informeBean.verInforme()}" oncomplete="#{rich:component('informe')}.show()" >
                                     <h:graphicImage title="Ver informe" alt="ver" library="icons" name="ver1.gif" style="color: black;"/>
                                 </a4j:commandLink>
                             </h:form>
                         </rich:column>
+                        <f:facet name="footer">
+                            <rich:dataScroller for="tablaInformes"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                        </f:facet>
+
                     </rich:dataTable>
 
-
-
-                    <!-- Informe -->
-                    <rich:popupPanel id="informe" modal="true" autosized="true" onmaskclick="#{rich:component('informe')}.hide()">
-                        <f:facet name="header">
-                            <h:outputText value="Informe médico" styleClass="cabeceraModal" />
-                        </f:facet>
-                        <f:facet name="controls">
-                            <h:outputLink value="#" onclick="#{rich:component('informe')}.hide();
-                                    return false;" style="color: inherit">
-                                X
-                            </h:outputLink>
-                        </f:facet>
-                        <h:form id="formularioInforme">
-                            <rich:panel style="margin-bottom: 5px;" id="informeDatosPaciente">
-                                <h4 class="text-left">Datos del paciente</h4>
-                                <div style="width: 49%; display: inline-block">
-                                    <h:outputText style="display:block;"  value="Nombre: #{informeBean.informe.paciente.nombre} #{informeBean.informe.paciente.apellidos}" />
-                                    <h:outputText style="display:block;"  value="NIF/DNI: #{informeBean.informe.paciente.nif}" />
-                                    <h:outputText style="display:block;" value="Nº SS: #{informeBean.paciente.numSegSoc}"  />
-                                    <h:outputText style="display:block;" value="Fecha nacimiento: #{informeBean.informe.paciente.fechaNacimiento}" />
-                                </div>
-                                <div style="width: 49%; display: inline-block">
-                                    <h:outputText style="display:block;" value="Dirección: #{informeBean.informe.paciente.direccion.direccion}, #{informeBean.informe.paciente.direccion.pueblo.nombre} (#{informeBean.informe.paciente.direccion.pueblo.codigoPostal}), #{informeBean.informe.paciente.direccion.pueblo.provincia.nombre}" />
-                                    <h:outputText style="display:block;"  value="Teléfono: #{informeBean.informe.paciente.direccion.telefono}" />
-                                    <h:outputText style="display:block;" value="Centro: #{informeBean.informe.paciente.centro.nombre}"/>
-                                    <h:outputText style="display:block;" value="Email: #{informeBean.informe.paciente.email}"/>
-                                </div>
-                            </rich:panel>
-
-                            <rich:panel>                         
-
-                                <h:panelGrid columns="1" width="100%">
-                                    <h:outputLabel value="Título" for="titulo"/>
-                                    <h:inputText id="titulo" value="#{informeBean.informe.titulo}" style="display: block; width: 100%" readonly="true" />
-
-                                    <h:outputLabel for="descripcion" value="Motivo de la consulta" />
-                                    <h:inputTextarea id="descripcion" value="#{informeBean.informe.descripcion}" style="display: block; width: 100%" rows="3" readonly="true" />
-
-                                    <h:outputLabel value="Resultado de las observaciones" for="observacion" />
-                                    <h:inputTextarea id="observacion" value="#{informeBean.informe.observacion}" style="display: block; width: 100%" rows="3" readonly="true" />
-
-                                    <h:outputLabel for="tratamiento" value="Tratamiento y recomendaciones" />
-                                    <h:inputTextarea id="tratamiento" value="#{informeBean.informe.tratamiento}" style="display: block; width: 100%" rows="2" readonly="true" />
-
-                                </h:panelGrid>
-
-                                <div class="botones">
-                                    <a4j:commandButton value="Cerrar" 
-                                                       immediate="true"                                                      
-                                                       styleClass="boton"
-                                                       onclick="#{rich:component('informe')}.hide();">
-
-                                    </a4j:commandButton> 
-                                    <a4j:commandButton styleClass="boton" value="Imprimir" immediate="true"  onclick="#{rich:component('imprInforme')}.show();"/>
-                                </div>
-                            </rich:panel>
-
-
-                            <h:panelGrid columns="2" width="100%" style="text-align: center;" id="informeDatosPie">
-                                <h:outputText value="Dr/a: #{informeBean.informe.medico.nombre} #{informeBean.informe.medico.apellidos}"/>
-                                <h:outputText value="Fecha: #{informeBean.informe.fecha} ">
-                                    <f:convertDateTime dateStyle="full" timeZone="es"/>
-                                </h:outputText>                            
-                            </h:panelGrid>
-                        </h:form>
-                    </rich:popupPanel>
-
-
-                    <!-- Modal futura implementación imprimir en pdf  -->
-                    <rich:popupPanel id="imprInforme" modal="true" resizeable="false" autosized="true">
-                        <f:facet name="header">
-                            <h:outputText value="Impresión del informe" styleClass="cabeceraModal" />
-                        </f:facet>
-                        <f:facet name="controls">
-                            <h:outputLink value="#" onclick="#{rich:component('imprInforme')}.hide(); return false;" style="color: inherit">
-                                X
-                            </h:outputLink>
-                        </f:facet>
-                        <h:form>
-
-                            <rich:panel>
-                                <h:outputText styleClass="msgOk" value="Opción a implementar en futuras versiones"/>
-                                <div class="botones">
-                                    <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true"  onclick="#{rich:component('imprInforme')}.hide();"/>
-                                </div>            
-                            </rich:panel>
-                        </h:form>
-                    </rich:popupPanel>
+                    <ui:include src="/resources/inc/informe.xhtml" />
 
 
                 </section>

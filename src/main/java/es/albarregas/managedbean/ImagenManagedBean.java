@@ -71,8 +71,10 @@ public class ImagenManagedBean implements Serializable {
         df = DAOFactory.getDAOFactory();
         igd = df.getGenericoDAO();
         usuario = (Usuario) FacesUtils.getSession("usuario");
-        if (usuario != null && usuario.getImagen() != null) {
-            imagen = usuario.getImagen();
+        if (!usuario.getTipo().equals("a")) {
+            if (usuario != null && usuario.getImagen() != null) {
+                imagen = usuario.getImagen();
+            }
         }
 
     }
@@ -170,18 +172,24 @@ public class ImagenManagedBean implements Serializable {
         }
     }
 
+    /**
+     * Añadir imagen a un Centro
+     *
+     * @param event
+     * @throws Exception
+     */
     public void aniadirImagenCentro(FileUploadEvent event) throws Exception {
 
         try {
             UploadedFile imagenSubida = event.getUploadedFile();
 
             Blob imagenRescatada = new javax.sql.rowset.serial.SerialBlob(imagenSubida.getData());
-            
+
             Centro centro = (Centro) FacesUtils.getSession("centroSeleccionado");
-            
-            if(centro != null){
+
+            if (centro != null) {
                 imagen = centro.getImagen();
-            }else{
+            } else {
                 imagen = null;
             }
 

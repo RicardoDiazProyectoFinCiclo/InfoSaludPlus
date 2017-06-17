@@ -1,7 +1,9 @@
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\managedbean\ServicioManagedBean.java
+C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\managedbean\GestionarMedicosManagedBean.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\modelo\Servicio.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\util\Constantes.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\daofactory\MySQLDAOFactory.java
+C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\managedbean\GestionarCitasManagedBean.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\persistencia\HibernateUtil.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\managedbean\AccesoManagedBean.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\daofactory\DAOFactory.java
@@ -19,7 +21,9 @@ C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\util\Utilidades.j
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\managedbean\CentroManagedBean.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\modelo\Provincia.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\modelo\Pueblo.java
+C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\managedbean\GestionarPacientesManagedBean.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\modelo\Usuario.java
+C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\managedbean\CitaPreviaMedicoManagedBean.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\util\FacesUtils.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\managedbean\CitaPreviaPacienteManagedBean.java
 C:\proyectosJava\JSF\InfoSaludPlus\src\main\java\es\albarregas\modelo\Informe.java

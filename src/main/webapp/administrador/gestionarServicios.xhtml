@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:a4j="http://richfaces.org/a4j" 
       xmlns:rich="http://richfaces.org/rich"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:t="http://myfaces.apache.org/tomahawk"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" lang="es">
 
@@ -40,8 +40,9 @@
                                 <rich:panelMenuItem label="Añadir personal sanitario" name="aniadir_personal_sanitario" action="aniadirPersonalSanitario" execute="true" />
                                 <rich:panelMenuItem  label="Gestionar centros" action="gestionarCentros" />
                                 <rich:panelMenuItem style="color:blue;" mode="client" label="Gestionar servicios" action="gestionarServicios" />
-                                <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" />
-                                <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" />
+                                <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" action="gestionarMedicos" />
+                                <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" action="gestionarPacientes"/>
+                                <rich:panelMenuItem label="Getionar Citas" name="gestionar_citas" action="gestionarCitas" />
                                 <rich:panelMenuItem label="Cerrar sesion" name="cerrar_sesion" action="#{accesoBean.cerrarSesion()}" />
                             </rich:panelMenuGroup>
 
@@ -54,11 +55,12 @@
                     <h:form>
                         <rich:panel>
                             <f:facet name="header">
-                                <h:outputText value="Servicios ( #{servicioBean.contadorListServicios} )" />
+                                <h:outputText value="Servicios ( #{servicioBean.listServicios.size()} )" />
                             </f:facet>
 
                             <rich:dataTable id="tablaServicios"   sortMode="single" value="#{servicioBean.listServicios}" style="text-align: center; width: 100%" 
-                                            var="ser" rows="5"  rowClasses="odd-row, even-row" binding="#{servicioBean.panelServicio}">
+                                            var="ser" rows="5"  rowClasses="odd-row, even-row" binding="#{servicioBean.panelServicio}"
+                                            rendered="#{not empty servicioBean.listServicios}">
                                 <rich:column  width="15%" sortBy="#{ser.id}">
                                     <f:facet name="header">
                                         <h:outputText value="Identificador"/>
@@ -93,10 +95,10 @@
 
                                 </rich:column>
                                 <f:facet name="footer">
-                                    <rich:dataScroller for="tablaServicios" stepControls="hide" boundaryControls="auto" fastControls="auto" />
+                                    <rich:dataScroller for="tablaServicios"  maxPages="5" fastStep="3" boundaryControls="hide"  />
                                 </f:facet>
                             </rich:dataTable>
-
+                            <h:outputText rendered="#{empty servicioBean.listServicios}" value="No hay servicios creados." />
                         </rich:panel>
 
 
@@ -119,7 +121,7 @@
                                 <rich:panel>
                                     <h:messages for="gvServicios"/>
 
-                                 
+
                                     <h:panelGrid columns="3" id="datosServicio" class="panel">
 
                                         <h:outputLabel for="nombreServicio" value="Nombre del servicio" />

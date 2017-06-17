@@ -2,6 +2,7 @@ es\albarregas\util\UtilidadesFechas.class
 es\albarregas\daofactory\MySQLDAOFactory.class
 es\albarregas\dao\IGenericoDAO.class
 es\albarregas\managedbean\AccesoManagedBean.class
+es\albarregas\managedbean\CitaPreviaMedicoManagedBean.class
 es\albarregas\modelo\Medico.class
 es\albarregas\managedbean\InformeManagedBean.class
 es\albarregas\managedbean\CitaPreviaPacienteManagedBean.class
@@ -10,15 +11,18 @@ es\albarregas\modelo\Paciente.class
 es\albarregas\managedbean\CentroManagedBean.class
 es\albarregas\modelo\Cita.class
 es\albarregas\util\FacesUtils.class
+es\albarregas\managedbean\GestionarMedicosManagedBean.class
 es\albarregas\util\Constantes.class
 es\albarregas\managedbean\ImagenManagedBean.class
 es\albarregas\managedbean\ServicioManagedBean.class
 es\albarregas\daofactory\DAOFactory.class
+es\albarregas\managedbean\GestionarPacientesManagedBean.class
 es\albarregas\modelo\Imagen.class
 es\albarregas\modelo\Informe.class
 es\albarregas\modelo\Servicio.class
 es\albarregas\util\Utilidades.class
 es\albarregas\persistencia\HibernateUtil.class
+es\albarregas\managedbean\GestionarCitasManagedBean.class
 es\albarregas\modelo\Usuario.class
 es\albarregas\modelo\Direccion.class
 es\albarregas\dao\GenericoDAO.class

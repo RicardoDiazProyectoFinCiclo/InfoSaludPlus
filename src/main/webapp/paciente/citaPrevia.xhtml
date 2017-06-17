@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets" 
       xmlns:a4j="http://richfaces.org/a4j" 
       xmlns:rich="http://richfaces.org/rich"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
       xmlns:t="http://myfaces.apache.org/tomahawk"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"  lang="es">
 
@@ -49,40 +49,74 @@
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">                          
 
-                    <rich:panel header="Cita previa">
-                        <rich:graphValidator id="gvCitaPrevia">
-                            <h:form id="formularioCitaPrevia">
-                                <rich:messages for="formularioCitaPrevia"/>
+                    <rich:panel class="col-sm-8 col-sm-offset-2">
+                        <f:facet name="header">
+                            <h:outputText value="Cita previa" />
+                        </f:facet>
+                        <h:form id="formularioCitaPrevia">
+                            <rich:messages ajaxRendered="true"  for="formularioCitaPrevia" class="msgErrorGlobal"/>
 
-                                <h:panelGrid columns="1" styleClass="panel">
-                                    <h:outputLabel for="tipoCita" value="Seleccione su tipo de cita"/>
-                                    <h:selectOneRadio id="tipoCita" value="#{citaPreviaPacienteBean.tipoCita}">
-                                        <f:selectItem itemLabel="Administrativa" itemValue="administrativa" />
-                                        <f:selectItem itemLabel="Consulta" itemValue="consulta" />
-                                    </h:selectOneRadio>
+                            <h:panelGrid columns="1" styleClass="panel" >
+                                <h:outputLabel for="tipoCita" value="Seleccione su tipo de cita" />
+                                <h:selectOneRadio id="tipoCita" value="#{citaPreviaPacienteBean.tipoCita}" >
+                                    <f:selectItem itemLabel="Administrativa" itemValue="administrativa" />
+                                    <f:selectItem itemLabel="Consulta" itemValue="consulta" />
+                                    <a4j:ajax event="change" render="selecHora"/>
+                                </h:selectOneRadio>
 
-                                    <h:panelGroup>
-                                        <h:outputLabel value="Introduzca la fecha de la cita"/>
-                                        <rich:calendar  value="#{citaPreviaPacienteBean.fechaBusqueda}" 
-                                                        datePattern="dd/MM/yyyy" locale="ES_es" inputSize="15"  />
-                                    </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:outputLabel value="Introduzca la fecha de la cita"/>
+                                    <rich:calendar  value="#{citaPreviaPacienteBean.fechaBusqueda}" preloadDateRangeEnd="#{citaPreviaPacienteBean.fechaHoy}" 
+                                                    datePattern="dd/MM/yyyy" locale="es" inputSize="15"  /> 
+                                </h:panelGroup>
 
-                                    <h:panelGroup>
-                                        <h:outputLabel value="Introduzca la hora de la cita"/>
-                                        <h:selectOneMenu value="#{citaPreviaPacienteBean.horaBusqueda}" >        
-                                            <f:selectItems value="#{citaPreviaPacienteBean.horas}" var="hora" itemValue="#{hora}"  itemLabel="#{hora}" />
-                                        </h:selectOneMenu>
-                                        <h:selectOneMenu value="#{citaPreviaPacienteBean.minutoBusqueda}" >        
-                                            <f:selectItems value="#{citaPreviaPacienteBean.minutos}" var="minuto" itemValue="#{minuto}"  itemLabel="#{minuto}" />
-                                        </h:selectOneMenu>
-                                    </h:panelGroup>
-                                </h:panelGrid>
+                                <h:panelGroup>
+                                    <h:outputLabel value="Introduzca la hora de la cita"/>
+                                    <h:selectOneMenu id="selecHora" value="#{citaPreviaPacienteBean.horaBusqueda}" >        
+                                        <f:selectItems value="#{citaPreviaPacienteBean.horas}" var="hora" itemValue="#{hora}"  itemLabel="#{hora}" />
+                                    </h:selectOneMenu>
+                                    <h:selectOneMenu id="selectMinuto" value="#{citaPreviaPacienteBean.minutoBusqueda}" >        
+                                        <f:selectItems value="#{citaPreviaPacienteBean.minutos}" var="minuto" itemValue="#{minuto}"  itemLabel="#{minuto}" />
+                                    </h:selectOneMenu>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                            <div class="botones">
+                                <a4j:commandButton value="PEDIR CITA" styleClass="boton"  
+                                                   render="tablaHuecos, citaReservada" status="esperaWait"
+                                                   oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('modalTablaHuecos')}.show();"   
+                                                   action="#{citaPreviaPacienteBean.pedirCitaPrevia()}"/>
+                                <a4j:commandButton value="VER MI CITA PREVIA" styleClass="boton"
+                                                   onclick="document.getElementById('citaReservadaForm').style.display = 'table'"
+                                                   rendered="#{not empty citaPreviaPacienteBean.citaReservada or citaPreviaPacienteBean.citaReservada ne null}"
+                                                   />
+                            </div>
+                        </h:form>
 
-                                <a4j:commandButton value="PEDIR CITA" styleClass="boton"  render="tablaHuecos" oncomplete="#{rich:component('modalTablaHuecos')}.show();"   action="#{citaPreviaPacienteBean.pedirCitaPrevia()}"/>
-                            </h:form>
-                        </rich:graphValidator>
                     </rich:panel>
 
+                    <h:form id="citaReservadaForm" class="col-sm-6 col-sm-offset-3" style="margin-top: 20px; overflow: hidden; display: none;" rendered="#{not empty citaPreviaPacienteBean.citaReservada or citaPreviaPacienteBean.citaReservada ne null}">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h:outputText value="Cita previa pendiente de asistencia"/></div>
+                            <div class="panel-body">
+                                <p><h:outputText value="Le recordamos que usted ha solicitado la siguiente cita, si no va a acudir elimínela, por favor. Gracias" /></p>
+                                <h:panelGrid columns="2" styleClass="panel">
+                                    <h:outputText styleClass="etiquetaBasica" value="Paciente: " />
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaReservada.paciente.nombre} #{citaPreviaPacienteBean.citaReservada.paciente.apellidos}"/>
+                                    <h:outputText styleClass="etiquetaBasica" value="Médico: " />
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaReservada.medico.nombre} #{citaPreviaPacienteBean.citaReservada.medico.apellidos}"/>
+                                    <h:outputText styleClass="etiquetaBasica" value="Fecha: "/>
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaReservada.fecha}">
+                                        <f:convertDateTime timeZone="es" timeStyle="full" />
+                                    </h:outputText>
+                                    <h:outputText styleClass="etiquetaBasica" value="Hora: " />
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaReservada.horaFormateada()}" />
+                                </h:panelGrid>
+                            </div>
+                            <div class="panel-footer text-center" style="background: transparent;">
+                                <a4j:commandButton value="ELIMINAR CITA" styleClass="boton" onclick="#{rich:component('modalConfirmElimCita')}.show();"/>
+                            </div>
+                        </div>
+                    </h:form>
 
                     <rich:popupPanel id="modalTablaHuecos" header="Pedir cita" width="700" height="300" resizeable="false" modal="true">
                         <h:form>
@@ -146,29 +180,30 @@
                                         </f:facet>
                                         <h:outputText value="#{hue.medico.nombre} #{hue.medico.apellidos}" />
                                     </rich:column>
-
                                     <f:facet name="footer">
-                                        <rich:dataScroller for="tablaHuecos" stepControls="hide" boundaryControls="auto" fastControls="auto" />
+                                        <rich:dataScroller for="tablaHuecos" maxPages="5" fastStep="3" boundaryControls="hide" />
                                     </f:facet>
                                 </rich:dataTable>
+
                             </rich:panel>
                         </h:form>
-                        <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true" onclick="#{rich:component('modalTablaHuecos')}.hide();" />
-
+                        <div class="botones">
+                            <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true" onclick="#{rich:component('modalTablaHuecos')}.hide();" />
+                        </div>
                     </rich:popupPanel>
 
                     <rich:popupPanel id="modalConfimCita" header="Confirmar cita" autosized="true" resizeable="false" modal="true">
                         <h3><h:outputText value="Confirmar cita"/></h3>
                         <rich:graphValidator id="gvConfirmCita">                         
                             <h:form id="formDatosCita">
-                                <rich:messages for="formDatosCita" styleClass="msgErrorGlobal"/>
+                                <rich:messages for="formDatosCita" styleClass="msgOkGlobal"/>
                                 <h:panelGrid id="datosCita" columns="2">
                                     <h:outputText value="Paciente: "/>
                                     <h:outputText value="#{citaPreviaPacienteBean.citaElegida.paciente.nombre}"/>
                                     <h:outputText value="Medico: " />
                                     <h:outputText value="#{citaPreviaPacienteBean.citaElegida.medico.nombre}"/>
                                     <h:outputText value="Fecha: "/>
-                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.fecha} ">
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.fecha}">
                                         <f:convertDateTime pattern="dd-MM-yyyy"/>
                                     </h:outputText>
                                     <h:outputText value="Hora: "/>
@@ -177,7 +212,8 @@
                                     <h:outputText value="#{citaPreviaPacienteBean.citaElegida.centro.nombre}"/>
                                 </h:panelGrid>
                                 <div class="botones">
-                                    <a4j:commandButton value="Confirmar cita" rendered="#{not citaPreviaPacienteBean.indImprimir}" styleClass="boton" render="formDatosCita" action="#{citaPreviaPacienteBean.confirmarCita()}" />
+                                    <a4j:commandButton value="Confirmar cita" rendered="#{not citaPreviaPacienteBean.indImprimir}" status="esperaWait"
+                                                       styleClass="boton" render="formDatosCita" action="#{citaPreviaPacienteBean.confirmarCita()}" />
                                     <a4j:commandButton value="Cerrar" styleClass="boton"   immediate="true" onclick="#{rich:component('modalConfirmCita')}.hide();" />
                                     <a4j:commandButton rendered="#{citaPreviaPacienteBean.indImprimir}" value="Imprimir" styleClass="boton"  />
                                 </div>
@@ -185,7 +221,20 @@
                         </rich:graphValidator>
                     </rich:popupPanel>
 
-
+                    <rich:popupPanel id="modalConfirmElimCita" header="Confirmar eliminación cita" autosized="true" resizeable="false" modal="true">
+                        <rich:graphValidator id="gvConfirmElimCita">                         
+                            <h:form id="formConfirmElimCita">
+                                <rich:messages for="formConfirmElimCita" class="#{citaPreviaPacienteBean.estiloMessages}"/>
+                                <h4><h:outputText rendered="#{not empty citaPreviaPacienteBean.citaReservada}" value="¿Está seguro de que desea eliminar la cita?" /></h4>
+                                <div class="botones">
+                                    <a4j:commandButton rendered="#{not empty citaPreviaPacienteBean.citaReservada}" value="Si, quiero eliminarla" status="esperaWait"
+                                                       styleClass="boton" render="formConfirmElimCita"  action="#{citaPreviaPacienteBean.deleteCitaPrevia()}" />
+                                    <a4j:commandButton value="Cerrar" styleClass="boton" action="#{citaPreviaPacienteBean.init()}" 
+                                                       onclick="#{rich:component('modalConfirmCita')}.hide(); document.getElementById('citaReservadaForm').style.display = 'none';" />
+                                </div>
+                            </h:form>
+                        </rich:graphValidator>
+                    </rich:popupPanel>
 
                 </section>
 

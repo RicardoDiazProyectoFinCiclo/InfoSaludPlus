@@ -36,6 +36,7 @@ public class InformeManagedBean implements Cloneable, Serializable {
     private List<Informe> listInformes;
     private List<Paciente> listPacientes;
     private UIDataTable panelInforme;
+    private Boolean informeLectura;
 
     DAOFactory df;
     IGenericoDAO igd;
@@ -95,6 +96,14 @@ public class InformeManagedBean implements Cloneable, Serializable {
     public void setPanelInforme(UIDataTable panelInforme) {
         this.panelInforme = panelInforme;
     }
+
+    public Boolean getInformeLectura() {
+        return informeLectura;
+    }
+
+    public void setInformeLectura(Boolean informeLectura) {
+        this.informeLectura = informeLectura;
+    }
     
     
 
@@ -102,6 +111,7 @@ public class InformeManagedBean implements Cloneable, Serializable {
     public void init() {
         df = DAOFactory.getDAOFactory();
         igd = df.getGenericoDAO();
+        informeLectura = false;
         
         if (FacesUtils.getSession("usuario") != null) {
             usuario = (Usuario) FacesUtils.getSession("usuario");
@@ -117,7 +127,7 @@ public class InformeManagedBean implements Cloneable, Serializable {
                 listInformes = igd.get("Informe i WHERE i.paciente.id = " + usuario.getId());
                 break;
             case "m":
-                listInformes = igd.get("Informe i WHERE i.medico.id = " + usuario.getId());
+                listInformes = igd.get("Informe i WHERE i.medico.id = " + usuario.getId() +" ORDER BY fecha desc");
                 listPacientes = igd.get("Paciente p WHERE p.medico.id = " + usuario.getId());
                 medico = (Medico) igd.getOne(usuario.getId(), Medico.class);
                 break;
@@ -143,9 +153,12 @@ public class InformeManagedBean implements Cloneable, Serializable {
      * @return 
      */
     public String iniciarInforme() {
+        informeLectura = false;
         paciente = (Paciente) panelInforme.getRowData();
+        informe.setPaciente(paciente);
+        informe.setMedico(medico);
         System.out.println("Id paciente: " + paciente.getId());
-        return null;
+        return "";
     }
 
     /**
@@ -169,6 +182,7 @@ public class InformeManagedBean implements Cloneable, Serializable {
      * @throws Exception 
      */
     public String verInforme() throws Exception {
+        informeLectura = true;
         informe = (Informe) panelInforme.getRowData();
         return "";
     }

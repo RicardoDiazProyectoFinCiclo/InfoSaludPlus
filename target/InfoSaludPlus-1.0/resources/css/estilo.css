@@ -68,6 +68,23 @@ figcaption{
     font: bold 12pt Arial, sans-serif;
 }
 
+.msgOkGlobal .rf-msgs, .msgOkGlobal .rf-msgs-err,.msgOkGlobal .rf-msgs-sum{
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    font: bold 12pt Arial, sans-serif !important;
+    color: rgb(20,20,170) !important; 
+}
+
+
+.msgErrorGlobal .rf-msgs, .msgErrorGlobal .rf-msgs-err,.msgErrorGlobal .rf-msgs-sum{
+    display: block;
+    text-align: center;
+    margin: 10px auto;
+    font: bold 12pt Arial, sans-serif !important;
+    color: rgb(170,20,20) !important; 
+}
+
 .panel{
     background: none;
     box-shadow: none;
@@ -147,11 +164,11 @@ label{
     Clase de los mensajes de error globales
 */
 .rf-msgs, .rf-msgs-err, .rf-msgs-sum{
-    display: block;
+/*    display: block;
     text-align: center;
     margin: 10px auto;
-    font: bold 12pt Arial, sans-serif !important;
-    color: rgb(170,20,20) !important; 
+    font: bold 12pt Arial, sans-serif !important;*/
+/*    color: inherit;*/
 }
 /*
     Cabeceras de menús horizontales
@@ -182,4 +199,30 @@ label{
     cursor: pointer;
 }
 
+/** DATA SCROLLER **/
+
+.rf-dt-ftr-c, .rf-dt-ftr{
+    background-color: #a1c9dd !important;
+}
+
 /* FIN DATATABLE */
+
+/** CUADROS DE INFORMACION */
+
+.paneles{
+    padding: 0px !important;
+    margin: 20px auto;
+}
+
+.etiquetaBasica{
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+/* COLOR ENLACES TABLA */
+.rf-dt-c-srt{
+   color: white !important;
+}
+.rf-dt-c-srt:hover{
+   color: cyan !important;
+}

@@ -29,13 +29,13 @@ public class Cita implements Serializable {
     @Column(name = "idCita")
     @GeneratedValue(strategy = IDENTITY)
     private int id;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "idPaciente")
     private Paciente paciente;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "idMedico")
     private Medico medico;
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     @JoinColumn(name = "idCentro")
     private Centro centro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -94,6 +94,10 @@ public class Cita implements Serializable {
         this.tipo = tipo;
     }
 
+    /**
+     * Método para obtener el día de la semana en español
+     * @return 
+     */
     public String diaFormateado() {
         String dia = "";
         try {
@@ -110,6 +114,10 @@ public class Cita implements Serializable {
         return dia;
     }
 
+    /**
+     * Método para obtener la hora formateada con formato 24h
+     * @return 
+     */
     public String horaFormateada() {
         SimpleDateFormat smf = new SimpleDateFormat("HH:mm");
 

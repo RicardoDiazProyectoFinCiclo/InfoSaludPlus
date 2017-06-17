@@ -114,28 +114,9 @@
             <to-view-id>/medico/verInformesMedico.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>/medico/misPacientes.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>inicio</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-            <redirect>true</redirect>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>inicioAreaMedico</from-outcome>
-            <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
-            <redirect>true</redirect>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>realizarInforme</from-outcome>
-            <to-view-id>/medico/realizarInforme.xhtml</to-view-id>
-            <redirect>true</redirect>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>verInformesMedico</from-outcome>
-            <to-view-id>/medico/verInformesMedico.xhtml</to-view-id>
+            <from-outcome>citasMedico</from-outcome>
+            <to-view-id>/medico/citasMedico.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
     </navigation-rule>
@@ -162,6 +143,11 @@
             <to-view-id>/medico/verInformesMedico.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>citasMedico</from-outcome>
+            <to-view-id>/medico/citasMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
     </navigation-rule>
     
     <navigation-rule>
@@ -184,6 +170,40 @@
         <navigation-case>
             <from-outcome>realizarInforme</from-outcome>
             <to-view-id>/medico/realizarInforme.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>citasMedico</from-outcome>
+            <to-view-id>/medico/citasMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/medico/citasMedico.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaMedico</from-outcome>
+            <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>misPacientes</from-outcome>
+            <to-view-id>/medico/misPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>realizarInforme</from-outcome>
+            <to-view-id>/medico/realizarInforme.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>verInformesMedico</from-outcome>
+            <to-view-id>/medico/verInformesMedico.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
     </navigation-rule>
@@ -213,6 +233,21 @@
             <to-view-id>/administrador/gestionarServicios.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarMedicos</from-outcome>
+            <to-view-id>/administrador/gestionarMedicos.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarPacientes</from-outcome>
+            <to-view-id>/administrador/gestionarPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCitas</from-outcome>
+            <to-view-id>/administrador/gestionarCitas.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
     </navigation-rule>
     
     <navigation-rule>
@@ -235,6 +270,21 @@
         <navigation-case>
             <from-outcome>gestionarServicios</from-outcome>
             <to-view-id>/administrador/gestionarServicios.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarMedicos</from-outcome>
+            <to-view-id>/administrador/gestionarMedicos.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarPacientes</from-outcome>
+            <to-view-id>/administrador/gestionarPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCitas</from-outcome>
+            <to-view-id>/administrador/gestionarCitas.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
     </navigation-rule>
@@ -261,6 +311,21 @@
             <to-view-id>/administrador/gestionarServicios.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarMedicos</from-outcome>
+            <to-view-id>/administrador/gestionarMedicos.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarPacientes</from-outcome>
+            <to-view-id>/administrador/gestionarPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCitas</from-outcome>
+            <to-view-id>/administrador/gestionarCitas.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
     </navigation-rule>
     
     <navigation-rule>
@@ -283,6 +348,138 @@
         <navigation-case>
             <from-outcome>gestionarCentros</from-outcome>
             <to-view-id>/administrador/gestionarCentros.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarMedicos</from-outcome>
+            <to-view-id>/administrador/gestionarMedicos.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarPacientes</from-outcome>
+            <to-view-id>/administrador/gestionarPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCitas</from-outcome>
+            <to-view-id>/administrador/gestionarCitas.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/administrador/gestionarMedicos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>aniadirPersonalSanitario</from-outcome>
+            <to-view-id>/administrador/aniadirPersonalSanitario.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaAdmin</from-outcome>
+            <to-view-id>/administrador/inicioAreaAdmin.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCentros</from-outcome>
+            <to-view-id>/administrador/gestionarCentros.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarServicios</from-outcome>
+            <to-view-id>/administrador/gestionarServicios.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarPacientes</from-outcome>
+            <to-view-id>/administrador/gestionarPacientes.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCitas</from-outcome>
+            <to-view-id>/administrador/gestionarCitas.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/administrador/gestionarPacientes.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>aniadirPersonalSanitario</from-outcome>
+            <to-view-id>/administrador/aniadirPersonalSanitario.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaAdmin</from-outcome>
+            <to-view-id>/administrador/inicioAreaAdmin.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCentros</from-outcome>
+            <to-view-id>/administrador/gestionarCentros.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarServicios</from-outcome>
+            <to-view-id>/administrador/gestionarServicios.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarMedicos</from-outcome>
+            <to-view-id>/administrador/gestionarMedicos.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCitas</from-outcome>
+            <to-view-id>/administrador/gestionarCitas.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/administrador/gestionarCitas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>aniadirPersonalSanitario</from-outcome>
+            <to-view-id>/administrador/aniadirPersonalSanitario.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaAdmin</from-outcome>
+            <to-view-id>/administrador/inicioAreaAdmin.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarCentros</from-outcome>
+            <to-view-id>/administrador/gestionarCentros.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarServicios</from-outcome>
+            <to-view-id>/administrador/gestionarServicios.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarMedicos</from-outcome>
+            <to-view-id>/administrador/gestionarMedicos.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>gestionarPacientes</from-outcome>
+            <to-view-id>/administrador/gestionarPacientes.xhtml</to-view-id>
             <redirect>true</redirect>
         </navigation-case>
     </navigation-rule>
