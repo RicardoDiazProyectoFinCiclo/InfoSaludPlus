@@ -41,6 +41,8 @@ public class Cita implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date fecha;
+    @Column(columnDefinition = "set('s','n') DEFAULT 'n' not null")
+    private String pasada = "n"; //si el médico ha pasado consulta o no a esta cita...
 
     //a = Administrativa, d = demanda
     @Column(nullable = false)
@@ -94,9 +96,19 @@ public class Cita implements Serializable {
         this.tipo = tipo;
     }
 
+    public String getPasada() {
+        return pasada;
+    }
+
+    public void setPasada(String pasada) {
+        this.pasada = pasada;
+    }
+    
+
     /**
      * Método para obtener el día de la semana en español
-     * @return 
+     *
+     * @return
      */
     public String diaFormateado() {
         String dia = "";
@@ -116,12 +128,18 @@ public class Cita implements Serializable {
 
     /**
      * Método para obtener la hora formateada con formato 24h
-     * @return 
+     *
+     * @return
      */
     public String horaFormateada() {
         SimpleDateFormat smf = new SimpleDateFormat("HH:mm");
 
         return smf.format(fecha);
+    }
+    
+    public String fechaFormateada(){
+        SimpleDateFormat smf = new SimpleDateFormat("dd 'de' MM 'de' yyyy");
+        return diaFormateado() +", " +smf.format(fecha);
     }
 
 }

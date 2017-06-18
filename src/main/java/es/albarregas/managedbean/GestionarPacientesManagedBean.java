@@ -89,4 +89,20 @@ public class GestionarPacientesManagedBean implements Serializable {
         listPacientes = igd.get("Paciente");
     }
 
+    public void bloquearPacientes() {
+        try {
+            Paciente pacienteSelec = (Paciente) tablaPacientes.getRowData();
+
+            if (pacienteSelec.getBloqueado().equals("n")) {
+                pacienteSelec.setBloqueado("s");
+            } else {
+                pacienteSelec.setBloqueado("n");
+            }
+
+            igd.update(pacienteSelec);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

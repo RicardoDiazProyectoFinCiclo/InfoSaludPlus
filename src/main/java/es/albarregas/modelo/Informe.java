@@ -1,6 +1,8 @@
 package es.albarregas.modelo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -101,6 +103,43 @@ public class Informe implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * Método para obtener el día de la semana en español
+     *
+     * @return
+     */
+    public String diaFormateado() {
+        String dia = "";
+        try {
+            String[] dias = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"};
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(fecha);
+            dia = dias[cal.get(Calendar.DAY_OF_WEEK) - 1];
+
+        } catch (Exception e) {
+            dia = "";
+            e.printStackTrace();
+        }
+
+        return dia;
+    }
+
+    /**
+     * Método para obtener la hora formateada con formato 24h
+     *
+     * @return
+     */
+    public String horaFormateada() {
+        SimpleDateFormat smf = new SimpleDateFormat("HH:mm");
+
+        return smf.format(fecha);
+    }
+
+    public String fechaFormateada() {
+        SimpleDateFormat smf = new SimpleDateFormat("dd 'de' MM 'de' yyyy");
+        return diaFormateado() + ", " + smf.format(fecha);
     }
 
 }

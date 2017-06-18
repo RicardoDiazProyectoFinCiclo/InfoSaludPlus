@@ -53,12 +53,12 @@
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1" > 
                     <h:form>
-                        <rich:panel>
+                        <rich:panel id="panelMedicos">
                             <f:facet name="header">
                                 <h:outputText value="Medicos ( #{gestionarMedicosBean.listMedicos.size()} )" />
                             </f:facet>
 
-                                <rich:dataTable id="tablaMedicos"   sortMode="single" value="#{gestionarMedicosBean.listMedicos}" style="text-align: center; width: 100%" 
+                            <rich:dataTable id="tablaMedicos"   sortMode="single" value="#{gestionarMedicosBean.listMedicos}" style="text-align: center; width: 100%" 
                                             var="med" rows="5"  rowClasses="odd-row, even-row" binding="#{gestionarMedicosBean.tablaMedicos}" rendered="#{not empty gestionarMedicosBean.listMedicos}">
                                 <rich:column  width="5%" sortBy="#{cen.id}">
                                     <f:facet name="header">
@@ -67,31 +67,39 @@
                                     <h:outputText value="#{med.id} "/>
                                 </rich:column>
 
-                                <rich:column width="30%" sortBy="#{med.apellidos}">
+                                <rich:column width="25%" sortBy="#{med.apellidos}">
                                     <f:facet name="header">
                                         <h:outputText value="Apellidos"/>
                                     </f:facet>
                                     <h:outputText value="#{med.apellidos}" />
                                 </rich:column>
-                                    <rich:column width="30%" sortBy="#{med.nombre}">
+                                <rich:column width="20%" sortBy="#{med.nombre}">
                                     <f:facet name="header">
                                         <h:outputText value="Nombre"/>
                                     </f:facet>
                                     <h:outputText value="#{med.nombre}" />
                                 </rich:column>
-                                    
-                                    <rich:column width="30%" sortBy="#{med.numColegiado}">
+
+                                <rich:column width="20%" sortBy="#{med.numColegiado}">
                                     <f:facet name="header">
                                         <h:outputText value="Nº Colegiado"/>
                                     </f:facet>
-                                        <h:outputText value="#{med.numColegiado}" />
+                                    <h:outputText value="#{med.numColegiado}" />
                                 </rich:column>
-                                    
-                                <rich:column width="40%" sortBy="#{med.centro.nombre}">
+
+                                <rich:column width="20%" sortBy="#{med.centro.nombre}">
                                     <f:facet name="header">
                                         <h:outputText value="Centro"/>
                                     </f:facet>
                                     <h:outputText rendered="#{not empty med.centro.nombre}" value="#{med.centro.nombre}" />
+                                </rich:column>
+
+                                <rich:column width="10%">
+                                    <f:facet name="header">
+                                        <h:outputText value="Ausencia"/>
+                                    </f:facet>
+                                    <a4j:commandButton value="#{med.ausencia == 'n' ? 'Poner ausencia' : 'Quitar ausencia'}" action="#{gestionarMedicosBean.ponerQuitarAusencias()}" execute="@this" render="tablaMedicos"/>
+                                                   
                                 </rich:column>
 
                                 <f:facet name="footer">
@@ -100,10 +108,6 @@
                             </rich:dataTable>
                             <h:outputText rendered="#{empty gestionarMedicosBean.listMedicos}" value="No hay médicos registrados" />
                         </rich:panel>
-
-
-                        
-
 
                     </h:form>
                 </section>

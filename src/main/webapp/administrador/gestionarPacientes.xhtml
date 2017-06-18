@@ -99,6 +99,15 @@
                                     </f:facet>
                                     <h:outputText rendered="#{not empty pac.medico.apellidos}" value="#{pac.medico.apellidos}, #{pac.medico.nombre}" />
                                 </rich:column>
+                                <rich:column width="15%" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Modificar"/>
+                                    </f:facet>
+
+                                    <a4j:commandButton value="#{pac.bloqueado == 'n' ? 'Bloquear' : 'Desbloquear'}" action="#{gestionarPacientesBean.bloquearPacientes()}" render="tablaPacientes" execute="@this" />
+
+                                </rich:column>
+                                
 
                                 <f:facet name="footer">
                                     <rich:dataScroller for="tablaPacientes"  maxPages="5" fastStep="3" boundaryControls="hide"  />

@@ -113,6 +113,7 @@
                                 </h:panelGrid>
                             </div>
                             <div class="panel-footer text-center" style="background: transparent;">
+                                <a4j:commandButton action="#{citaPreviaPacienteBean.imprimirCitaPrevia()}" value="Imprimir" styleClass="boton"  />
                                 <a4j:commandButton value="ELIMINAR CITA" styleClass="boton" onclick="#{rich:component('modalConfirmElimCita')}.show();"/>
                             </div>
                         </div>
@@ -215,7 +216,7 @@
                                     <a4j:commandButton value="Confirmar cita" rendered="#{not citaPreviaPacienteBean.indImprimir}" status="esperaWait"
                                                        styleClass="boton" render="formDatosCita" action="#{citaPreviaPacienteBean.confirmarCita()}" />
                                     <a4j:commandButton value="Cerrar" styleClass="boton"   immediate="true" onclick="#{rich:component('modalConfirmCita')}.hide();" />
-                                    <a4j:commandButton rendered="#{citaPreviaPacienteBean.indImprimir}" value="Imprimir" styleClass="boton"  />
+                                    <a4j:commandButton rendered="#{citaPreviaPacienteBean.indImprimir}" action="#{citaPreviaPacienteBean.imprimirCitaPrevia()}" value="Imprimir" styleClass="boton"  />
                                 </div>
                             </h:form>
                         </rich:graphValidator>

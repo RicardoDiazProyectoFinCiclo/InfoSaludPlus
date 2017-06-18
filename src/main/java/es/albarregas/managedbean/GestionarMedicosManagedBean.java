@@ -86,14 +86,34 @@ public class GestionarMedicosManagedBean implements Serializable {
         try {
             df = DAOFactory.getDAOFactory();
             igd = df.getGenericoDAO();
-            
-            usuario = (Usuario) FacesUtils.getSession("usuario");        
-            listMedicos = igd.get("Medico");
 
+            usuario = (Usuario) FacesUtils.getSession("usuario");
+            listMedicos = igd.get("Medico");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public String ponerQuitarAusencias() {
+        try {
+            Medico medicoUpd = (Medico) tablaMedicos.getRowData();
+
+            if (medicoUpd.getAusencia().equals("n")) {
+                medicoUpd.setAusencia("s");
+            } else {
+                medicoUpd.setAusencia("n");
+            }
+
+            igd.update(medicoUpd);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+
 
 }

@@ -80,7 +80,7 @@
                                            status="guardarSave">
                         </a4j:commandButton> 
                         <a4j:commandButton type="reset" styleClass="boton" value="Limpiar" immediate="true" rendered="#{not informeBean.informeLectura}"/>
-                        <a4j:commandButton styleClass="boton" value="Imprimir" immediate="true" rendered="#{informeBean.informeLectura}"  onclick="#{rich:component('imprInforme')}.show();"/>
+                        <a4j:commandButton styleClass="boton" value="Imprimir" immediate="true" rendered="#{informeBean.informeLectura}"  action="#{informeBean.imprimirInforme()}" />
                         <a4j:commandButton value="Cerrar" 
                                            immediate="true"                                                      
                                            styleClass="boton"
@@ -119,27 +119,6 @@
                 <h:outputText styleClass="msgOk" value="El informe se ha generado correctamente."/>
                 <div class="botones">
                     <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true" render="menuPrincipal"  onclick="#{rich:component('confirmInforme')}.hide();"/>
-                </div>            
-            </rich:panel>
-        </h:form>
-    </rich:popupPanel>
-
-    <!-- Modal futura implementación imprimir en pdf  -->
-    <rich:popupPanel id="imprInforme" modal="true" resizeable="false" autosized="true">
-        <f:facet name="header">
-            <h:outputText value="Impresión del informe" styleClass="cabeceraModal" />
-        </f:facet>
-        <f:facet name="controls">
-            <h:outputLink value="#" onclick="#{rich:component('imprInforme')}.hide(); return false;" style="color: inherit">
-                X
-            </h:outputLink>
-        </f:facet>
-        <h:form>
-
-            <rich:panel>
-                <h:outputText styleClass="msgOk" value="Opción a implementar en futuras versiones"/>
-                <div class="botones">
-                    <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true"  onclick="#{rich:component('imprInforme')}.hide();"/>
                 </div>            
             </rich:panel>
         </h:form>

@@ -13,12 +13,23 @@ import es.albarregas.modelo.Paciente;
 import es.albarregas.modelo.Usuario;
 import es.albarregas.util.FacesUtils;
 import java.io.Serializable;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.richfaces.component.UIDataTable;
 
 /**
@@ -185,6 +196,54 @@ public class InformeManagedBean implements Cloneable, Serializable {
         informeLectura = true;
         informe = (Informe) panelInforme.getRowData();
         return "";
+    }
+    
+    public void imprimirInforme(){
+        try {
+            URL url = this.getClass().getResource("/es/albarregas/reportes/Informe.jasper");
+            System.out.println("Ruta: " + url.toString());
+            String paramNombrePaciente = informe.getPaciente().getApellidos() + "," + informe.getPaciente().getNombre();
+            String paramNombreMedico = informe.getMedico().getApellidos() + "," + informe.getMedico().getNombre();
+            String paramTitulo = informe.getTitulo();
+            String paramObservacion = informe.getObservacion();
+            String paramTratamiento = informe.getTratamiento();
+            String paramCentro = informe.getMedico().getCentro().getNombre();
+            String paramFecha = informe.fechaFormateada();
+            String paramHora = informe.horaFormateada();
+            String paramTelefonoPaciente = informe.getPaciente().getDireccion().getTelefono();
+            String paramDireccionPaciente = informe.getMedico().getCentro().getDireccion().getDireccion() + ", ("
+                    + informe.getMedico().getCentro().getDireccion().getPueblo().getCodigoPostal() + ") "
+                    + informe.getMedico().getDireccion().getPueblo().getNombre() + ", "
+                    + informe.getMedico().getDireccion().getPueblo().getProvincia().getNombre();
+
+            String paramTelefono = informe.getMedico().getCentro().getDireccion().getTelefono();
+            String paramEspecialidadMedico = informe.getMedico().getServicio().getNombre();
+            String paramDescripcion = informe.getDescripcion();
+            
+            JasperReport jr = (JasperReport) JRLoader.loadObject(url);
+            Map parametros = new HashMap<String, Object>();
+            parametros.put("nombrePaciente", paramNombrePaciente);
+            parametros.put("telefonoPaciente", paramTelefonoPaciente);
+            parametros.put("direccionPaciente", paramDireccionPaciente);
+            
+            parametros.put("nombreMedico", paramNombreMedico);
+            parametros.put("especialidadMedico", paramEspecialidadMedico);
+            parametros.put("centroMedico", paramCentro);
+            
+            parametros.put("titulo",paramTitulo);
+            parametros.put("tratamiento", paramTratamiento);
+            parametros.put("observacion", paramObservacion);
+            parametros.put("descripcion", paramDescripcion);
+            
+            parametros.put("fechaInforme", paramFecha);
+            parametros.put("hora", paramHora);
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, new JREmptyDataSource());
+            JasperViewer jv = new JasperViewer(jp);
+            jv.show();
+        } catch (Exception ex) {
+            Logger.getLogger(GestionarMedicosManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

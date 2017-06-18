@@ -46,47 +46,51 @@
                 </nav>
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">                          
-
-                    <rich:dataTable id="tablaInformes" sortMode="single" value="#{informeBean.listInformes}" style="margin-left: 150px; text-align: center;" var="inf" rows="5" binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row">
-                        <rich:column>
-                            <f:facet name="header">
-                                <h:outputText value="Médico"/>
-                            </f:facet>
-                            <h:outputText value="Dr/a #{inf.medico.nombre} #{inf.medico.apellidos} "/>
-                        </rich:column>
-
-                        <rich:column sortBy="#{inf.fecha}">
-                            <f:facet name="header">
-                                <h:outputText value="Fecha del informe"/>
-                            </f:facet>
-                            <h:outputText value="#{inf.fecha}">
-                                <f:convertDateTime dateStyle="long" timeZone="es"/>
-                            </h:outputText>
-                        </rich:column>
-                        
-                        <rich:column sortBy="#{inf.titulo}">
-                            <f:facet name="header">
-                                <h:outputText value="Título del informe"/>
-                            </f:facet>
-                            <h:outputText value="#{inf.titulo}"/>
-                        </rich:column>
-                        
-                        <rich:column>
-                            <f:facet name="header">
-                                <h:outputText value="Ver informe"/>
-                            </f:facet>
-                            <h:form>
-                                <a4j:commandLink render="formularioInforme" action="#{informeBean.verInforme()}" oncomplete="#{rich:component('informe')}.show()" >
-                                    <h:graphicImage title="Ver informe" alt="ver" library="icons" name="ver1.gif" style="color: black;"/>
-                                </a4j:commandLink>
-                            </h:form>
-                        </rich:column>
-
-                        <f:facet name="footer">
-                            <rich:dataScroller for="tablaInformes"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                    <rich:panel id="panelMedicos">
+                        <f:facet name="header">
+                            <h:outputText value="Mis informes ( #{informeBean.listInformes.size()} )" />
                         </f:facet>
-                    </rich:dataTable>
+                        <rich:dataTable id="tablaInformes" sortMode="single" rendered="#{not empty informeBean.listInformes}" value="#{informeBean.listInformes}" style="margin-left: 150px; text-align: center;" var="inf" rows="5" binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row">
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Médico"/>
+                                </f:facet>
+                                <h:outputText value="Dr/a #{inf.medico.nombre} #{inf.medico.apellidos} "/>
+                            </rich:column>
 
+                            <rich:column sortBy="#{inf.fecha}">
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha del informe"/>
+                                </f:facet>
+                                <h:outputText value="#{inf.fecha}">
+                                    <f:convertDateTime dateStyle="long" timeZone="es"/>
+                                </h:outputText>
+                            </rich:column>
+
+                            <rich:column sortBy="#{inf.titulo}">
+                                <f:facet name="header">
+                                    <h:outputText value="Título del informe"/>
+                                </f:facet>
+                                <h:outputText value="#{inf.titulo}"/>
+                            </rich:column>
+
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Ver informe"/>
+                                </f:facet>
+                                <h:form>
+                                    <a4j:commandLink render="formularioInforme" action="#{informeBean.verInforme()}" oncomplete="#{rich:component('informe')}.show()" >
+                                        <h:graphicImage title="Ver informe" alt="ver" library="icons" name="ver1.gif" style="color: black;"/>
+                                    </a4j:commandLink>
+                                </h:form>
+                            </rich:column>
+
+                            <f:facet name="footer">
+                                <rich:dataScroller for="tablaInformes"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                            </f:facet>
+                        </rich:dataTable>
+                        <h:outputText  value="No hay informes para usted" rendered="#{empty informeBean.listInformes}" />
+                    </rich:panel>
 
                     <!-- Informe -->
                     <rich:popupPanel id="informe" modal="true" autosized="true" onmaskclick="#{rich:component('informe')}.hide()">

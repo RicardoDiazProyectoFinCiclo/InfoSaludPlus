@@ -16,14 +16,25 @@ import es.albarregas.util.Constantes;
 import es.albarregas.util.FacesUtils;
 import es.albarregas.util.UtilidadesFechas;
 import java.io.Serializable;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.richfaces.component.UIDataTable;
 
 /**
@@ -175,7 +186,6 @@ public class CitaPreviaPacienteManagedBean implements Serializable, Cloneable {
         this.estiloMessages = estiloMessages;
     }
 
-    
     @PostConstruct
     public void init() {
         fechaHoy = new Date();
@@ -407,6 +417,43 @@ public class CitaPreviaPacienteManagedBean implements Serializable, Cloneable {
             this.setEstiloMessages("msgErrorGlobal");
             FacesUtils.addMessage("formConfirmElimCita", "error", "Error al intentar eliminar la cita previa");
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Método para imprimir en pdf la cita previa que el paciente ha reservado
+     */
+    public void imprimirCitaPrevia() {
+        try {
+            URL url = this.getClass().getResource("/es/albarregas/reportes/ResguardoCitaPrevia.jasper");
+            System.out.println("Ruta: " + url.toString());
+            String paramPaciente = citaReservada.getPaciente().getApellidos() + "," + citaReservada.getPaciente().getNombre();
+            String paramMedico = citaReservada.getMedico().getApellidos() + "," + citaReservada.getMedico().getNombre();
+            String paramFecha = citaReservada.fechaFormateada();
+            String paramHora = citaReservada.horaFormateada();
+            String paramCentro = citaReservada.getCentro().getNombre();
+            String paramDireccion = citaReservada.getCentro().getDireccion().getDireccion() + ", ("
+                    + citaReservada.getCentro().getDireccion().getPueblo().getCodigoPostal() + ") "
+                    + citaReservada.getCentro().getDireccion().getPueblo().getNombre() + ", "
+                    + citaReservada.getCentro().getDireccion().getPueblo().getProvincia().getNombre();
+
+            String paramTelefono = citaReservada.getCentro().getDireccion().getTelefono();
+            
+            JasperReport jr = (JasperReport) JRLoader.loadObject(url);
+            Map parametros = new HashMap<String, Object>();
+            parametros.put("paciente", paramPaciente);
+            parametros.put("medico", paramMedico);
+            parametros.put("fechaInforme", paramFecha);
+            parametros.put("hora", paramHora);
+            parametros.put("centro", paramCentro);
+            parametros.put("direccion", paramDireccion);
+            parametros.put("telefono", paramTelefono);
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, new JREmptyDataSource());
+            JasperViewer jv = new JasperViewer(jp);
+            jv.show();
+        } catch (Exception ex) {
+            Logger.getLogger(GestionarMedicosManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

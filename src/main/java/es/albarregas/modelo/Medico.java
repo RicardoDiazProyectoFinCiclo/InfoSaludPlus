@@ -24,7 +24,8 @@ public class Medico extends Usuario {
     @OneToOne
     @JoinColumn(name = "idServicio",columnDefinition = "int(11) DEFAULT 1")
     private Servicio servicio;
-
+    @Column(columnDefinition = "set('s','n') DEFAULT 'n' not null")
+    protected String ausencia = "n"; //Si el médico está o no de baja médica (valga la redundancia) o vacaciones...
 
     public String getNumColegiado() {
         return numColegiado;
@@ -57,5 +58,15 @@ public class Medico extends Usuario {
     public void setServicio(Servicio servicio) {
         this.servicio = servicio;
     }
+
+    public String getAusencia() {
+        return ausencia;
+    }
+
+    public void setAusencia(String ausencia) {
+        this.ausencia = ausencia;
+    }
+    
+    
 
 }

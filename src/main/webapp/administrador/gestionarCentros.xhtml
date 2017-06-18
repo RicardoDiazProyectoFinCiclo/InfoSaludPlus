@@ -88,8 +88,8 @@
 
                                     <a4j:commandLink  render="formCentros,cabModalCentros" 
                                                       resetValues="true" action="#{centroBean.levantarModalModificar()}" 
-                                                      oncomplete="#{rich:component('modalCentros')}.show()" execute="@this" >
-                                        <h:graphicImage library="icons" name="edit.gif" alt="Añadir" />
+                                                      oncomplete="#{rich:component('modalCentros')}.show()" title="Modificar Centro" execute="@this" >
+                                        <h:graphicImage library="icons" name="edit.gif" alt="Modificar" />
                                     </a4j:commandLink>
 
                                 </rich:column>

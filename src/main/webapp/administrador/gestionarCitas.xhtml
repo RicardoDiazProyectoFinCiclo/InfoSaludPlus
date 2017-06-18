@@ -61,9 +61,9 @@
                             <rich:dataTable id="tablaCitas"   sortMode="single" value="#{gestionarCitasBean.listCitas}" style="text-align: center; width: 100%" 
                                             var="cit" rows="5"  rowClasses="odd-row, even-row" binding="#{gestionarCitasBean.tablaCitas}" 
                                             rendered="#{not empty gestionarCitasBean.listCitas}">
-                                <rich:column width="5%" sortBy="#{cen.id}">
+                                <rich:column width="3%" sortBy="#{cit.id}">
                                     <f:facet name="header">
-                                        <h:outputText value="Identificador"/>
+                                        <h:outputText value="Id"/>
                                     </f:facet>
                                     <h:outputText value="#{cit.id} "/>
                                 </rich:column>
@@ -102,8 +102,8 @@
                                     </f:facet>
                                     <h:outputText rendered="#{not empty cit.centro.nombre}" value="#{cit.centro.nombre}" />
                                 </rich:column>
-                                
-                                <rich:column width="10%" sortBy="#{cit.fecha}">
+
+                                <rich:column width="12%" sortBy="#{cit.fecha}">
                                     <f:facet name="header">
                                         <h:outputText value="Fecha"/>
                                     </f:facet>
@@ -111,12 +111,19 @@
                                         <f:convertDateTime dateStyle="long" timeZone="es"/>
                                     </h:outputText>
                                 </rich:column>
-                                
+
                                 <rich:column width="5%" sortBy="#{cit.horaFormateada()}">
                                     <f:facet name="header">
                                         <h:outputText value="Hora"/>
                                     </f:facet>
                                     <h:outputText value="#{cit.horaFormateada()}" />
+                                </rich:column>
+
+                                <rich:column width="5%" sortBy="#{cit.horaFormateada()}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Médico disponible"/>
+                                    </f:facet>
+                                    <h:outputText value="#{cit.medico.ausencia == 'n' ? 'Si, asistirá' : 'No, está ausente'} " />
                                 </rich:column>
 
                                 <f:facet name="footer">
@@ -127,10 +134,55 @@
                         </rich:panel>
 
 
-
-
-
+                        <div class="botones">
+                            <a4j:commandButton value="Cambio de médicos" render="formCambioMedicos" action="#{gestionarCitasBean.levantarModalCambioMedicos()}" execute="@form"  styleClass="boton" oncomplete="#{rich:component('modalCambioMedicos')}.show();"  />
+                        </div>
                     </h:form>
+
+                    <rich:popupPanel id="modalCambioMedicos" modal="true" resizeable="false" autosized="true">
+                        <f:facet name="header">
+                            <h:outputText value="Cambio de médicos" styleClass="cabeceraModal" />
+                        </f:facet>
+                        <f:facet name="controls">
+                            <h:outputLink value="#" onclick="#{rich:component('modalCambioMedicos')}.hide(); return false;" style="color: inherit">
+                                X
+                            </h:outputLink>
+                        </f:facet>
+
+                        <rich:panel>
+
+                            <h:form id="formCambioMedicos" styleClass="tabla">
+                                <rich:messages for="formCambioMedicos" styleClass="#{gestionarCitasBean.claseMsg}" />
+                                <h:panelGrid columns="3" >
+                                    <h:outputText value="Médico ausente" />
+                                    <h:outputText value="Sustituir por" />
+                                    <h:outputText value="Médicos disponibles" />
+
+                                    <h:selectOneMenu value="#{gestionarCitasBean.idMedicoAusente}">
+                                        <f:selectItem itemLabel="Selecciona un médico ausente..." itemValue="0" />
+                                        <f:selectItems value="#{gestionarCitasBean.listMedicosAusentes}" var="med" itemLabel="#{med.apellidos}, #{med.nombre}" itemValue="#{med.id}" />
+                                    </h:selectOneMenu>
+
+                                    <h:outputText value="      &lt;-----&gt;      "/>
+
+                                    <h:selectOneMenu value="#{gestionarCitasBean.idMedicoNoAusente}">
+                                        <f:selectItem itemLabel="Selecciona un médico disponible..." itemValue="0" />
+                                        <f:selectItems value="#{gestionarCitasBean.listMedicosNoAusentes}" var="med" itemLabel="#{med.apellidos}, #{med.nombre}" itemValue="#{med.id}" />
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+
+                                <div class="botones">
+                                    <a4j:commandButton value="Aceptar cambio" styleClass="boton" render="formCambioMedicos" action="#{gestionarCitasBean.cambioMedicoAusente()}" />
+
+                                    <a4j:commandButton value="Cerrar" styleClass="boton" immediate="true" onclick="#{rich:component('modalCambioMedicos')}.hide();"/>
+                                </div>    
+                            </h:form>
+                        </rich:panel>
+
+                    </rich:popupPanel>
+
+
+
                 </section>
 
             </ui:define>

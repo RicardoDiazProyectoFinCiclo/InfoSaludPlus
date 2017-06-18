@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34150134-d4d9-45c3-bdfa-fec8c7776b6d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="paciente" class="java.lang.String"/>
+	<parameter name="medico" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="hora" class="java.lang.String"/>
+	<parameter name="centro" class="java.lang.String"/>
+	<parameter name="direccion" class="java.lang.String"/>
+	<parameter name="telefono" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="98" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="555" height="98" forecolor="#FFFFFF" backcolor="#0066CC" uuid="1ffaea17-ebf6-43e1-b47a-2e6850d18340"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="160" y="35" width="313" height="44" forecolor="#FFFFFF" uuid="6f62d627-493a-495a-8f9d-54326d99c5e8"/>
+				<textElement>
+					<font fontName="Arial" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resguardo de Cita Previa]]></text>
+			</staticText>
+			<image>
+				<reportElement x="14" y="10" width="114" height="80" uuid="70dc89de-470d-4ee4-ae7e-eda26f5be006"/>
+				<imageExpression><![CDATA["C:\\Users\\Ricardo\\Pictures\\logoInfoSaludPlus.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="58" y="0" width="69" height="20" uuid="b56a6875-9130-4fe3-a1e1-8409ac03c3d0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paciente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="0" width="381" height="20" uuid="a06e02cc-73c6-4e30-b192-1e11584d2c75"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{paciente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="58" y="39" width="69" height="20" uuid="17e20e33-9a6a-4de0-89c2-f7253ac368aa"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Médico:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="39" width="381" height="20" uuid="a686e33e-a478-43ce-b414-8cf0679f70f9"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{medico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="297" splitType="Stretch">
+			<staticText>
+				<reportElement x="58" y="15" width="69" height="20" uuid="d5e73d15-e438-4a3e-8697-d4c62100f4b4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="50" width="69" height="20" uuid="7d400663-3cc8-4684-946c-08f06c85b847"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="15" width="381" height="20" uuid="958575e8-0ca6-413f-be73-b3aebab2924b"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="50" width="381" height="20" uuid="affbd8ac-ce46-4a5b-b7e4-6c1481191041"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hora}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="58" y="83" width="69" height="20" uuid="f4b76ff0-dcc1-4bf8-982b-ee77662b1e68"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Centro:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="83" width="381" height="20" uuid="efe029f1-04bc-44b2-8cb4-9f470ded8ac2"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{centro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="58" y="115" width="69" height="20" uuid="d326694b-5d59-49d3-9a7f-3af03a1a17c3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="115" width="381" height="59" uuid="be764a0e-fc73-4c22-a013-775aa550fb3e"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="71" y="247" width="448" height="17" forecolor="#0000FF" uuid="048aadf2-90d8-4637-bafa-72d1d46b00ba"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Recuerde anular su cita previa si no puede acudir, para que otro paciente pueda elegirla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="277" width="100" height="20" forecolor="#333333" uuid="f0d59bb9-a967-4885-99b7-cee1bdaa3659"/>
+				<textElement>
+					<font size="14" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[GRACIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="187" width="69" height="20" uuid="504b1a78-d962-4643-931e-9400b8d01531"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="138" y="187" width="381" height="20" uuid="33db100c-20b7-4144-9538-df7d1e729bcf"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{telefono}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
