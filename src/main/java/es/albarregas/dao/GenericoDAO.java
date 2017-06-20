@@ -8,7 +8,11 @@ import org.hibernate.HibernateException;
 
 import org.hibernate.Session;
 
-
+/**
+ * DAO Genérico para acceder a la base de datos
+ * @author Ricardo
+ * @param <T> 
+ */
 public class GenericoDAO<T> implements IGenericoDAO<T>, Serializable {
 
     private Session sesion;

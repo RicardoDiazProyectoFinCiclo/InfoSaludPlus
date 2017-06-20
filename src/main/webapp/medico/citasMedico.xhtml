@@ -49,10 +49,17 @@
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">                          
 
-                    <h:form>
+                    <h2 class="cabeceraSeccion" >
+                        <p><h:outputText value="PACIENTES CITADOS PARA HOY " /></p>  
+                        <p>(<h:outputText value="#{citaPreviaMedicoBean.fechaHoy}" >
+                                <f:convertDateTime timeStyle="long" pattern="EEEE d 'de' MMMM 'de' yyyy" locale="es" />
+                            </h:outputText>)</p>
+                    </h2>
+
+                    
                         <rich:panel header="Pacientes citados para hoy (#{citaPreviaMedicoBean.listCitas.size()})">
                             <rich:dataTable  id="tablaHuecos"   sortMode="single" value="#{citaPreviaMedicoBean.listCitas}" style="text-align: center; width: 100%" 
-                                             var="cit" rows="5" rendered="#{not empty citaPreviaMedicoBean.listCitas}"  rowClasses="odd-row, even-row" binding="#{citaPreviaMedicoBean.tablaCitas}">
+                                             var="cit" rows="5" rendered="#{not empty citaPreviaMedicoBean.listCitas}"  rowClasses="odd-row, even-row" binding="#{informeBean.panelCita}">
 
                                 <rich:column width="15%" sortBy="#{cit.horaFormateada()}">
                                     <f:facet name="header">
@@ -88,7 +95,7 @@
                                         <h:outputText value="Realizar Informe"/>
                                     </f:facet>
                                     <h:form>
-                                        <a4j:commandLink  render="informeDatosPaciente, formularioInforme, informeDatosPie" action="#{informeBean.iniciarInforme()}" oncomplete="#{rich:component('informe')}.show()" >
+                                        <a4j:commandLink  render="informeDatosPaciente, formularioInforme, informeDatosPie" action="#{informeBean.iniciarInformeDesdeCita()}" oncomplete="#{rich:component('informe')}.show()" >
                                             <h:graphicImage library="icons" name="edit.gif" alt="Añadir" />
                                         </a4j:commandLink>
                                     </h:form>
@@ -100,7 +107,7 @@
                             <h:outputText rendered="#{empty citaPreviaMedicoBean.listCitas}" value="No hay pacientes citados para hoy"/>
 
                         </rich:panel>
-                    </h:form>
+                    
 
 
                     <ui:include src="/resources/inc/informe.xhtml" />

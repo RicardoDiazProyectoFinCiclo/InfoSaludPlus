@@ -5,7 +5,6 @@
  */
 package es.albarregas.modelo;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- *
+ *  Modelo relacionado con la tabla pacientes. Hereda de usuarios
  * @author Ricardo
  */
 @Entity

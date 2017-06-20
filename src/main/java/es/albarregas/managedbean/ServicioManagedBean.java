@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.albarregas.managedbean;
 
 import es.albarregas.dao.IGenericoDAO;
@@ -17,7 +12,8 @@ import javax.faces.bean.ViewScoped;
 import org.richfaces.component.UIDataTable;
 
 /**
- * Managed Bean para gestionar servicios 
+ * Managed Bean para gestionar servicios (Altas, bajas, modificaciones)
+ *
  * @author Ricardo
  */
 @ViewScoped
@@ -71,8 +67,10 @@ public class ServicioManagedBean implements Serializable {
     public void setPanelServicio(UIDataTable panelServicio) {
         this.panelServicio = panelServicio;
     }
-    
 
+    /**
+     * El postconstructor se ejecuta al entrar en la vista
+     */
     @PostConstruct
     public void init() {
         try {
@@ -90,8 +88,10 @@ public class ServicioManagedBean implements Serializable {
     }
 
     /**
-     * Método que carga datos del modal de añadir servicios (los datos están en el init())
-     * @return 
+     * Método que carga datos del modal de añadir servicios (los datos están en
+     * el init())
+     *
+     * @return
      */
     public String levantarModalAniadir() {
         init();
@@ -101,7 +101,8 @@ public class ServicioManagedBean implements Serializable {
 
     /**
      * Método que se ejecuta antes de levantar el modal de modificar servicios
-     * @return 
+     *
+     * @return
      */
     public String levantarModalModificar() {
         init();
@@ -120,7 +121,8 @@ public class ServicioManagedBean implements Serializable {
 
     /**
      * Método para añadir un servicio a la BD
-     * @return 
+     *
+     * @return
      */
     public String aniadirServicio() {
 
@@ -136,7 +138,8 @@ public class ServicioManagedBean implements Serializable {
 
     /**
      * Modal para modificar un servicio de BD
-     * @return 
+     *
+     * @return
      */
     public String modificarServicio() {
 

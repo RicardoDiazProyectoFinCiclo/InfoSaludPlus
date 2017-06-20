@@ -38,7 +38,7 @@
                             <rich:panelMenuGroup label="Panel del administrador" selectable="false" expanded="true" styleClass="cabeMenuHori">
                                 <rich:panelMenuItem label="Datos personales" name="datos_personales" action="inicioAreaAdmin" />
                                 <rich:panelMenuItem style="color:blue;" mode="client" label="Añadir personal sanitario" name="aniadir_personal_sanitario" execute="true" />
-                                <rich:panelMenuItem label="Centros" action="gestionarCentros" />
+                                <rich:panelMenuItem label="Gestionar Centros" action="gestionarCentros" />
                                 <rich:panelMenuItem label="Gestionar servicios" action="gestionarServicios" />
                                 <rich:panelMenuItem label="Gestionar medicos" name="gestionar_medicos" action="gestionarMedicos" />
                                 <rich:panelMenuItem label="Gestionar pacientes" name="gestionar_pacientes" action="gestionarPacientes" />
@@ -50,7 +50,10 @@
                 </nav>
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">                          
-
+                    <h2 class="cabeceraSeccion" >
+                        <h:outputText value="REGISTRAR PERSONAL SANITARIO (MÉDICOS)" />
+                    </h2>
+                    
                     <h:form id="formularioRegistroPersonalSanitario">
                         <rich:focus preserve="true" delayed="true"/>
                         <rich:graphValidator id="gvRegistroPersonalSanitario" value="#{accesoBean}">

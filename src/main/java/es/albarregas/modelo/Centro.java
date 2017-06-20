@@ -3,7 +3,6 @@ package es.albarregas.modelo;
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- *
+ * Modelo relacionado con la tabla centros
  * @author Ricardo
  */
 @Entity
@@ -68,6 +67,9 @@ public class Centro implements Serializable {
         this.imagen = imagen;
     }
 
+    /**
+     * Obtener un solo centro
+     */
     public void oneCentro() {
         if (this.id > 0) {
             DAOFactory df = DAOFactory.getDAOFactory();
@@ -79,6 +81,10 @@ public class Centro implements Serializable {
 
     }
 
+    /**
+     * Obtener todos los centros
+     * @return 
+     */
     public ArrayList allCentros() {
 
         DAOFactory df = DAOFactory.getDAOFactory();

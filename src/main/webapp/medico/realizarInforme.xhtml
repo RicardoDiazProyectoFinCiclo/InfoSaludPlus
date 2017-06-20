@@ -46,59 +46,70 @@
                     </h:form>
                 </nav>
 
-                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1 text-center">                          
-                    <rich:dataTable id="tablaInformes" value="#{informeBean.listPacientes}" style="margin-left: 100px" var="pac" rows="5" binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row">
-                        <rich:column sortBy="#{pac.apellidos}">
-                            <f:facet name="header">
-                                <h:outputText value="Apellidos"/>
-                            </f:facet>
-                            <h:outputText value="#{pac.apellidos}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{pac.nombre}">
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{pac.nombre}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{pac.nif}">
-                            <f:facet name="header">
-                                <h:outputText value="NIF"/>
-                            </f:facet>
-                            <h:outputText value="#{pac.nif}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{pac.numSegSoc}">
-                            <f:facet name="header">
-                                <h:outputText value="Nº SS"/>
-                            </f:facet>
-                            <h:outputText value="#{pac.numSegSoc}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{pac.fechaNacimiento}">
-                            <f:facet name="header">
-                                <h:outputText value="Fecha de Nacimiento"/>
-                            </f:facet>
-                            <h:outputText value="#{pac.fechaNacimiento}">
-                                <f:convertDateTime dateStyle="long" timeZone="es"/>
-                            </h:outputText>
-                        </rich:column>
-                        <rich:column>
-                            <f:facet name="header">
-                                <h:outputText value="Realizar Informe"/>
-                            </f:facet>
-                            <h:form>
-                                <a4j:commandLink  render="informeDatosPaciente, formularioInforme, informeDatosPie" action="#{informeBean.iniciarInforme()}" oncomplete="#{rich:component('informe')}.show()" >
-                                    <h:graphicImage library="icons" name="edit.gif" alt="Añadir" />
-                                </a4j:commandLink>
-                            </h:form>
-                        </rich:column>
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1"> 
 
-                        <f:facet name="footer">
-                            <rich:dataScroller for="tablaInformes"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                    <h2 class="cabeceraSeccion" >
+                        <h:outputText value="REALIZAR INFORMES A LOS PACIENTES" />
+                    </h2>
+                    <rich:panel>
+                        <f:facet name="header">
+                            <h:outputText value="Pacientes ( #{informeBean.listInformes.size()} )" />
                         </f:facet>
-                    </rich:dataTable>
+                        <rich:dataTable id="tablaInformes" value="#{informeBean.listPacientes}" style="text-align: center; width: 100%"
+                                        var="pac" rows="5" binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row" rendered="#{not empty informeBean.listPacientes}">
+                            <rich:column sortBy="#{pac.apellidos}">
+                                <f:facet name="header">
+                                    <h:outputText value="Apellidos"/>
+                                </f:facet>
+                                <h:outputText value="#{pac.apellidos}"/>
+                            </rich:column>
+                            <rich:column sortBy="#{pac.nombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{pac.nombre}"/>
+                            </rich:column>
+                            <rich:column sortBy="#{pac.nif}">
+                                <f:facet name="header">
+                                    <h:outputText value="NIF"/>
+                                </f:facet>
+                                <h:outputText value="#{pac.nif}"/>
+                            </rich:column>
+                            <rich:column sortBy="#{pac.numSegSoc}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nº SS"/>
+                                </f:facet>
+                                <h:outputText value="#{pac.numSegSoc}"/>
+                            </rich:column>
+                            <rich:column sortBy="#{pac.fechaNacimiento}">
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha de Nacimiento"/>
+                                </f:facet>
+                                <h:outputText value="#{pac.fechaNacimiento}">
+                                    <f:convertDateTime dateStyle="long" timeZone="es"/>
+                                </h:outputText>
+                            </rich:column>
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Realizar Informe"/>
+                                </f:facet>
+                                <h:form>
+                                    <a4j:commandLink  render="informeDatosPaciente, formularioInforme, informeDatosPie" action="#{informeBean.iniciarInforme()}" oncomplete="#{rich:component('informe')}.show()" >
+                                        <h:graphicImage library="icons" name="edit.gif" alt="Añadir" />
+                                    </a4j:commandLink>
+                                </h:form>
+                            </rich:column>
+
+                            <f:facet name="footer">
+                                <rich:dataScroller for="tablaInformes"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                            </f:facet>
+                        </rich:dataTable>
+                        <h:outputText value="No tienes ningún paciente para realizar informes" rendered="#{empty informeBean.listPacientes}" />
+                    </rich:panel>
 
                     <ui:include src="/resources/inc/informe.xhtml" />
 
-                    
+
 
                 </section>
 

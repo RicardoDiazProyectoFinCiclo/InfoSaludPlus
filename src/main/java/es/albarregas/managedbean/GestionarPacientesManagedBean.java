@@ -79,7 +79,10 @@ public class GestionarPacientesManagedBean implements Serializable {
     public void setTablaPacientes(UIDataTable tablaPacientes) {
         this.tablaPacientes = tablaPacientes;
     }
-
+    
+    /**
+     * Se carga al entrar en la vista
+     */
     @PostConstruct
     public void init() {
         df = DAOFactory.getDAOFactory();
@@ -89,6 +92,9 @@ public class GestionarPacientesManagedBean implements Serializable {
         listPacientes = igd.get("Paciente");
     }
 
+    /**
+     * Método para boquear y desbloquear el acceso de los pacientes
+     */
     public void bloquearPacientes() {
         try {
             Paciente pacienteSelec = (Paciente) tablaPacientes.getRowData();

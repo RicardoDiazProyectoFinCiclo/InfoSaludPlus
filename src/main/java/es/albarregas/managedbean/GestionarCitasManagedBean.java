@@ -125,6 +125,9 @@ public class GestionarCitasManagedBean implements Serializable {
         this.claseMsg = claseMsg;
     }
 
+    /**
+     * Cargamos al entrar en la vista
+     */
     @PostConstruct
     public void init() {
         df = DAOFactory.getDAOFactory();
@@ -134,6 +137,9 @@ public class GestionarCitasManagedBean implements Serializable {
         listCitas = igd.get("Cita Where DATE(fecha) > CURDATE()");
     }
 
+    /**
+     * Se ejecuta al levantar el modal de cambio de médicos
+     */
     public void levantarModalCambioMedicos() {
         try {
             listMedicosAusentes = igd.get("Medico Where ausencia = 's'");
@@ -143,8 +149,12 @@ public class GestionarCitasManagedBean implements Serializable {
         }
     }
 
+    /**
+     * Cambiar de medicos, uno que está de baja o ausente por otro disponible
+     */
     public void cambioMedicoAusente() {
         try {
+            //Vemos que se han seleccionado los médicos
             claseMsg = "msgErrorGlobal";
             if (idMedicoAusente == 0) {
                 FacesUtils.addMessage("formCambioMedicos", "error", "Debe seleccionar un médico ausente");

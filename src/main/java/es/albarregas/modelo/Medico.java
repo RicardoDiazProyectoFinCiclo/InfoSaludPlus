@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- *
+ *  Modelo relacionado con la tabla médicos. Hereda de Usuarios
  * @author Ricardo
  */
 @Entity

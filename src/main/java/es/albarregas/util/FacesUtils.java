@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.albarregas.util;
 
 import javax.faces.application.FacesMessage;
@@ -11,7 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ *  Clase con métodos para acceder o escribir en la sesión y añadir mensajes de error o informrmación
  * @author Ricardo
  */
 public class FacesUtils {

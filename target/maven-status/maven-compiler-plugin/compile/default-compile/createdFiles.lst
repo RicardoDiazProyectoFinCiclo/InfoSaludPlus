@@ -24,6 +24,7 @@ es\albarregas\util\Utilidades.class
 es\albarregas\persistencia\HibernateUtil.class
 es\albarregas\managedbean\GestionarCitasManagedBean.class
 es\albarregas\modelo\Usuario.class
+es\albarregas\managedbean\ComunesManagedBean.class
 es\albarregas\modelo\Direccion.class
 es\albarregas\dao\GenericoDAO.class
 es\albarregas\modelo\Provincia.class

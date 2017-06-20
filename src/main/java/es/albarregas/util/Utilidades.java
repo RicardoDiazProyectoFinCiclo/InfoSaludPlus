@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.albarregas.util;
 
 import java.security.MessageDigest;
@@ -10,7 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 /**
- *
+ * Clase con algunas utilidades que nos pueden ser necesarias
  * @author Ricardo
  */
 public class Utilidades {

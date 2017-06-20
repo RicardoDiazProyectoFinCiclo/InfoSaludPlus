@@ -20,7 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 
 /**
- *
+ *  Modelo relacionado con la tabla usuarios
  * @author Ricardo
  */
 @Entity

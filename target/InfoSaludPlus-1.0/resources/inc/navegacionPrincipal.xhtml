@@ -31,24 +31,18 @@
             <rich:dropDownMenu mode="ajax">
                 <f:facet name="label">
                     <h:panelGrid cellpadding="0" cellspacing="0" columns="2" style="vertical-align:middle">
-                        <h:outputText value="Servicios" styleClass="menuItemLb"/>
+                        <h:outputText value="Información" styleClass="menuItemLb"/>
                     </h:panelGrid>
                 </f:facet>
-                <rich:menuItem mode="client" onclick="#{rich:component('confirmRegistro')}.show();">
-                    <h:outputText value="Cardiología" />
+
+
+                <rich:menuItem mode="client">        
+                    <h:outputText value="Servicios" />
                 </rich:menuItem>
-                <rich:menuItem mode="client">
-                    <h:outputText value="Neumología" />
+                <rich:menuItem mode="client">        
+                    <h:outputText value="Centros" />
                 </rich:menuItem>
-                <rich:menuItem mode="client">
-                    <h:outputText value="Traumatología" />
-                </rich:menuItem>
-                <rich:menuItem mode="client">
-                    <h:outputText value="Medicina General" />
-                </rich:menuItem>
-                <rich:menuItem mode="client">
-                    <h:outputText value="Medicina Interna" />
-                </rich:menuItem>
+
             </rich:dropDownMenu>
 
             <rich:toolbarGroup location="right">
@@ -88,7 +82,7 @@
         </f:facet>
         <f:facet name="controls">
             <h:outputLink value="#" onclick="#{rich:component('registro')}.hide();
-                        return false;" style="color: inherit">
+                    return false;" style="color: inherit">
                 X
             </h:outputLink>
         </f:facet>
@@ -182,9 +176,9 @@
                             <f:validateLength minimum="4" maximum="20"/>
                         </h:inputSecret>
                         <rich:message for="claveRep" ajaxRendered="true"/>
-                        
+
                     </h:panelGrid>
-                    
+
                     <div class="botones">
                         <a4j:commandButton value="Registrarse" 
                                            execute="@form"

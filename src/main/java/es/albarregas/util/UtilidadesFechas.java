@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- *
+ *  Clase con algunas utilidades de fechas que nos pueden ser necesarios
  * @author Ricardo
  */
 public class UtilidadesFechas {

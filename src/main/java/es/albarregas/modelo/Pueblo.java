@@ -18,7 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 /**
- *
+ * Modelo relacionado con la tabla pueblos
  * @author Ricardo
  */
 @Entity

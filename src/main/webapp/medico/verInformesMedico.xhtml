@@ -46,62 +46,71 @@
                     </h:form>
                 </nav>
 
-                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1 text-center">                          
-                    <rich:dataTable id="tablaInformes" value="#{informeBean.listInformes}" style="margin-left: 100px" var="inf" rows="5" 
-                                    binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row">
-                        <rich:column sortBy="#{inf.paciente.apellidos}">
-                            <f:facet name="header">
-                                <h:outputText value="Apellidos"/>
-                            </f:facet>
-                            <h:outputText value="#{inf.paciente.apellidos}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{inf.paciente.nombre}">
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>
-                            </f:facet>
-                            <h:outputText value="#{inf.paciente.nombre}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{inf.paciente.nif}">
-                            <f:facet name="header">
-                                <h:outputText value="NIF"/>
-                            </f:facet>
-                            <h:outputText value="#{inf.paciente.nif}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{inf.paciente.numSegSoc}">
-                            <f:facet name="header">
-                                <h:outputText value="Nº SS"/>
-                            </f:facet>
-                            <h:outputText value="#{inf.paciente.numSegSoc}"/>
-                        </rich:column>
-                        <rich:column sortBy="#{inf.fecha}">
-                            <f:facet name="header">
-                                <h:outputText value="Fecha del informe"/>
-                            </f:facet>
-                            <h:outputText value="#{inf.fecha}">
-                                <f:convertDateTime dateStyle="long" timeZone="es"/>
-                            </h:outputText>
-                        </rich:column>
-                        <rich:column sortBy="#{inf.titulo}">
-                            <f:facet name="header">
-                                <h:outputText value="Título del informe"/>
-                            </f:facet>
-                            <h:outputText value="#{inf.titulo}"/>
-                        </rich:column>
-                        <rich:column>
-                            <f:facet name="header">
-                                <h:outputText value="Ver informe"/>
-                            </f:facet>
-                            <h:form>
-                                <a4j:commandLink render="informeDatosPaciente, formularioInforme, informeDatosPie" action="#{informeBean.verInforme()}" oncomplete="#{rich:component('informe')}.show()" >
-                                    <h:graphicImage title="Ver informe" alt="ver" library="icons" name="ver1.gif" style="color: black;"/>
-                                </a4j:commandLink>
-                            </h:form>
-                        </rich:column>
-                        <f:facet name="footer">
-                            <rich:dataScroller for="tablaInformes"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">  
+                    <h2 class="cabeceraSeccion" >
+                        <h:outputText value="VER LOS INFORMES MÉDICOS QUE HE REDACTADO" />
+                    </h2>
+                    <rich:panel>
+                        <f:facet name="header">
+                            <h:outputText value="Informes de pacientes ( #{informeBean.listInformes.size()} )" />
                         </f:facet>
+                        <rich:dataTable id="tablaInformes" value="#{informeBean.listInformes}" style="text-align: center; width: 100%" var="inf" rows="5" 
+                                        binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row" rendered="#{not empty informeBean.listInformes}">
+                            <rich:column sortBy="#{inf.paciente.apellidos}">
+                                <f:facet name="header">
+                                    <h:outputText value="Apellidos"/>
+                                </f:facet>
+                                <h:outputText value="#{inf.paciente.apellidos}"/>
+                            </rich:column>
+                            <rich:column sortBy="#{inf.paciente.nombre}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre"/>
+                                </f:facet>
+                                <h:outputText value="#{inf.paciente.nombre}"/>
+                            </rich:column>
+                            <rich:column sortBy="#{inf.paciente.nif}">
+                                <f:facet name="header">
+                                    <h:outputText value="NIF"/>
+                                </f:facet>
+                                <h:outputText value="#{inf.paciente.nif}"/>
+                            </rich:column>
+                            <rich:column sortBy="#{inf.paciente.numSegSoc}">
+                                <f:facet name="header">
+                                    <h:outputText value="Nº SS"/>
+                                </f:facet>
+                                <h:outputText value="#{inf.paciente.numSegSoc}"/>
+                            </rich:column>
+                            <rich:column sortBy="#{inf.fecha}">
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha del informe"/>
+                                </f:facet>
+                                <h:outputText value="#{inf.fecha}">
+                                    <f:convertDateTime dateStyle="long" timeZone="es"/>
+                                </h:outputText>
+                            </rich:column>
+                            <rich:column sortBy="#{inf.titulo}">
+                                <f:facet name="header">
+                                    <h:outputText value="Título del informe"/>
+                                </f:facet>
+                                <h:outputText value="#{inf.titulo}"/>
+                            </rich:column>
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Ver informe"/>
+                                </f:facet>
+                                <h:form>
+                                    <a4j:commandLink render="informeDatosPaciente, formularioInforme, informeDatosPie" action="#{informeBean.verInforme()}" oncomplete="#{rich:component('informe')}.show()" >
+                                        <h:graphicImage title="Ver informe" alt="ver" library="icons" name="ver1.gif" style="color: black;"/>
+                                    </a4j:commandLink>
+                                </h:form>
+                            </rich:column>
+                            <f:facet name="footer">
+                                <rich:dataScroller for="tablaInformes"  maxPages="5" fastStep="3" boundaryControls="hide"  />
+                            </f:facet>
 
-                    </rich:dataTable>
+                        </rich:dataTable>
+                        <h:outputText value="No has emitido ningún informe" rendered="#{empty informeBean.listInformes}" />
+                    </rich:panel>
 
                     <ui:include src="/resources/inc/informe.xhtml" />
 

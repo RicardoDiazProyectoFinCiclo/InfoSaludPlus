@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.albarregas.managedbean;
 
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
+import es.albarregas.modelo.Cita;
 import es.albarregas.modelo.Informe;
 import es.albarregas.modelo.Medico;
 import es.albarregas.modelo.Paciente;
@@ -24,6 +20,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -33,7 +30,9 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.richfaces.component.UIDataTable;
 
 /**
- * Managed Bean para tratar la subida y bajada de imágenes de forma aislada para reutilizar código y evitar problemas
+ * Managed Bean para tratar la subida y bajada de imágenes de forma aislada para
+ * reutilizar código y evitar problemas
+ *
  * @author Ricardo
  */
 @ViewScoped
@@ -47,7 +46,9 @@ public class InformeManagedBean implements Cloneable, Serializable {
     private List<Informe> listInformes;
     private List<Paciente> listPacientes;
     private UIDataTable panelInforme;
+    private UIDataTable panelCita;
     private Boolean informeLectura;
+    private Cita cita;
 
     DAOFactory df;
     IGenericoDAO igd;
@@ -115,20 +116,38 @@ public class InformeManagedBean implements Cloneable, Serializable {
     public void setInformeLectura(Boolean informeLectura) {
         this.informeLectura = informeLectura;
     }
-    
-    
 
+    public UIDataTable getPanelCita() {
+        return panelCita;
+    }
+
+    public void setPanelCita(UIDataTable panelCita) {
+        this.panelCita = panelCita;
+    }
+
+    public Cita getCita() {
+        return cita;
+    }
+
+    public void setCita(Cita cita) {
+        this.cita = cita;
+    }
+
+    /**
+     * Se carga al entrar en la vista
+     */
     @PostConstruct
     public void init() {
         df = DAOFactory.getDAOFactory();
         igd = df.getGenericoDAO();
         informeLectura = false;
-        
+
         if (FacesUtils.getSession("usuario") != null) {
             usuario = (Usuario) FacesUtils.getSession("usuario");
         }
 
         informe = new Informe();
+        cita = new Cita();
         medico = new Medico();
         informe.setFecha(new Date());
 
@@ -138,7 +157,7 @@ public class InformeManagedBean implements Cloneable, Serializable {
                 listInformes = igd.get("Informe i WHERE i.paciente.id = " + usuario.getId());
                 break;
             case "m":
-                listInformes = igd.get("Informe i WHERE i.medico.id = " + usuario.getId() +" ORDER BY fecha desc");
+                listInformes = igd.get("Informe i WHERE i.medico.id = " + usuario.getId() + " ORDER BY fecha desc");
                 listPacientes = igd.get("Paciente p WHERE p.medico.id = " + usuario.getId());
                 medico = (Medico) igd.getOne(usuario.getId(), Medico.class);
                 break;
@@ -150,7 +169,8 @@ public class InformeManagedBean implements Cloneable, Serializable {
 
     /**
      * Para sacar la fecha de hoy formateada
-     * @return 
+     *
+     * @return
      */
     public String fechaFormateada() {
         String nombreCentro = this.usuario.getCentro().getNombre();
@@ -161,9 +181,11 @@ public class InformeManagedBean implements Cloneable, Serializable {
 
     /**
      * Rescatamos el paciente del futuro informe a añadir
-     * @return 
+     *
+     * @return
      */
     public String iniciarInforme() {
+        informe = new Informe();
         informeLectura = false;
         paciente = (Paciente) panelInforme.getRowData();
         informe.setPaciente(paciente);
@@ -173,9 +195,27 @@ public class InformeManagedBean implements Cloneable, Serializable {
     }
 
     /**
-     * Añadimos el informe a la base de datos
+     * Si queremos generar un informe desde el panel de citas, tenemos que
+     * hacerlo con este método que se ejecuta al levantar el modal de informe
+     *
      * @return
-     * @throws Exception 
+     */
+    public String iniciarInformeDesdeCita() {
+        informeLectura = false;
+        informe = new Informe();
+        cita = (Cita) panelCita.getRowData();
+        paciente = cita.getPaciente();
+        medico = cita.getMedico();
+        informe.setPaciente(paciente);
+        informe.setMedico(medico);
+        return "";
+    }
+
+    /**
+     * Añadimos el informe a la base de datos
+     *
+     * @return
+     * @throws Exception
      */
     public String guardarInforme() throws Exception {
         System.out.println("Guardando informe");
@@ -189,19 +229,25 @@ public class InformeManagedBean implements Cloneable, Serializable {
 
     /**
      * Rescatamos el informe seleccionado
+     *
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public String verInforme() throws Exception {
         informeLectura = true;
         informe = (Informe) panelInforme.getRowData();
         return "";
     }
-    
-    public void imprimirInforme(){
+
+    /**
+     * Generamos un pdf del informe seleccionado
+     */
+    public void imprimirInforme() {
         try {
+            //Ruta del jasper report
             URL url = this.getClass().getResource("/es/albarregas/reportes/Informe.jasper");
             System.out.println("Ruta: " + url.toString());
+            //Declaramos los parámetros que le vamos a pasar en el map
             String paramNombrePaciente = informe.getPaciente().getApellidos() + "," + informe.getPaciente().getNombre();
             String paramNombreMedico = informe.getMedico().getApellidos() + "," + informe.getMedico().getNombre();
             String paramTitulo = informe.getTitulo();
@@ -219,30 +265,47 @@ public class InformeManagedBean implements Cloneable, Serializable {
             String paramTelefono = informe.getMedico().getCentro().getDireccion().getTelefono();
             String paramEspecialidadMedico = informe.getMedico().getServicio().getNombre();
             String paramDescripcion = informe.getDescripcion();
-            
+
+            //Cargamos la url del jasper report
             JasperReport jr = (JasperReport) JRLoader.loadObject(url);
+            //Metemos los parámetros en el map
             Map parametros = new HashMap<String, Object>();
             parametros.put("nombrePaciente", paramNombrePaciente);
             parametros.put("telefonoPaciente", paramTelefonoPaciente);
             parametros.put("direccionPaciente", paramDireccionPaciente);
-            
+
             parametros.put("nombreMedico", paramNombreMedico);
             parametros.put("especialidadMedico", paramEspecialidadMedico);
             parametros.put("centroMedico", paramCentro);
-            
-            parametros.put("titulo",paramTitulo);
+
+            parametros.put("titulo", paramTitulo);
             parametros.put("tratamiento", paramTratamiento);
             parametros.put("observacion", paramObservacion);
             parametros.put("descripcion", paramDescripcion);
-            
+
             parametros.put("fechaInforme", paramFecha);
             parametros.put("hora", paramHora);
 
             JasperPrint jp = JasperFillManager.fillReport(jr, parametros, new JREmptyDataSource());
-            JasperViewer jv = new JasperViewer(jp);
-            jv.show();
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Si no pones esto al cerrar el viewe se cierra toda la aplicacion
+            jv.setVisible(true); //el show() está deprecated
+
         } catch (Exception ex) {
             Logger.getLogger(GestionarMedicosManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void limpiarInforme() {
+        try {
+            if (informe != null) {
+                informe.setTitulo("");
+                informe.setDescripcion("");
+                informe.setTratamiento("");
+                informe.setObservacion("");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

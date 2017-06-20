@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- *
+ *  Modelo relacionado con la tabla servicios
  * @author Ricardo
  */
 @Entity

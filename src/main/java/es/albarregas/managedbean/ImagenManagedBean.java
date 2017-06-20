@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.albarregas.managedbean;
 
 import es.albarregas.dao.IGenericoDAO;
@@ -65,6 +61,9 @@ public class ImagenManagedBean implements Serializable {
         this.idCentro = idCentro;
     }
 
+    /**
+     * Se carga al entrar en cualquier método y en la vista
+     */
     @PostConstruct
     public void init() {
 

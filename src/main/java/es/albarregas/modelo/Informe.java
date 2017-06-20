@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- *
+ *  Modelo relacionado con la tabla informes
  * @author Ricardo
  */
 @Entity
@@ -137,9 +138,13 @@ public class Informe implements Serializable {
         return smf.format(fecha);
     }
 
+    /**
+     * Método para obtener la fecha formateada en formato largo
+     * @return 
+     */
     public String fechaFormateada() {
-        SimpleDateFormat smf = new SimpleDateFormat("dd 'de' MM 'de' yyyy");
-        return diaFormateado() + ", " + smf.format(fecha);
+        SimpleDateFormat smf = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+        return smf.format(fecha);
     }
 
 }

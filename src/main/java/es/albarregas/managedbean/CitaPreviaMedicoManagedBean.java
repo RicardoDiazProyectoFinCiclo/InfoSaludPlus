@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package es.albarregas.managedbean;
 
 import es.albarregas.dao.IGenericoDAO;
@@ -22,6 +17,7 @@ import org.richfaces.component.UIDataTable;
 
 /**
  * Managed Bean para las citas previas de los médicos
+ *
  * @author Ricardo
  */
 @ViewScoped
@@ -37,6 +33,7 @@ public class CitaPreviaMedicoManagedBean implements Serializable, Cloneable {
     DAOFactory df;
     IGenericoDAO igd;
     private UIDataTable tablaCitas;
+    private Date fechaHoy;
 
     public Medico getMedico() {
         return medico;
@@ -78,16 +75,28 @@ public class CitaPreviaMedicoManagedBean implements Serializable, Cloneable {
         this.usuario = usuario;
     }
 
+    public Date getFechaHoy() {
+        return fechaHoy;
+    }
+
+    public void setFechaHoy(Date fechaHoy) {
+        this.fechaHoy = fechaHoy;
+    }
+
+    /**
+     * Se ejecuta al entrar en la vista
+     */
     @PostConstruct
     public void init() {
         try {
             df = DAOFactory.getDAOFactory();
             igd = df.getGenericoDAO();
+            fechaHoy = new Date();
 
             if (FacesUtils.getSession("usuario") != null) {
                 usuario = (Usuario) FacesUtils.getSession("usuario");
             }
-            
+
             inicioFecha = new Date();
             finFecha = new Date();
 

@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import javax.faces.bean.ManagedBean;
-import javax.persistence.CascadeType;
+import java.util.Locale;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 /**
- *
+ * Modelo relacionado con la tabla citas
  * @author Ricardo
  */
 @Entity
@@ -137,9 +135,13 @@ public class Cita implements Serializable {
         return smf.format(fecha);
     }
     
+    /**
+     * Método para obtener la fecha formateada en formato largo
+     * @return 
+     */
     public String fechaFormateada(){
-        SimpleDateFormat smf = new SimpleDateFormat("dd 'de' MM 'de' yyyy");
-        return diaFormateado() +", " +smf.format(fecha);
+        SimpleDateFormat smf = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+        return smf.format(fecha);
     }
 
 }

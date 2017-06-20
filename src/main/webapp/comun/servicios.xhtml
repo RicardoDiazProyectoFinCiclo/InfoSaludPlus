@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <f:view>
+
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+            <ui:define name="titulo">InfoSaludPlus |  inicio</ui:define>
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+            <ui:define name="migaPan">
+                <h:outputText value="Inicio" style="font-weight:bold" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <section class="col-sm-9 row">
+                    <h2 class="cabeceraSeccion" >
+                            <h:outputText value="NUESTRAS NOTICIAS" />
+                        </h2>
+                    <article class="col-sm-5 col-sm-offset-1"> 
+                        <h3>Estrenamos página web</h3>
+                        <p>Info Salud plus abre su página web a partir de Junio</p>
+
+                        <p>Los pacientes, que a partir de su apertura, podrán pedir la cita
+                            a través del servicio online, celebran la próxima apertura.</p>
+
+                        <figure>
+                            <h:graphicImage library="images" name="gente-feliz.jpg" width="300" height="200"/>
+                            <figcaption>Pacientes de Info Salud Plus celebrando la próxima apertura</figcaption>
+                        </figure>
+                    </article>
+                    <article class="col-sm-offset-1 col-sm-5"> 
+                        <h3>Nuevos avances médicos</h3>
+                        <p>El equipo de Info Salud plus ha descubierto una bacteria para luchar contra las
+                            hemorroides.
+                        </p>
+                        <figure>
+                            <h:graphicImage library="images" name="avanceCientifico.jpg" width="300" height="200"/>
+                            <figcaption>Científicos de Info Salud Plus descubriendo la nueva bacteria</figcaption>
+                        </figure>
+                    </article>
+                    <div class="text-center">
+                        <h2 class="cabeceraSeccion" >
+                            <h:outputText value="SERVICIOS MÉDICOS DE INFOSALUD PLUS" />
+                        </h2>
+                        <a4j:repeat value="#{comunesBean.listServicios}" var="ser" rows="10">
+                            <div class="bg-primary servicios-cu">
+                                <h:outputText value="#{ser.nombre}" />
+                            </div>
+                        </a4j:repeat>
+                    </div>
+                </section>
+
+
+                <aside class="col-sm-offset-1 col-sm-2">
+
+                    <rich:panel header="Cita previa">
+                        <h:outputText value="Cita previa online de forma rápida para acudir a nuestros centros de salud."/>
+                        <h:form>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="dni" value="DNI:"/>
+                                <h:inputText id="dni" />
+
+                                <h:outputLabel for="fechaNac3" value="Fecha de Nacimiento:"/>
+                                <rich:calendar id="fechaNac3" value="#{paciente.fechaNacimiento}" 
+                                               locale="es/ES" inputSize="15"  datePattern="dd/MM/yyyy"/>
+                            </h:panelGrid>
+                            <div class="botones">
+                                <h:commandButton value="Enviar" action="inicioAreaPaciente"/>
+                                <h:commandButton value="Limpiar" type="reset" style="margin-left: 10px;"  />
+                            </div>
+                        </h:form>
+                    </rich:panel>
+                </aside>
+
+            </ui:define>
+        </ui:decorate>
+
+    </f:view>
+</html>
+

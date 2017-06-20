@@ -5,17 +5,30 @@ body{
 }
 
 header, footer, #secciones, #menuPrincipal{
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 
-h1{
+header h1{
     text-align: left;
-    margin-top: 50px;
+    margin-top: 30px;
+    letter-spacing: 5px;
+    word-spacing: 10px;
+    font-weight: bold;
+}
+
+header h2{
+    text-align: left;
+    font-style: italic;
+    color: #333333;
 }
 
 h2, h3{
     text-align: center;
+}
+
+p{
+    font: normal 11pt Arial;
 }
 
 #secciones{
@@ -261,4 +274,21 @@ label{
 #enlacesPie ul li a{
     font: italic 11pt Arial;
     color: cyan;
+}
+.cabeceraSeccion{
+    text-align: center; 
+    color: #006290; 
+    padding: 0px; 
+    font: bold 18pt Arial;
+    letter-spacing: 3px;
+    word-spacing: 6px;
+    text-shadow: 2px 2px lightgray; 
+}
+
+.servicios-cu{
+    width: 150px; 
+    display: inline-block; 
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
 }

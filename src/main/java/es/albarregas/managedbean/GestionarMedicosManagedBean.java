@@ -80,6 +80,9 @@ public class GestionarMedicosManagedBean implements Serializable {
         this.tablaMedicos = tablaMedicos;
     }
 
+    /**
+     * Cargamos al entrar en la vista
+     */
     @PostConstruct
     public void init() {
 
@@ -95,6 +98,10 @@ public class GestionarMedicosManagedBean implements Serializable {
         }
     }
 
+    /**
+     * Método en que si la ausencia está puesta la quitamos, si no la tiene la ponemos (Para ausencias médicas)
+     * @return 
+     */
     public String ponerQuitarAusencias() {
         try {
             Medico medicoUpd = (Medico) tablaMedicos.getRowData();

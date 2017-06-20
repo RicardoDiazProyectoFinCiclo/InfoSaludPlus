@@ -26,8 +26,7 @@
                 <h:outputText value=" / Área del Paciente" />
             </ui:define>
 
-            <ui:define name="secciones">
-
+            <ui:define name="secciones">    
                 <nav id="panelLateral" class="row col-sm-2">
                     <h:outputStylesheet>
                         .cols {
@@ -48,8 +47,10 @@
                 </nav>
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1">                          
-
-                    <rich:panel class="col-sm-8 col-sm-offset-2">
+                    <h2 class="cabeceraSeccion col-sm-8" >
+                        <h:outputText value="SOLICITAR CITA PREVIA"/>
+                    </h2>
+                    <rich:panel class="col-sm-8">
                         <f:facet name="header">
                             <h:outputText value="Cita previa" />
                         </f:facet>
@@ -94,7 +95,7 @@
 
                     </rich:panel>
 
-                    <h:form id="citaReservadaForm" class="col-sm-6 col-sm-offset-3" style="margin-top: 20px; overflow: hidden; display: none;" rendered="#{not empty citaPreviaPacienteBean.citaReservada or citaPreviaPacienteBean.citaReservada ne null}">
+                    <h:form id="citaReservadaForm" class="col-sm-6 col-sm-offset-1" style="margin-top: 20px; overflow: hidden; display: none;" rendered="#{not empty citaPreviaPacienteBean.citaReservada or citaPreviaPacienteBean.citaReservada ne null}">
                         <div class="panel panel-primary">
                             <div class="panel-heading"><h:outputText value="Cita previa pendiente de asistencia"/></div>
                             <div class="panel-body">
@@ -113,7 +114,7 @@
                                 </h:panelGrid>
                             </div>
                             <div class="panel-footer text-center" style="background: transparent;">
-                                <a4j:commandButton action="#{citaPreviaPacienteBean.imprimirCitaPrevia()}" value="Imprimir" styleClass="boton"  />
+                                <a4j:commandButton action="#{citaPreviaPacienteBean.imprimirCitaPrevia()}" value="IMPRIMIR" styleClass="boton"  />
                                 <a4j:commandButton value="ELIMINAR CITA" styleClass="boton" onclick="#{rich:component('modalConfirmElimCita')}.show();"/>
                             </div>
                         </div>
@@ -216,7 +217,7 @@
                                     <a4j:commandButton value="Confirmar cita" rendered="#{not citaPreviaPacienteBean.indImprimir}" status="esperaWait"
                                                        styleClass="boton" render="formDatosCita" action="#{citaPreviaPacienteBean.confirmarCita()}" />
                                     <a4j:commandButton value="Cerrar" styleClass="boton"   immediate="true" onclick="#{rich:component('modalConfirmCita')}.hide();" />
-                                    <a4j:commandButton rendered="#{citaPreviaPacienteBean.indImprimir}" action="#{citaPreviaPacienteBean.imprimirCitaPrevia()}" value="Imprimir" styleClass="boton"  />
+                                    <a4j:commandButton rendered="#{citaPreviaPacienteBean.indImprimir}" immediate="true" action="#{citaPreviaPacienteBean.imprimirCitaPrevia()}" value="Imprimir" styleClass="boton"  />
                                 </div>
                             </h:form>
                         </rich:graphValidator>

@@ -4,7 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html" 
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets" 
-      xmlns:rich="http://richfaces.org/rich">
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
 
     <f:view>
 
@@ -20,6 +21,9 @@
             <ui:define name="secciones">
 
                 <section class="col-sm-9 row">
+                    <h2 class="cabeceraSeccion" >
+                            <h:outputText value="NUESTRAS NOTICIAS" />
+                        </h2>
                     <article class="col-sm-5 col-sm-offset-1"> 
                         <h3>Estrenamos página web</h3>
                         <p>Info Salud plus abre su página web a partir de Junio</p>
@@ -28,7 +32,7 @@
                             a través del servicio online, celebran la próxima apertura.</p>
 
                         <figure>
-                            <h:graphicImage library="images" name="gente-feliz.jpg" width="300" height="200"/>
+                            <h:graphicImage library="images" class="img-responsive" name="gente-feliz.jpg" width="300" height="200"/>
                             <figcaption>Pacientes de Info Salud Plus celebrando la próxima apertura</figcaption>
                         </figure>
                     </article>
@@ -38,15 +42,27 @@
                             hemorroides.
                         </p>
                         <figure>
-                            <h:graphicImage library="images" name="avanceCientifico.jpg" width="300" height="200"/>
+                            <h:graphicImage library="images" class="img-responsive" name="avanceCientifico.jpg" width="300" height="200"/>
                             <figcaption>Científicos de Info Salud Plus descubriendo la nueva bacteria</figcaption>
                         </figure>
                     </article>
+                    <div class="text-center">
+                        <h2 class="cabeceraSeccion" >
+                            <h:outputText value="SERVICIOS MÉDICOS DE INFOSALUD PLUS" />
+                        </h2>
+                        <a4j:repeat value="#{comunesBean.listServicios}" var="ser" rows="10">
+                            <div class="bg-primary servicios-cu">
+                                <h:outputText value="#{ser.nombre}" />
+                            </div>
+                        </a4j:repeat>
+                    </div>
                 </section>
+
+
                 <aside class="col-sm-offset-1 col-sm-2">
 
                     <rich:panel header="Cita previa">
-                        <h:outputText value="Cita previa online de forma rápida para acudir a nuestros centros de salud."/>
+                        <p><h:outputText  value="Cita previa online de forma rápida para acudir a nuestros centros de salud."/></p>
                         <h:form>
                             <h:panelGrid columns="1">
                                 <h:outputLabel for="dni" value="DNI:"/>
@@ -57,8 +73,8 @@
                                                locale="es/ES" inputSize="15"  datePattern="dd/MM/yyyy"/>
                             </h:panelGrid>
                             <div class="botones">
-                                <h:commandButton value="Enviar" action="inicioAreaPaciente"/>
-                                <h:commandButton value="Limpiar" type="reset" style="margin-left: 10px;"  />
+                                <h:commandButton value="Enviar" styleClass="boton" action="inicioAreaPaciente"/>
+                                <h:commandButton value="Limpiar" styleClass="boton" type="reset" style="margin-left: 10px;"  />
                             </div>
                         </h:form>
                     </rich:panel>

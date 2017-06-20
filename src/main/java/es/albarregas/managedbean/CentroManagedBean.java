@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.albarregas.managedbean;
 
 import es.albarregas.dao.IGenericoDAO;
@@ -20,7 +16,7 @@ import javax.faces.bean.ViewScoped;
 import org.richfaces.component.UIDataTable;
 
 /**
- *
+ *  Managed Bean para hacer cosas con los centros (altas, bajas, modificaciones)
  * @author Ricardo
  */
 @ViewScoped
@@ -121,7 +117,9 @@ public class CentroManagedBean implements Serializable, Cloneable {
     }
 
     
-    
+    /**
+     * El postconstructor se ejecuta al entrar en la vista
+     */
     @PostConstruct
     public void init() {
         try {
@@ -133,16 +131,21 @@ public class CentroManagedBean implements Serializable, Cloneable {
             centro = new Centro();
             listCentros = igd.get("Centro");
             contadorListCentros = listCentros.size();
-
+            //declaramos las direcciones, pueblos, provincias
             direccion = new Direccion();
             pueblo = new Pueblo();
             provincia = new Provincia();
+            //cogemos los pueblos que se corresponden al codigo postal actual
             this.setListPueblos(igd.get("Pueblo Where codigoPostal = '" + this.getPueblo().getCodigoPostal() + "'"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Ejecutamos esta función al levantar modal añadir. cargamos datos de inicio.
+     * @return 
+     */
     public String levantarModalAniadir() {
         //Hay que resetear todo al levantar el aniadir, por tanto el init() es el método indicado
         init();
@@ -150,6 +153,10 @@ public class CentroManagedBean implements Serializable, Cloneable {
         return null;
     }
 
+    /**
+     * Ejecutamos esta funcion al levantar el modal modificar
+     * @return 
+     */
     public String levantarModalModificar() {
         init();
         System.out.println("Levantando modal centros");
@@ -162,6 +169,7 @@ public class CentroManagedBean implements Serializable, Cloneable {
                 this.setDireccion(new Direccion());
             }
 
+            //Controlamos que el pueblo y etc no sea null para que no pete
             if (direccion.getPueblo() != null) {
                 this.setPueblo(this.getDireccion().getPueblo());
                 listPueblos = igd.get("Pueblo Where codigoPostal = '" + this.getPueblo().getCodigoPostal() + "'");
@@ -184,6 +192,10 @@ public class CentroManagedBean implements Serializable, Cloneable {
         return "";
     }
 
+    /**
+     * Añadir un nuevo centro
+     * @return 
+     */
     public String aniadirCentro() {
         try {
             pueblo.setProvincia(provincia);
@@ -199,11 +211,16 @@ public class CentroManagedBean implements Serializable, Cloneable {
 
     }
 
+    /**
+     * Modificar un centro existente
+     * @return 
+     */
     public String modificarCentro() {
         try {
             pueblo.setProvincia(provincia);
             direccion.setPueblo(pueblo);
             centro.setDireccion(direccion);
+            //actualizamos
             igd.update(centro);
             //Es más rápido sacarlos de la base de datos que modificar el actualizado.
             listCentros = igd.get("Centro");

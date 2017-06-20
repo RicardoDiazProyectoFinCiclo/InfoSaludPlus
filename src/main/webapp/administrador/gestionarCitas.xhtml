@@ -52,6 +52,10 @@
                 </nav>
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1" > 
+                    <h2 class="cabeceraSeccion" >
+                        <h:outputText value="TODAS LAS CITAS PREVIAS SOLICITADAS" />
+                    </h2>
+
                     <h:form>
                         <rich:panel>
                             <f:facet name="header">
@@ -153,18 +157,17 @@
 
                             <h:form id="formCambioMedicos" styleClass="tabla">
                                 <rich:messages for="formCambioMedicos" styleClass="#{gestionarCitasBean.claseMsg}" />
-                                <h:panelGrid columns="3" >
-                                    <h:outputText value="Médico ausente" />
-                                    <h:outputText value="Sustituir por" />
-                                    <h:outputText value="Médicos disponibles" />
+                                <h:panelGrid columns="3"  >
+                                    <h:outputText style="text-align: center; display: block; font: bold 10pt Arial;" value="Médico ausente" />
+                                    <h:outputText style="text-align: center; display: block; font: bold 10pt Arial;" value="Sustituir por" />
+                                    <h:outputText style="text-align: center; display: block; font: bold 10pt Arial;" value="Médicos disponibles" />
 
                                     <h:selectOneMenu value="#{gestionarCitasBean.idMedicoAusente}">
                                         <f:selectItem itemLabel="Selecciona un médico ausente..." itemValue="0" />
                                         <f:selectItems value="#{gestionarCitasBean.listMedicosAusentes}" var="med" itemLabel="#{med.apellidos}, #{med.nombre}" itemValue="#{med.id}" />
                                     </h:selectOneMenu>
 
-                                    <h:outputText value="      &lt;-----&gt;      "/>
-
+                                    <h:outputText style="text-align: center; display: block; font: bold 10pt Arial;" value="      &lt; ========= &gt;      "/>
                                     <h:selectOneMenu value="#{gestionarCitasBean.idMedicoNoAusente}">
                                         <f:selectItem itemLabel="Selecciona un médico disponible..." itemValue="0" />
                                         <f:selectItems value="#{gestionarCitasBean.listMedicosNoAusentes}" var="med" itemLabel="#{med.apellidos}, #{med.nombre}" itemValue="#{med.id}" />

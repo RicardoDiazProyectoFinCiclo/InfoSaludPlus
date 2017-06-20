@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package es.albarregas.managedbean;
 
 import es.albarregas.dao.IGenericoDAO;
@@ -29,6 +25,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.swing.JFrame;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -438,20 +435,21 @@ public class CitaPreviaPacienteManagedBean implements Serializable, Cloneable {
                     + citaReservada.getCentro().getDireccion().getPueblo().getProvincia().getNombre();
 
             String paramTelefono = citaReservada.getCentro().getDireccion().getTelefono();
-            
+
             JasperReport jr = (JasperReport) JRLoader.loadObject(url);
             Map parametros = new HashMap<String, Object>();
             parametros.put("paciente", paramPaciente);
             parametros.put("medico", paramMedico);
-            parametros.put("fechaInforme", paramFecha);
+            parametros.put("fecha", paramFecha);
             parametros.put("hora", paramHora);
             parametros.put("centro", paramCentro);
             parametros.put("direccion", paramDireccion);
             parametros.put("telefono", paramTelefono);
 
             JasperPrint jp = JasperFillManager.fillReport(jr, parametros, new JREmptyDataSource());
-            JasperViewer jv = new JasperViewer(jp);
-            jv.show();
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Si no pones esto al cerrar el viewe se cierra toda la aplicacion
+            jv.setVisible(true); //el show() está deprecated
         } catch (Exception ex) {
             Logger.getLogger(GestionarMedicosManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }

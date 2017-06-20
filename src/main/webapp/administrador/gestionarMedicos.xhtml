@@ -52,6 +52,10 @@
                 </nav>
 
                 <section id="cuadroPrincipal" class="row col-sm-9 col-sm-offset-1" > 
+                    <h2 class="cabeceraSeccion" >
+                        <h:outputText value="PERSONAL MÉDICO" />
+                    </h2>
+
                     <h:form>
                         <rich:panel id="panelMedicos">
                             <f:facet name="header">
@@ -99,7 +103,7 @@
                                         <h:outputText value="Ausencia"/>
                                     </f:facet>
                                     <a4j:commandButton value="#{med.ausencia == 'n' ? 'Poner ausencia' : 'Quitar ausencia'}" action="#{gestionarMedicosBean.ponerQuitarAusencias()}" execute="@this" render="tablaMedicos"/>
-                                                   
+
                                 </rich:column>
 
                                 <f:facet name="footer">
