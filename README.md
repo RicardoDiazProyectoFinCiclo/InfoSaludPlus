@@ -1,4 +1,5 @@
 # InfoSaludPlus
+- Subiendo versión final de Info Salud Plus. Base de datos cargada. Manuales en carpeta raiz. JavaDoc en carpeta raiz y en el target. Modificaciones de ultima hora, se incluyen 3 páginas comunes aparte del index, visibles desde el menu principal. Muchos retoques de última hora para afinar la aplicación. 20/06/2017 23:50
 - Añadido pdfs y otras mejoras. 18/06/2017 20:30
 - Citas terminadas por revisar: se añaden y eliminan. Varias funcionalidades del administrador (gestiona casi todo, falta desarrollar algunas cosas). Corregido el subir imagen de centro. 17/06/2017
 - Citas en fase Beta. El paciente puede elegir una cita (administrativa o consulta), y seleccionarla y confirmarla. Falta pulirlo y hacer toda la parte de citas de médicos. 08/06/2017

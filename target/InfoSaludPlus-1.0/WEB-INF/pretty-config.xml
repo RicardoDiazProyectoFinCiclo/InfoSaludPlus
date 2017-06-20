@@ -18,7 +18,11 @@
         <view-id value="/faces/comun/servicios.xhtml" />
     </url-mapping>
 
-
+    <url-mapping id="medicos">
+        <pattern value="/medicos/" />
+        <view-id value="/faces/comun/medicos.xhtml" />
+    </url-mapping>
+    
     <!-- Navegación pacientes -->
     <url-mapping id="inicioAreaPaciente">	
         <pattern value="/inicioAreaPaciente/" />

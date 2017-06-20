@@ -1,4 +1,3 @@
-
 package es.albarregas.managedbean;
 
 import es.albarregas.dao.IGenericoDAO;
@@ -71,11 +70,10 @@ public class ImagenManagedBean implements Serializable {
 
         df = DAOFactory.getDAOFactory();
         igd = df.getGenericoDAO();
+        //Esta información puede que sea redundante, pero he tenido que modificar in extremis, por la sesion qe daba problemas
         usuario = (Usuario) FacesUtils.getSession("usuario");
-        if (usuario != null && !usuario.getTipo().equals("a")) {
-            if (usuario.getImagen() != null) {
-                imagen = usuario.getImagen();
-            }
+        if (usuario != null && !usuario.getTipo().equals("a") && usuario.getImagen() != null) {
+            imagen = usuario.getImagen();
         }
 
     }
@@ -92,6 +90,11 @@ public class ImagenManagedBean implements Serializable {
     public void pintar(OutputStream stream, Object object) throws IOException, SQLException {
 
         try {
+
+            usuario = (Usuario) FacesUtils.getSession("usuario");
+            if (usuario != null && !usuario.getTipo().equals("a") && usuario.getImagen() != null) {
+                imagen = usuario.getImagen();
+            }
 
             if (imagen != null) {
                 int tamanioImagen = (int) imagen.getFuenteImagen().length();
@@ -133,26 +136,43 @@ public class ImagenManagedBean implements Serializable {
             e.printStackTrace();
         }
     }
-    
-    public void pintarImagenCentro2(OutputStream stream, Object object) throws IOException, SQLException {
+
+    public void pintarImagenConId(OutputStream stream, Object object) throws IOException, SQLException {
 
         try {
 
-            Map<String,String> params;
+//            Map<String,String> params;
+//            params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+//
+//            String idCentro = params.get("paramIdCentro");
+//            
+//            Centro centro = (Centro)igd.getOne(Integer.parseInt(idCentro), Centro.class);
+//            if (centro != null && centro.getImagen() != null) {
+//                imagen = centro.getImagen();
+//
+//                int tamanioImagen = (int) imagen.getFuenteImagen().length();
+//                RenderedImage image = ImageIO.read(new BufferedInputStream(new ByteArrayInputStream(imagen.getFuenteImagen().getBytes(1, tamanioImagen))));
+//                ImageIO.write(image, imagen.getTipoMIME(), stream);
+//
+//                System.out.println("Entrando en función pintar");
+//            }
+            Map<String, String> params;
             params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 
-            String idCentro = params.get("paramIdCentro");
-            
-            Centro centro = (Centro)igd.getOne(Integer.parseInt(idCentro), Centro.class);
-            if (centro != null && centro.getImagen() != null) {
-                imagen = centro.getImagen();
+            String idImagen = params.get("paramIdImagen");
+            if (idImagen != null) {
+                imagen = (Imagen) igd.getOne(Integer.parseInt(idImagen), Imagen.class);
+                if (imagen != null) {
 
-                int tamanioImagen = (int) imagen.getFuenteImagen().length();
-                RenderedImage image = ImageIO.read(new BufferedInputStream(new ByteArrayInputStream(imagen.getFuenteImagen().getBytes(1, tamanioImagen))));
-                ImageIO.write(image, imagen.getTipoMIME(), stream);
+                    int tamanioImagen = (int) imagen.getFuenteImagen().length();
+                    RenderedImage image = ImageIO.read(new BufferedInputStream(new ByteArrayInputStream(imagen.getFuenteImagen().getBytes(1, tamanioImagen))));
+                    ImageIO.write(image, imagen.getTipoMIME(), stream);
 
-                System.out.println("Entrando en función pintar");
+                    System.out.println("Entrando en función pintar");
+                }
             }
+
+            imagen = null;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -168,6 +188,12 @@ public class ImagenManagedBean implements Serializable {
     public void aniadirImagen(FileUploadEvent event) throws Exception {
 
         try {
+
+            usuario = (Usuario) FacesUtils.getSession("usuario");
+            if (usuario != null && !usuario.getTipo().equals("a") && usuario.getImagen() != null) {
+                imagen = usuario.getImagen();
+            }
+
             UploadedFile imagenSubida = event.getUploadedFile();
 
             Blob imagenRescatada = new javax.sql.rowset.serial.SerialBlob(imagenSubida.getData());

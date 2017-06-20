@@ -64,9 +64,9 @@
 
                             <rich:dataTable id="tablaMedicos"   sortMode="single" value="#{gestionarMedicosBean.listMedicos}" style="text-align: center; width: 100%" 
                                             var="med" rows="5"  rowClasses="odd-row, even-row" binding="#{gestionarMedicosBean.tablaMedicos}" rendered="#{not empty gestionarMedicosBean.listMedicos}">
-                                <rich:column  width="5%" sortBy="#{cen.id}">
+                                <rich:column  width="3%" sortBy="#{med.id}">
                                     <f:facet name="header">
-                                        <h:outputText value="Identificador"/>
+                                        <h:outputText value="Id"/>
                                     </f:facet>
                                     <h:outputText value="#{med.id} "/>
                                 </rich:column>
@@ -82,6 +82,13 @@
                                         <h:outputText value="Nombre"/>
                                     </f:facet>
                                     <h:outputText value="#{med.nombre}" />
+                                </rich:column>
+
+                                <rich:column width="15%" sortBy="#{med.email}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Email"/>
+                                    </f:facet>
+                                    <h:outputText value="#{med.email}" />
                                 </rich:column>
 
                                 <rich:column width="20%" sortBy="#{med.numColegiado}">

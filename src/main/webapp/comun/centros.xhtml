@@ -33,9 +33,9 @@
                                         <p><h:outputText style="font-weight: bold; text-transform: uppercase;" value="#{ser.nombre}" /></p>
                                     <p>
 
-                                        <a4j:mediaOutput  id="media" element="img" class="img-responsive center-block img-rounded imagenPublica" style=" border: solid 1px black; " createContent="#{imagenBean.pintarImagenCentro2}"
+                                        <a4j:mediaOutput  id="media" element="img" class="img-responsive center-block img-rounded imagenPublica" style=" border: solid 1px black; " createContent="#{imagenBean.pintarImagenConId}"
                                                           value="#{row}"  cacheable="false" >
-                                            <f:param value="#{ser.id}" name="paramIdCentro" /> 
+                                            <f:param value="#{ser.imagen.id}" name="paramIdImagen" /> 
                                         </a4j:mediaOutput>
 
                                     </p>

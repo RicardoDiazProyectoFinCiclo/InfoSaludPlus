@@ -3,6 +3,7 @@ package es.albarregas.managedbean;
 import es.albarregas.dao.IGenericoDAO;
 import es.albarregas.daofactory.DAOFactory;
 import es.albarregas.modelo.Centro;
+import es.albarregas.modelo.Medico;
 import es.albarregas.modelo.Servicio;
 import java.io.Serializable;
 import java.util.List;
@@ -22,6 +23,7 @@ public class ComunesManagedBean implements Serializable{
     private IGenericoDAO igd;
     private List<Centro> listCentros; 
     private List<Servicio> listServicios;
+    private List<Medico> listMedicos;
 
     public DAOFactory getDf() {
         return df;
@@ -54,6 +56,16 @@ public class ComunesManagedBean implements Serializable{
     public void setListServicios(List<Servicio> listServicios) {
         this.listServicios = listServicios;
     }
+
+    public List<Medico> getListMedicos() {
+        return listMedicos;
+    }
+
+    public void setListMedicos(List<Medico> listMedicos) {
+        this.listMedicos = listMedicos;
+    }
+    
+    
   
     
     /**
@@ -64,8 +76,9 @@ public class ComunesManagedBean implements Serializable{
         df = DAOFactory.getDAOFactory();
         igd = df.getGenericoDAO();
         
-        this.setListCentros(igd.get("Centro"));
-        this.setListServicios(igd.get("Servicio"));
+        this.setListCentros(igd.get("Centro Order By nombre"));
+        this.setListServicios(igd.get("Servicio Order By nombre "));
+        this.setListMedicos(igd.get("Medico Order By nombre"));
     }
     
     

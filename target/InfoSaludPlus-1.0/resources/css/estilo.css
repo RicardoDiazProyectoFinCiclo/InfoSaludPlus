@@ -55,13 +55,6 @@ figcaption{
     color: darkgrey;
 }
 
-/*aside{
-    background: rgb(240,240,240);
-    border: dotted 1px black;
-    padding: 50px;
-    min-height: 420px;
-}*/
-
 .menuPrincipal{
     color: white; 
 }
@@ -181,16 +174,6 @@ label{
     margin-left: 10px;
 }
 
-/*
-    Clase de los mensajes de error globales
-*/
-.rf-msgs, .rf-msgs-err, .rf-msgs-sum{
-    /*    display: block;
-        text-align: center;
-        margin: 10px auto;
-        font: bold 12pt Arial, sans-serif !important;*/
-    /*    color: inherit;*/
-}
 /*
     Cabeceras de menús horizontales
 */
@@ -316,6 +299,7 @@ label{
     text-align: center;
 }
 
+/* Secciones públicas */
 .seccionInteres{
     margin-top: 30px;
     margin-bottom: 30px;
@@ -327,6 +311,7 @@ label{
     box-shadow: 4px 4px 5px darkgrey;
 }
 
+/* Imagen en las zonas comunes */
 .imagenPublica{
     margin: 20px auto;
     text-align: center;

@@ -62,41 +62,48 @@
 
                             <rich:dataTable id="tablaPacientes"   sortMode="single" value="#{gestionarPacientesBean.listPacientes}" style="text-align: center; width: 100%" 
                                             var="pac" rows="5"  rowClasses="odd-row, even-row" binding="#{gestionarPacientesBean.tablaPacientes}" rendered="#{not empty gestionarPacientesBean.listPacientes}" >
-                                <rich:column  width="5%" sortBy="#{cen.id}">
+                                <rich:column  width="3%" sortBy="#{cen.id}">
                                     <f:facet name="header">
-                                        <h:outputText value="Identificador"/>
+                                        <h:outputText value="Id"/>
                                     </f:facet>
                                     <h:outputText value="#{pac.id} "/>
                                 </rich:column>
 
-                                <rich:column width="30%" sortBy="#{pac.apellidos}">
+                                <rich:column width="15%" sortBy="#{pac.apellidos}">
                                     <f:facet name="header">
                                         <h:outputText value="Apellidos"/>
                                     </f:facet>
                                     <h:outputText value="#{pac.apellidos}" />
                                 </rich:column>
-                                <rich:column width="30%" sortBy="#{pac.nombre}">
+                                <rich:column width="15%" sortBy="#{pac.nombre}">
                                     <f:facet name="header">
                                         <h:outputText value="Nombre"/>
                                     </f:facet>
                                     <h:outputText value="#{pac.nombre}" />
                                 </rich:column>
 
-                                <rich:column width="30%" sortBy="#{pac.numSegSoc}">
+                                <rich:column width="15%" sortBy="#{pac.email}">
+                                    <f:facet name="header">
+                                        <h:outputText value="Email"/>
+                                    </f:facet>
+                                    <h:outputText value="#{pac.email}" />
+                                </rich:column>
+                                
+                                <rich:column width="15%" sortBy="#{pac.numSegSoc}">
                                     <f:facet name="header">
                                         <h:outputText value="Nº Seguridad Social"/>
                                     </f:facet>
                                     <h:outputText value="#{pac.numSegSoc}" />
                                 </rich:column>
 
-                                <rich:column width="40%" sortBy="#{pac.centro.nombre}">
+                                <rich:column width="15%" sortBy="#{pac.centro.nombre}">
                                     <f:facet name="header">
                                         <h:outputText value="Centro"/>
                                     </f:facet>
                                     <h:outputText rendered="#{not empty pac.centro.nombre}" value="#{pac.centro.nombre}" />
                                 </rich:column>
 
-                                <rich:column width="40%" sortBy="#{pac.medico.apellidos}">
+                                <rich:column width="15%" sortBy="#{pac.medico.apellidos}">
                                     <f:facet name="header">
                                         <h:outputText value="Médico"/>
                                     </f:facet>

@@ -56,9 +56,9 @@
                         </f:facet>
                         <h:form id="formularioCitaPrevia">
                             <rich:messages ajaxRendered="true"  for="formularioCitaPrevia" class="msgErrorGlobal"/>
-
+                            <h3 style="font-size: 18pt;"><h:outputLabel for="tipoCita" value="Seleccione su tipo de cita" /></h3>
                             <h:panelGrid columns="1" styleClass="panel" >
-                                <h:outputLabel for="tipoCita" value="Seleccione su tipo de cita" />
+                                
                                 <h:selectOneRadio id="tipoCita" value="#{citaPreviaPacienteBean.tipoCita}" >
                                     <f:selectItem itemLabel="Administrativa" itemValue="administrativa" />
                                     <f:selectItem itemLabel="Consulta" itemValue="consulta" />
