@@ -247,7 +247,13 @@ public class AccesoManagedBean implements Cloneable, Serializable {
             if (!listaUsuarios.isEmpty()) {
                 usuario = (Usuario) listaUsuarios.get(0);
                 //Los demás datos los cargaremos en el postconstructor
-                FacesUtils.addSession("usuario", usuario);
+
+                //Vemos si está o no bloqueado
+                if (usuario.getBloqueado().equals("s")) {
+                    FacesUtils.addMessage("formularioLogin", "error", "El usuario está bloqueado, póngase en contacto con el administrador");
+                } else {
+                    FacesUtils.addSession("usuario", usuario);
+                }
             } else {
                 //La primera no va a null cuando el rich:messages no es globalOnly (el for no puede ser para el graphValidator
                 FacesUtils.addMessage("formularioLogin", "error", "Usuario y/o contraseña incorrectos");
@@ -470,6 +476,14 @@ public class AccesoManagedBean implements Cloneable, Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Limpiamos el formulario de registro médico cuando el admin registra a un
+     * médico
+     */
+    public void limpiarRegistroMedicos() {
+        medico = new Medico();
     }
 
 }

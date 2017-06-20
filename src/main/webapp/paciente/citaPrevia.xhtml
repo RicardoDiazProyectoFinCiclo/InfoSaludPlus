@@ -195,22 +195,25 @@
                     </rich:popupPanel>
 
                     <rich:popupPanel id="modalConfimCita" header="Confirmar cita" autosized="true" resizeable="false" modal="true">
-                        <h3><h:outputText value="Confirmar cita"/></h3>
+
                         <rich:graphValidator id="gvConfirmCita">                         
                             <h:form id="formDatosCita">
+                                <h3><h:outputText rendered="#{not citaPreviaPacienteBean.indImprimir}" value="Confirmar cita"/>
+                                    <h:outputText rendered="#{citaPreviaPacienteBean.indImprimir}" value="Cita confirmada"/></h3>
+
                                 <rich:messages for="formDatosCita" styleClass="msgOkGlobal"/>
-                                <h:panelGrid id="datosCita" columns="2">
-                                    <h:outputText value="Paciente: "/>
-                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.paciente.nombre}"/>
-                                    <h:outputText value="Medico: " />
-                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.medico.nombre}"/>
-                                    <h:outputText value="Fecha: "/>
+                                <h:panelGrid id="datosCita" styleClass="panel" columns="2">
+                                    <h:outputText styleClass="etiquetaBasica" value="Paciente: "/>
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.paciente.nombre} #{citaPreviaPacienteBean.citaElegida.paciente.apellidos}"/>
+                                    <h:outputText styleClass="etiquetaBasica" value="Medico: " />
+                                    <h:outputText value="#{citaPreviaPacienteBean.citaElegida.medico.nombre} #{citaPreviaPacienteBean.citaElegida.medico.apellidos}"/>
+                                    <h:outputText styleClass="etiquetaBasica" value="Fecha: "/>
                                     <h:outputText value="#{citaPreviaPacienteBean.citaElegida.fecha}">
-                                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                        <f:convertDateTime dateStyle="full" timeZone="es" locale="es" />
                                     </h:outputText>
-                                    <h:outputText value="Hora: "/>
+                                    <h:outputText styleClass="etiquetaBasica" value="Hora: "/>
                                     <h:outputText value=" #{citaPreviaPacienteBean.citaElegida.horaFormateada()}"/>
-                                    <h:outputText value="Centro" />
+                                    <h:outputText styleClass="etiquetaBasica" value="Centro" />
                                     <h:outputText value="#{citaPreviaPacienteBean.citaElegida.centro.nombre}"/>
                                 </h:panelGrid>
                                 <div class="botones">

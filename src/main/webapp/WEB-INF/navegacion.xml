@@ -31,6 +31,66 @@
         </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>/comun/centros.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/pagina2.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>inicioAreaPaciente</from-outcome>
+            <to-view-id>/paciente/inicioAreaPaciente.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaAdmin</from-outcome>
+            <to-view-id>/administrador/inicioAreaAdmin.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaMedico</from-outcome>
+            <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/comun/servicios.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/pagina2.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>inicioAreaPaciente</from-outcome>
+            <to-view-id>/paciente/inicioAreaPaciente.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaAdmin</from-outcome>
+            <to-view-id>/administrador/inicioAreaAdmin.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicioAreaMedico</from-outcome>
+            <to-view-id>/medico/inicioAreaMedico.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicio</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect>true</redirect>
+        </navigation-case>
+    </navigation-rule>
+    
     <!-- Navegación de pacientes -->
     
     <navigation-rule>
@@ -49,7 +109,7 @@
             <from-outcome>citaPrevia</from-outcome>
             <to-view-id>/paciente/citaPrevia.xhtml</to-view-id>
             <redirect>true</redirect>
-        </navigation-case>                    
+        </navigation-case>                 
     </navigation-rule>
     
     <navigation-rule>

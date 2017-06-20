@@ -8,6 +8,16 @@
         <pattern value="/inicio/" />
         <view-id value="/faces/index.xhtml" />
     </url-mapping>
+    <url-mapping id="centros">
+        <pattern value="/centros/" />
+        <view-id value="/faces/comun/centros.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="servicios">
+        <pattern value="/servicios/" />
+        <view-id value="/faces/comun/servicios.xhtml" />
+    </url-mapping>
+
 
     <!-- Navegación pacientes -->
     <url-mapping id="inicioAreaPaciente">	

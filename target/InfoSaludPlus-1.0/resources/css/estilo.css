@@ -17,13 +17,13 @@ header h1{
     font-weight: bold;
 }
 
-header h2{
+h2{
     text-align: left;
     font-style: italic;
     color: #333333;
 }
 
-h2, h3{
+h3{
     text-align: center;
 }
 
@@ -44,8 +44,10 @@ footer{
 #secciones article{
     background: rgb(253,253,255);
     border-radius: 10px;
-    padding: 20px;
+    padding: 30px;
     min-height: 420px;
+    box-shadow: 4px 4px 5px darkgrey;
+    margin-bottom: 10px;
 }
 
 figcaption{
@@ -119,6 +121,12 @@ label{
     color: rgb(245,245,255);
     font: italic bold 10pt sans-serif;
     border: inherit;
+}
+
+.msgBienvenida:hover{
+    background: none;
+    border: none;
+    cursor: inherit;
 }
 
 /*
@@ -275,7 +283,7 @@ label{
     font: italic 11pt Arial;
     color: cyan;
 }
-.cabeceraSeccion{
+.cabeceraSeccion p, h2.cabeceraSeccion{
     text-align: center; 
     color: #006290; 
     padding: 0px; 
@@ -285,10 +293,42 @@ label{
     text-shadow: 2px 2px lightgray; 
 }
 
+
 .servicios-cu{
     width: 150px; 
     display: inline-block; 
     margin: 10px;
     padding: 10px;
     border-radius: 5px;
+    box-shadow: 3px 3px 3px lightgray;
+}
+
+.datosError{
+    padding: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px #888888;
+    margin-bottom: 30px;
+}
+
+.datosError h2{
+    font-size: 18pt !important;
+    text-align: center;
+}
+
+.seccionInteres{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background: white;
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 5px darkgrey;
+}
+
+.imagenPublica{
+    margin: 20px auto;
+    text-align: center;
+    border: solid 3px #f0f0f0;
 }

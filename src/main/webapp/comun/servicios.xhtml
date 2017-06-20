@@ -22,34 +22,9 @@
 
                 <section class="col-sm-9 row">
                     <h2 class="cabeceraSeccion" >
-                            <h:outputText value="NUESTRAS NOTICIAS" />
-                        </h2>
-                    <article class="col-sm-5 col-sm-offset-1"> 
-                        <h3>Estrenamos página web</h3>
-                        <p>Info Salud plus abre su página web a partir de Junio</p>
-
-                        <p>Los pacientes, que a partir de su apertura, podrán pedir la cita
-                            a través del servicio online, celebran la próxima apertura.</p>
-
-                        <figure>
-                            <h:graphicImage library="images" name="gente-feliz.jpg" width="300" height="200"/>
-                            <figcaption>Pacientes de Info Salud Plus celebrando la próxima apertura</figcaption>
-                        </figure>
-                    </article>
-                    <article class="col-sm-offset-1 col-sm-5"> 
-                        <h3>Nuevos avances médicos</h3>
-                        <p>El equipo de Info Salud plus ha descubierto una bacteria para luchar contra las
-                            hemorroides.
-                        </p>
-                        <figure>
-                            <h:graphicImage library="images" name="avanceCientifico.jpg" width="300" height="200"/>
-                            <figcaption>Científicos de Info Salud Plus descubriendo la nueva bacteria</figcaption>
-                        </figure>
-                    </article>
-                    <div class="text-center">
-                        <h2 class="cabeceraSeccion" >
-                            <h:outputText value="SERVICIOS MÉDICOS DE INFOSALUD PLUS" />
-                        </h2>
+                        <h:outputText value="SERVICIOS MÉDICOS DE INFOSALUD PLUS" />
+                    </h2>
+                    <div class="text-center col-sm-11 col-sm-offset-1 seccionInteres">
                         <a4j:repeat value="#{comunesBean.listServicios}" var="ser" rows="10">
                             <div class="bg-primary servicios-cu">
                                 <h:outputText value="#{ser.nombre}" />
@@ -62,21 +37,14 @@
                 <aside class="col-sm-offset-1 col-sm-2">
 
                     <rich:panel header="Cita previa">
-                        <h:outputText value="Cita previa online de forma rápida para acudir a nuestros centros de salud."/>
-                        <h:form>
-                            <h:panelGrid columns="1">
-                                <h:outputLabel for="dni" value="DNI:"/>
-                                <h:inputText id="dni" />
+                        <p class="text-justify">Cita previa online de forma rápida para acudir a nuestro centro de salud.</p>
 
-                                <h:outputLabel for="fechaNac3" value="Fecha de Nacimiento:"/>
-                                <rich:calendar id="fechaNac3" value="#{paciente.fechaNacimiento}" 
-                                               locale="es/ES" inputSize="15"  datePattern="dd/MM/yyyy"/>
-                            </h:panelGrid>
-                            <div class="botones">
-                                <h:commandButton value="Enviar" action="inicioAreaPaciente"/>
-                                <h:commandButton value="Limpiar" type="reset" style="margin-left: 10px;"  />
-                            </div>
-                        </h:form>
+                        <p style="text-align: center;"><h:graphicImage class="img-responsive" library="images" name="cita_previa.png" alt="Imagen de cita previa" title="Imagen de cita previa" /></p>
+
+                        <p class="text-justify">
+                            Para pedirla tienes que registrarte y hacer login con tu usuario.</p>
+                        <p class="text-justify">¡Recuerda seleccionar un médico en tu área personal!</p>
+
                     </rich:panel>
                 </aside>
 

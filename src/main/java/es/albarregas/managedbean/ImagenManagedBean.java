@@ -16,9 +16,11 @@ import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
@@ -70,8 +72,8 @@ public class ImagenManagedBean implements Serializable {
         df = DAOFactory.getDAOFactory();
         igd = df.getGenericoDAO();
         usuario = (Usuario) FacesUtils.getSession("usuario");
-        if (!usuario.getTipo().equals("a")) {
-            if (usuario != null && usuario.getImagen() != null) {
+        if (usuario != null && !usuario.getTipo().equals("a")) {
+            if (usuario.getImagen() != null) {
                 imagen = usuario.getImagen();
             }
         }
@@ -117,7 +119,31 @@ public class ImagenManagedBean implements Serializable {
         try {
 
             Centro centro = (Centro) FacesUtils.getSession("centroSeleccionado");
+            if (centro != null && centro.getImagen() != null) {
+                imagen = centro.getImagen();
 
+                int tamanioImagen = (int) imagen.getFuenteImagen().length();
+                RenderedImage image = ImageIO.read(new BufferedInputStream(new ByteArrayInputStream(imagen.getFuenteImagen().getBytes(1, tamanioImagen))));
+                ImageIO.write(image, imagen.getTipoMIME(), stream);
+
+                System.out.println("Entrando en función pintar");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void pintarImagenCentro2(OutputStream stream, Object object) throws IOException, SQLException {
+
+        try {
+
+            Map<String,String> params;
+            params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
+            String idCentro = params.get("paramIdCentro");
+            
+            Centro centro = (Centro)igd.getOne(Integer.parseInt(idCentro), Centro.class);
             if (centro != null && centro.getImagen() != null) {
                 imagen = centro.getImagen();
 

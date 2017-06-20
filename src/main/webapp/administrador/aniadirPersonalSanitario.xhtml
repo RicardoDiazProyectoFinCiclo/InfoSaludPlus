@@ -167,7 +167,7 @@
                                 </h:panelGrid>
 
                                 <div class="botones">
-                                    <a4j:commandButton value="Registrarse" 
+                                    <a4j:commandButton value="REGISTRAR MÉDICO" 
                                                        action="#{accesoBean.registroMedico()}" 
                                                        oncomplete="if(#{facesContext.getMessageList().size()} == 0){#{rich:component('confirmRegistro')}.show(); }"
                                                        styleClass="boton"
@@ -175,7 +175,8 @@
                                                        status="guardarSave" >
                                         <a4j:param  value="m" assignTo="#{accesoBean.medico.tipo}"/>
                                     </a4j:commandButton> 
-
+                                    <a4j:commandButton type="reset" styleClass="boton" value="LIMPIAR"  
+                                                       immediate="true" render="formularioRegistroPersonalSanitario" action="#{accesoBean.limpiarRegistroMedicos}" />
                                 </div>
                             </rich:panel>
                         </rich:graphValidator>

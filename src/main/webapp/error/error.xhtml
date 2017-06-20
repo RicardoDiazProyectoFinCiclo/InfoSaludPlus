@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <f:view>
+
+        <ui:decorate template="/resources/templates/plantillaInicio.xhtml">
+            <ui:define name="titulo">InfoSaludPlus |  inicio</ui:define>
+            <ui:define name="accesosMenu">
+
+            </ui:define>
+            <ui:define name="migaPan">
+                <h:outputText value="Inicio" style="font-weight:bold" />
+            </ui:define>
+
+            <ui:define name="secciones">
+
+                <section class="col-sm-9 row">
+                    <div class="col-md-8 col-md-offset-2 text-center">
+
+                        <h3>Puede volver a la página principal haciendo click <a style="font-size: 16pt;" href="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml">aquí</a> </h3>
+                        <div class="datosError" style="padding: 50px;">
+                            <h2>Ha ocurrido un error inesperado en el servidor. </h2>
+                            <p style="text-align: center;"><h:graphicImage height="200" width="200" library="images" name="advertencia.png" alt="Imagen de advertencia" title="Imagen de advertencia" /></p>
+                            <h2>Estamos trabajando para solucionarlo.</h2>
+                        </div>
+                        <h3>Puede volver a la página principal haciendo click <a style="font-size: 16pt;" href="#{facesContext.externalContext.applicationContextPath}/faces/index.xhtml}">aquí</a> </h3>
+                    </div>  
+                </section>
+
+
+                <aside class="col-sm-offset-1 col-sm-2">
+
+                    <rich:panel header="Cita previa">
+                        <p class="text-justify">Cita previa online de forma rápida para acudir a nuestro centro de salud.</p>
+                        
+                        <p style="text-align: center;"><h:graphicImage class="img-responsive" library="images" name="cita_previa.png" alt="Imagen de cita previa" title="Imagen de cita previa" /></p>
+                        
+                        <p class="text-justify">
+                            Para pedirla tienes que registrarte y hacer login con tu usuario.</p>
+                        <p class="text-justify">¡Recuerda seleccionar un médico en tu área personal!</p>
+                    </rich:panel>
+                </aside>
+
+            </ui:define>
+        </ui:decorate>
+
+    </f:view>
+</html>
+

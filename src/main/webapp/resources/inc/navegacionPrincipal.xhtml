@@ -36,11 +36,11 @@
                 </f:facet>
 
 
-                <rich:menuItem mode="client">        
-                    <h:outputText value="Servicios" />
+                <rich:menuItem mode="client" >        
+                    <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/comun/servicios.xhtml" >Servicio</h:outputLink>
                 </rich:menuItem>
                 <rich:menuItem mode="client">        
-                    <h:outputText value="Centros" />
+                    <h:outputLink value="#{facesContext.externalContext.applicationContextPath}/faces/comun/centros.xhtml" >Centros</h:outputLink>
                 </rich:menuItem>
 
             </rich:dropDownMenu>

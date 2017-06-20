@@ -67,6 +67,16 @@
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>ERROR</dispatcher>
     </filter-mapping>
+    
+    <error-page>
+        <error-code>500</error-code>
+        <location>/faces/error/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/faces/error/error.xhtml</location>
+    </error-page>
+    
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
         <welcome-file>index.xhtml</welcome-file>
