@@ -1,14 +1,17 @@
+/******************************** BODY ***************************************/
 body{
     background: rgb(240,240,255);
     font-size: 11pt;
     margin: 0 auto;
 }
 
+/****************************** COMUNES GENERALES ****************************/
 header, footer, #secciones, #menuPrincipal{
     margin-top: 5px;
 }
 
 
+/********************************** HEADER ***********************************/
 header h1{
     text-align: left;
     margin-top: 30px;
@@ -31,15 +34,13 @@ p{
     font: normal 11pt Arial;
 }
 
+/********************************* SECCIONES ********************************/
+
 #secciones{
     min-height: 400px;
 }
 
-footer{
-    text-align: center;
-    background-color: #222;
-    color: white;
-}
+
 
 #secciones article{
     background: rgb(253,253,255);
@@ -66,9 +67,7 @@ figcaption{
     font-size: 11pt;
 }
 
-/*
-    Clase para los mensajes de error a medida
-*/
+/******************************* MENSAJES ***********************************/
 .mensajeError{
     color: rgb(150,0,0);
     font-weight: bold;
@@ -106,9 +105,7 @@ label{
     font-size: 11pt;
 }
 
-/*
-    Mensaje de bienvenida al loguearte
-*/
+/***************** MENSAJES DE BIENVENIDA AL LOGUEARTE ***********************/
 .msgBienvenida, .msgBienvenida > .rf-ddm-itm-lbl{
     background: inherit;
     color: rgb(245,245,255);
@@ -122,16 +119,12 @@ label{
     cursor: inherit;
 }
 
-/*
-    Capa de los botones
-*/
+/************************** CAPA BOTONES PIE  ********************************/
 div.botones{
     text-align: center;
 }
 
-/*
-    Estilo general de los botones
-*/
+/*************************** CLASE PARA BOTON ********************************/
 .boton{
     margin: 10px 20px;
     padding: 5px;
@@ -145,17 +138,15 @@ div.botones{
     border-radius: 3px;
     font: bold 10pt Arial, sans-serif !important;
 }
-/*
-    Mensajes de ok
-*/
+
+/*************************** MENSAJES OK ************************************/
+   
 .msgOk{
     font: bold 12pt Arial, sans-serif;
     color: rgb(0,150,0);
 }
 
-/*
-    Clase para las cabeceras de los modales
-*/
+/************************** CABECERAS DE MODALES *****************************/
 .cabeceraModal{
     font: bold 12pt Arial, sans-serif;
     text-align: center;
@@ -166,17 +157,13 @@ label{
 }
 
 
-/*
-    Clase de los mensajes de error individuales
-*/
+/************************ MENSAJES ERRORES INDIVIDUALES **********************/
 
 .rf-msg-err{
     margin-left: 10px;
 }
 
-/*
-    Cabeceras de menús horizontales
-*/
+/************************* CABECERAS MENÚ HORIZONTAL *************************/
 .cabeMenuHori{
     color: white;
     font: bold 14pt Arial, sans-serif !important;
@@ -188,7 +175,7 @@ label{
     padding: 5px;
 }
 
-/* DATATABLE */
+/********************************* DATATABLE *********************************/
 .even-row {
     background-color: #FCFFFE;
 }
@@ -203,15 +190,13 @@ label{
     cursor: pointer;
 }
 
-/** DATA SCROLLER **/
+/********************************* DATA SCROLLER ****************************/
 
 .rf-dt-ftr-c, .rf-dt-ftr{
     background-color: #a1c9dd !important;
 }
 
-/* FIN DATATABLE */
-
-/** CUADROS DE INFORMACION */
+/**************************** CUADROS DE INFORMACION *************************/
 
 .paneles{
     padding: 0px !important;
@@ -223,7 +208,7 @@ label{
     margin-right: 20px;
 }
 
-/* COLOR ENLACES TABLA */
+/**************************** COLOR ENLACES TABLA ****************************/
 .rf-dt-c-srt{
     color: white !important;
 }
@@ -231,7 +216,31 @@ label{
     color: cyan !important;
 }
 
-/* FOOTER */
+/* Secciones públicas */
+.seccionInteres{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background: white;
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 5px darkgrey;
+}
+
+/* Imagen en las zonas comunes */
+.imagenPublica{
+    margin: 20px auto;
+    text-align: center;
+    border: solid 3px #f0f0f0;
+}
+
+/********************************** FOOTER ***********************************/
+footer{
+    text-align: center;
+    background-color: #222;
+    color: white;
+}
 
 #redesSociales, #datosPie, #enlacesPie, footer{
     overflow: hidden;
@@ -258,6 +267,7 @@ label{
     margin: 5px 10%;
     width: 200px;
 }
+
 #enlacesPie ul li{
     margin: 10px auto;
 }
@@ -266,6 +276,7 @@ label{
     font: italic 11pt Arial;
     color: cyan;
 }
+
 .cabeceraSeccion p, h2.cabeceraSeccion{
     text-align: center; 
     color: #006290; 
@@ -275,7 +286,6 @@ label{
     word-spacing: 6px;
     text-shadow: 2px 2px lightgray; 
 }
-
 
 .servicios-cu{
     width: 150px; 
@@ -297,23 +307,4 @@ label{
 .datosError h2{
     font-size: 18pt !important;
     text-align: center;
-}
-
-/* Secciones públicas */
-.seccionInteres{
-    margin-top: 30px;
-    margin-bottom: 30px;
-    background: white;
-    background-color: white;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 4px 4px 5px darkgrey;
-}
-
-/* Imagen en las zonas comunes */
-.imagenPublica{
-    margin: 20px auto;
-    text-align: center;
-    border: solid 3px #f0f0f0;
 }

@@ -56,7 +56,7 @@
                             <h:outputText value="Pacientes ( #{informeBean.listInformes.size()} )" />
                         </f:facet>
                         <rich:dataTable id="tablaInformes" value="#{informeBean.listPacientes}" style="text-align: center; width: 100%"
-                                        var="pac" rows="5" binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row" rendered="#{not empty informeBean.listPacientes}">
+                                        var="pac" rows="5" sortMode="single" binding="#{informeBean.panelInforme}" rowClasses="odd-row, even-row" rendered="#{not empty informeBean.listPacientes}">
                             <rich:column sortBy="#{pac.apellidos}">
                                 <f:facet name="header">
                                     <h:outputText value="Apellidos"/>

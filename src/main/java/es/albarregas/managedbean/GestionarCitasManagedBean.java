@@ -161,13 +161,13 @@ public class GestionarCitasManagedBean implements Serializable {
             } else if (idMedicoNoAusente == 0) {
                 FacesUtils.addMessage("formCambioMedicos", "error", "Debe seleccionar un médico no ausente");
             } else {
-                List<Paciente> listPacientesCambiar = igd.get("Paciente Where idMedico = " + idMedicoAusente);
+                List<Cita> listCitasCambiar = igd.get("Cita Where idMedico = " + idMedicoAusente +" AND CURDATE() <= DATE(fecha)");
                 Medico medicoNoAusente = (Medico) igd.getOne(idMedicoNoAusente, Medico.class);
 
-                if (listPacientesCambiar.size() > 0) {
-                    for (Paciente paciente : listPacientesCambiar) {
-                        paciente.setMedico(medicoNoAusente);
-                        igd.update(paciente);
+                if (listCitasCambiar.size() > 0) {
+                    for (Cita cita : listCitasCambiar) {
+                        cita.setMedico(medicoNoAusente);
+                        igd.update(cita);
                     }
                     claseMsg = "msgOkGlobal";
                     FacesUtils.addMessage("formCambioMedicos", "info", "El médico ha sido cambiado para cada paciente correctamente");
